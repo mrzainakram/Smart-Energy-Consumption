@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <h2>Welcome, {{ user.username }}!</h2>
+        <a href="{% url 'logout' %}">Logout</a>
+        <h3>Recent Predictions</h3>
+        <ul>
+        {% for prediction in predictions %}
+            <li>
+                Month: {{ prediction.month_year }} | Predicted Usage: {{ prediction.predicted_usage_kw }} kW | Bill: {{ prediction.predicted_bill }} PKR | 
+                High Consumption: {{ prediction.high_consumption_appliance }} | 
+                Recommendation: {% if prediction.recommendation %}{{ prediction.recommendation.recommendation_text }}{% else %}No recommendation available{% endif %} | 
+                Suggestion: {% if prediction.recommendation %}{{ prediction.recommendation.suggestion }}{% else %}No suggestion available{% endif %}
+            </li>
+        {% empty %}
+            <li>No predictions yet.</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h2>Welcome to Smart Energy Consumption</h2>
+        <p>Please visit <a href="http://localhost:3001/">Frontend</a> to continue.</p>
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign Up</a></p>
+    {% endif %}
+</body>
+</html>

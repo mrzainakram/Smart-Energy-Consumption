@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <title>Logged Out</title>
+  </head>
+  <body>
+      <h2>Logged Out</h2>
+      {% if messages %}
+          {% for message in messages %}
+              <p>{{ message }}</p>
+          {% endfor %}
+      {% endif %}
+      <p>You have been logged out. <a href="{% url 'login' %}">Log in again</a></p>
+  </body>
+  </html>
