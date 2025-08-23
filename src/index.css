@@ -69,6 +69,14 @@ body {
     --mobile-font-base: 0.75rem;
   }
   
+  /* Force mobile optimization */
+  body {
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+    touch-action: manipulation !important;
+  }
+  
   .container {
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
@@ -338,6 +346,51 @@ body {
   input, select, textarea {
     min-height: 44px;
     font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Force Mobile Touch Optimization */
+@media (max-width: 768px) {
+  /* Ensure all interactive elements are touch-friendly */
+  button, .button, .clickable, a, [role="button"] {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Mobile-specific container */
+  .container, .responsive-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* Force mobile grid layouts */
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  /* Mobile text sizing */
+  .text-6xl, .text-5xl, .text-4xl {
+    font-size: 2rem !important;
+  }
+  
+  .text-3xl, .text-2xl {
+    font-size: 1.5rem !important;
+  }
+  
+  .text-xl, .text-lg {
+    font-size: 1.25rem !important;
   }
 }
 
