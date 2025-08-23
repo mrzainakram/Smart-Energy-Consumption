@@ -228,20 +228,20 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
         className="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xl border-b border-gray-800/50 shadow-2xl"
       >
         {/* Main Navigation Bar - Single Row, Clean Layout */}
-        <nav className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+        <nav className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-4">
+          <div className="flex items-center justify-between flex-wrap gap-2 sm:gap-0">
             
             {/* Left Section - Logo + Active User + Time */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 sm:space-x-2 flex-wrap sm:flex-nowrap">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-2xl">⚡</span>
               </div>
               
               {/* Active User Button */}
-              <div className="w-full h-12 text-center bg-gray-900/80 rounded-xl px-4 py-3 border-2 border-indigo-400 shadow-lg flex items-center justify-center space-x-4 hover:shadow-indigo-400/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+              <div className="w-auto sm:w-full h-10 sm:h-12 text-center bg-gray-900/80 rounded-xl px-2 sm:px-4 py-2 sm:py-3 border-2 border-indigo-400 shadow-lg flex items-center justify-center space-x-2 sm:space-x-4 hover:shadow-indigo-400/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
                 <div className="flex flex-row w-full items-center justify-center space-x-4">
-                  <div className="text-sm text-indigo-600 font-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>Active User:</div>
-                  <div className="text-base font-bold text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
+                                      <div className="text-xs sm:text-sm text-indigo-600 font-bold hidden sm:block" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>Active User:</div>
+                    <div className="text-sm sm:text-base font-bold text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
                     {user?.email ? user.email.split('@')[0] : 'User'}
                   </div>
                   <div className="text-green-400 text-sm font-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>●</div>
@@ -249,7 +249,7 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
               </div>
 
               {/* Current Time - 3D Styled */}
-              <div className="w-full h-12 flex items-center justify-center space-x-2 bg-gray-900/80 border-2 border-orange-400 rounded-xl shadow-lg hover:shadow-orange-400/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 ml-0 mr-1">
+              <div className="w-auto sm:w-full h-10 sm:h-12 flex items-center justify-center space-x-1 sm:space-x-2 bg-gray-900/80 border-2 border-orange-400 rounded-xl shadow-lg hover:shadow-orange-400/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 ml-0 mr-1">
                 <span className="text-white text-xl" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>🕒</span>
                 <span className="text-white font-mono font-bold text-base" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
                   {formatTime(currentTime)}
@@ -258,13 +258,13 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
             </div>
             
             {/* Center Section - Main Buttons */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-wrap gap-1 sm:gap-0">
 
               {/* Language Dropdown */}
               <div className="relative ml-1">
                 <button
                   onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                  className="w-32 h-12 bg-gray-900/80 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 border-2 border-blue-400 shadow-lg hover:shadow-blue-400/50 hover:-translate-y-1"
+                  className="w-24 sm:w-32 h-10 sm:h-12 bg-gray-900/80 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-1 sm:space-x-2 border-2 border-blue-400 shadow-lg hover:shadow-blue-400/50 hover:-translate-y-1"
                   style={{
                     textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)',
                     WebkitTextStroke: '0.5px rgba(0,0,0,0.3)'
