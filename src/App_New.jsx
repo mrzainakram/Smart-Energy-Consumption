@@ -218,9 +218,7 @@ const App_New = () => {
             />
           )}
 
-          {currentPage === 'responsive' && (
-            <ResponsiveDemo />
-          )}
+
         </div>
       </div>
     </LanguageProvider>
