@@ -8,7 +8,7 @@ import ProjectDashboard from './components/ProjectDashboard'; // Keep this impor
 import AISystemIntro from './components/AISystemIntro';
 import ThreeDBackground from './components/ThreeDBackground';
 import EnhancedPredictionDashboard from './components/EnhancedPredictionDashboard';
-import ResponsiveDemo from './components/ResponsiveDemo';
+
 import { LanguageProvider } from './contexts/LanguageContext';
 
 const App_New = () => {
@@ -167,15 +167,7 @@ const App_New = () => {
           <ThreeDBackground />
         </div>
         
-        {/* Quick Access Button for Responsive Demo */}
-        <div className="fixed top-4 right-4 z-50">
-          <button
-            onClick={() => setCurrentPage('responsive')}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-          >
-            📱 Responsive Demo
-          </button>
-        </div>
+        
 
         {/* Main Content */}
         <div className="relative z-10">
