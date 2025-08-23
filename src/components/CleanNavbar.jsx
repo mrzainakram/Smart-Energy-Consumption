@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
+import useDeviceDetection from '../hooks/useDeviceDetection';
+import { UniversalText, UniversalButton } from './UniversalResponsiveWrapper';
 
 const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
   const { language, setLanguage, translate } = useLanguage();
+  const deviceInfo = useDeviceDetection();
   const [showContact, setShowContact] = useState(false);
   const [showServices, setShowServices] = useState(false);
   const [showAboutUs, setShowAboutUs] = useState(false);
@@ -240,20 +243,22 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
               {/* Active User Button */}
               <div className="w-auto sm:w-full h-10 sm:h-12 text-center bg-gray-900/80 rounded-xl px-2 sm:px-4 py-2 sm:py-3 border-2 border-indigo-400 shadow-lg flex items-center justify-center space-x-2 sm:space-x-4 hover:shadow-indigo-400/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
                 <div className="flex flex-row w-full items-center justify-center space-x-4">
-                                      <div className="text-xs sm:text-sm text-indigo-600 font-bold hidden sm:block" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>Active User:</div>
-                    <div className="text-sm sm:text-base font-bold text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
+                  <UniversalText variant="caption" className="text-indigo-600 font-bold hidden sm:block" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
+                    Active User:
+                  </UniversalText>
+                  <UniversalText variant="body" className="font-bold text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
                     {user?.email ? user.email.split('@')[0] : 'User'}
-                  </div>
-                  <div className="text-green-400 text-sm font-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>●</div>
+                  </UniversalText>
+                  <UniversalText variant="caption" className="text-green-400 font-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>●</UniversalText>
                 </div>
               </div>
 
               {/* Current Time - 3D Styled */}
               <div className="w-auto sm:w-full h-10 sm:h-12 flex items-center justify-center space-x-1 sm:space-x-2 bg-gray-900/80 border-2 border-orange-400 rounded-xl shadow-lg hover:shadow-orange-400/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 ml-0 mr-1">
                 <span className="text-white text-xl" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>🕒</span>
-                <span className="text-white font-mono font-bold text-base" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
+                <UniversalText variant="body" className="text-white font-mono font-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)' }}>
                   {formatTime(currentTime)}
-                </span>
+                </UniversalText>
               </div>
             </div>
             
@@ -273,10 +278,10 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
                   <span className="text-xl">
                     {language === 'english' ? '🇺🇸' : language === 'roman_urdu' ? '🇵🇰' : '🇵🇰'}
                   </span>
-                  <span className="hidden lg:inline text-base">
+                  <UniversalText variant="body" className="hidden lg:inline">
                     {language === 'english' ? 'English' : language === 'roman_urdu' ? 'Roman Urdu' : 'اردو'}
-                  </span>
-                  <span className="text-base">▼</span>
+                  </UniversalText>
+                  <UniversalText variant="body">▼</UniversalText>
                 </button>
                 
                 {/* Dropdown Menu */}
@@ -316,40 +321,43 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
               </div>
 
               {/* Contact Button */}
-              <button
+              <UniversalButton
                 onClick={() => setShowContact(!showContact)}
-                className="w-32 h-12 bg-gray-900/80 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-green-400/50 border-2 border-green-400 hover:-translate-y-1 flex items-center justify-center ml-1"
+                variant="success"
+                className="w-32 h-12 bg-gray-900/80 border-2 border-green-400 hover:shadow-green-400/50 hover:-translate-y-1 ml-1"
                 style={{
                   textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)',
                   WebkitTextStroke: '0.5px rgba(0,0,0,0.3)'
                 }}
               >
                 📞 {translate('Contact')}
-              </button>
+              </UniversalButton>
 
               {/* Services Button */}
-              <button
+              <UniversalButton
                 onClick={() => setShowServices(!showServices)}
-                className="w-32 h-12 bg-gray-900/80 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-purple-400/50 border-2 border-purple-400 hover:-translate-y-1 flex items-center justify-center ml-1"
+                variant="secondary"
+                className="w-32 h-12 bg-gray-900/80 border-2 border-purple-400 hover:shadow-purple-400/50 hover:-translate-y-1 ml-1"
                 style={{
                   textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)',
                   WebkitTextStroke: '0.5px rgba(0,0,0,0.3)'
                 }}
               >
                 🛠️ {translate('Services')}
-              </button>
+              </UniversalButton>
 
               {/* Logout Button */}
-              <button
+              <UniversalButton
                 onClick={onLogout}
-                className="w-32 h-12 bg-gray-900/80 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-red-400/50 border-2 border-red-400 hover:-translate-y-1 flex items-center justify-center ml-1"
+                variant="danger"
+                className="w-32 h-12 bg-gray-900/80 border-2 border-red-400 hover:shadow-red-400/50 hover:-translate-y-1 ml-1"
                 style={{
                   textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.1)',
                   WebkitTextStroke: '0.5px rgba(0,0,0,0.3)'
                 }}
               >
                 {translate('Logout')}
-              </button>
+              </UniversalButton>
             </div>
           </div>
         </nav>
@@ -364,7 +372,7 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
           className="fixed top-32 left-1/2 transform -translate-x-1/2 z-50 bg-gray-900/95 backdrop-blur-xl border border-gray-700/50 rounded-2xl shadow-2xl p-8 min-w-96 max-w-2xl"
         >
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-semibold text-white">🏢 About Us</h3>
+            <UniversalText variant="h3" className="text-white">🏢 About Us</UniversalText>
             <button
               onClick={() => setShowAboutUs(false)}
               className="text-gray-400 hover:text-white transition-colors duration-200"
@@ -380,63 +388,63 @@ const CleanNavbar = ({ user, onLogout, openSECPARS }) => {
             
             <div className="space-y-4">
               <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-600/30">
-                <h5 className="text-lg font-semibold text-blue-400 mb-2">🎯 Our Mission</h5>
-                <p className="text-sm leading-relaxed">
+                <UniversalText variant="h4" className="text-blue-400 mb-2">🎯 Our Mission</UniversalText>
+                <UniversalText variant="caption" className="leading-relaxed">
                   To revolutionize energy management in Pakistani households through cutting-edge AI technology, 
                   helping families save money while contributing to a sustainable future.
-                </p>
+                </UniversalText>
               </div>
               
               <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-600/30">
-                <h5 className="text-lg font-semibold text-green-400 mb-2">🚀 What We Provide</h5>
-                <ul className="text-sm space-y-2">
-                  <li className="flex items-start">
+                <UniversalText variant="h4" className="text-green-400 mb-2">🚀 What We Provide</UniversalText>
+                <div className="space-y-2">
+                  <div className="flex items-start">
                     <span className="text-green-400 mr-2">•</span>
-                    <span><strong>AI Energy Predictions:</strong> 16 advanced ML models for accurate consumption forecasting</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption"><strong>AI Energy Predictions:</strong> 16 advanced ML models for accurate consumption forecasting</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-green-400 mr-2">•</span>
-                    <span><strong>Smart Bill Analysis:</strong> OCR-powered bill scanning and data extraction</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption"><strong>Smart Bill Analysis:</strong> OCR-powered bill scanning and data extraction</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-green-400 mr-2">•</span>
-                    <span><strong>Appliance Optimization:</strong> Efficiency analysis and smart recommendations</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption"><strong>Appliance Optimization:</strong> Efficiency analysis and smart recommendations</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-green-400 mr-2">•</span>
-                    <span><strong>LESCO Integration:</strong> Pakistan-specific rates and slab optimization</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption"><strong>LESCO Integration:</strong> Pakistan-specific rates and slab optimization</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-green-400 mr-2">•</span>
-                    <span><strong>House Comparison:</strong> Benchmark your usage against similar households</span>
-                  </li>
-                </ul>
+                    <UniversalText variant="caption"><strong>House Comparison:</strong> Benchmark your usage against similar households</UniversalText>
+                  </div>
+                </div>
               </div>
               
               <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-600/30">
-                <h5 className="text-lg font-semibold text-purple-400 mb-2">💡 How It Helps You</h5>
-                <ul className="text-sm space-y-2">
-                  <li className="flex items-start">
+                <UniversalText variant="h4" className="text-purple-400 mb-2">💡 How It Helps You</UniversalText>
+                <div className="space-y-2">
+                  <div className="flex items-start">
                     <span className="text-purple-400 mr-2">•</span>
-                    <span>Reduce electricity bills by up to 30%</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption">Reduce electricity bills by up to 30%</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-purple-400 mr-2">•</span>
-                    <span>Understand your energy consumption patterns</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption">Understand your energy consumption patterns</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-purple-400 mr-2">•</span>
-                    <span>Get personalized energy-saving recommendations</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption">Get personalized energy-saving recommendations</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-purple-400 mr-2">•</span>
-                    <span>Optimize appliance usage for cost efficiency</span>
-                  </li>
-                  <li className="flex items-start">
+                    <UniversalText variant="caption">Optimize appliance usage for cost efficiency</UniversalText>
+                  </div>
+                  <div className="flex items-start">
                     <span className="text-purple-400 mr-2">•</span>
-                    <span>Plan your energy consumption strategically</span>
-                  </li>
-                </ul>
+                    <UniversalText variant="caption">Plan your energy consumption strategically</UniversalText>
+                  </div>
+                </div>
               </div>
               
               <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-600/30">
