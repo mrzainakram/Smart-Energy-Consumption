@@ -48,13 +48,6 @@ st.markdown("""
         border-left: 4px solid #667eea;
     }
     .endpoint {
-        background: white;
-        padding: 1rem;
-        border-radius: 5px;
-        border: 1px solid #e9ecef;
-        margin: 0.5rem 0;
-    }
-    .method {
         display: inline-block;
         padding: 0.25rem 0.5rem;
         border-radius: 3px;
