@@ -110,7 +110,7 @@ body {
     
     /* Overall App Background to Dark Black */
     .stApp {
-        background-color: #1a1a1a !important; /* Dark black background */
+        /* background-color: #1a1a1a !important; /* Dark black background */
     }
 
     /* Sidebar Background - Default Dark Gray */
