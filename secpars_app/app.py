@@ -243,6 +243,11 @@ body {
         color: #000000 !important; /* Black text inside input fields */
     }
 
+    /* Streamlit Chat Input Text */
+    .stApp [data-testid="stForm"] input[type="text"] {
+        color: #000000 !important; /* Black text for the chat input field */
+    }
+
     /* Override for elements that should maintain their specific color/gradient */
     .title-main, 
     .subtitle-main, 
