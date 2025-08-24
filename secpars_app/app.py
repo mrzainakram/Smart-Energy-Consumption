@@ -450,7 +450,7 @@ body {
         }
     }
     
-    /* Navbar button text - Dual Mode */
+    /* Navbar button text - Both Modes */
     .css-1d391kg .stButton > button {
         color: #ffffff !important;
         background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
@@ -461,9 +461,70 @@ body {
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
-    /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
+    /* --- START NEW ROBUST CSS FOR SIDEBAR & CHAT HEADER --- */
+    
+    /* Sidebar Text (General) - Dark Mode */
+    .css-1d391kg .stMarkdown, 
+    .css-1d391kg p, 
+    .css-1d391kg span, 
+    .css-1d391kg div:not([data-testid^="stExpander"]), 
+    .css-1d391kg label {
+        color: #ffffff !important;
+        font-weight: 600 !important; /* Slightly bold for dark mode */
+    }
+    
+    /* Sidebar Text (General) - Light Mode */
+    @media (prefers-color-scheme: light) {
+        .css-1d391kg .stMarkdown, 
+        .css-1d391kg p, 
+        .css-1d391kg span, 
+        .css-1d391kg div:not([data-testid^="stExpander"]), 
+        .css-1d391kg label {
+            color: #000000 !important;
+            font-weight: 700 !important; /* Bold for light mode */
+        }
+    }
+    
+    /* Sidebar Headers (h1, h2, h3, subheader) - Dark Mode */
+    .css-1d391kg h1, 
+    .css-1d391kg h2, 
+    .css-1d391kg h3, 
+    .css-1d391kg .stSubheader {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Sidebar Headers (h1, h2, h3, subheader) - Light Mode */
+    @media (prefers-color-scheme: light) {
+        .css-1d391kg h1, 
+        .css-1d391kg h2, 
+        .css-1d391kg h3, 
+        .css-1d391kg .stSubheader {
+            color: #1f2937 !important;
+            font-weight: 800 !important;
+        }
+    }
+    
+    /* Sidebar Selectbox Text - Dark Mode */
+    .css-1d391kg .stSelectbox > div > div > div {
+        color: #ffffff !important;
+        background-color: #374151 !important;
+        border: 2px solid #ff8c00 !important;
+    }
+    
+    /* Sidebar Selectbox Text - Light Mode */
+    @media (prefers-color-scheme: light) {
+        .css-1d391kg .stSelectbox > div > div > div {
+            color: #000000 !important;
+            background-color: #ffffff !important;
+            border: 2px solid #ff8c00 !important;
+        }
+    }
+    
+    /* Project Information Bar - BOLD BLACK TEXT (Original Request) */
+    /* This specific rule will make the expander button text black on orange */
     .stExpander > div > div > div > div {
-        color: #000000 !important;
+        color: #000000 !important; /* Force black text */
         background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
         border: none !important;
         border-radius: 12px !important;
@@ -473,6 +534,39 @@ body {
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
         text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
     }
+    
+    /* Chat with SECPARS Header - EXACT TITLE STYLE & COLOR */
+    .stMarkdown h3:contains("Chat with SECPARS"),
+    .stMarkdown h4:contains("Chat with SECPARS") {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 4.5rem !important;
+        font-weight: 900 !important;
+        color: #ff8c00 !important;
+        -webkit-text-fill-color: #ff8c00 !important;
+        background: none !important;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
+        text-align: center !important;
+        margin: 2rem 0 !important;
+        letter-spacing: 2px !important;
+        position: relative !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Chat with SECPARS Underline */
+    .stMarkdown h3:contains("Chat with SECPARS")::after,
+    .stMarkdown h4:contains("Chat with SECPARS")::after {
+        content: '' !important;
+        position: absolute !important;
+        bottom: -5px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 80% !important;
+        height: 3px !important;
+        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
+        border-radius: 2px !important;
+    }
+    
+    /* --- END NEW ROBUST CSS --- */
     
     /* Light Mode Bar Text */
     @media (prefers-color-scheme: light) {
