@@ -81,7 +81,7 @@ body {
 
 .title-main {
     font-family: 'Poppins', sans-serif;
-    font-size: 4rem; /* Slightly reduced font size */
+    font-size: 3.8rem; /* Slightly reduced font size */
     font-weight: 900;
     color: #ffffff;
     margin-bottom: 1rem;
