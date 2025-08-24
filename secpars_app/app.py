@@ -21,12 +21,19 @@ if hasattr(st, 'secrets'):
     # Set environment variables from Streamlit secrets
     if 'GEMINI_API_KEY' in st.secrets:
         os.environ['GEMINI_API_KEY'] = st.secrets['GEMINI_API_KEY']
+        st.success("✅ GEMINI_API_KEY loaded from Streamlit secrets")
     if 'OPENAI_API_KEY' in st.secrets:
         os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+        st.success("✅ OPENAI_API_KEY loaded from Streamlit secrets")
     if 'PROJECT_DATA_DIR' in st.secrets:
         os.environ['PROJECT_DATA_DIR'] = st.secrets['PROJECT_DATA_DIR']
     if 'CHROMA_DIR' in st.secrets:
         os.environ['CHROMA_DIR'] = st.secrets['CHROMA_DIR']
+    
+    # Debug: Show what's in secrets
+    st.info(f"🔐 Streamlit Secrets Available: {list(st.secrets.keys())}")
+else:
+    st.warning("⚠️ Streamlit secrets not available (running locally)")
 
 # Clean Native Streamlit SECPARS Interface
 st.markdown("""
@@ -601,6 +608,33 @@ if user_q:
         try:
             # Debug: Show current environment status
             st.info(f"🔍 Debug Info: GEMINI_API_KEY={'set' if os.getenv('GEMINI_API_KEY') else 'missing'}, OPENAI_API_KEY={'set' if os.getenv('OPENAI_API_KEY') else 'missing'}")
+            
+            # Debug: Show API key values (first few characters)
+            gemini_key = os.getenv('GEMINI_API_KEY', '')
+            openai_key = os.getenv('OPENAI_API_KEY', '')
+            st.info(f"🔑 API Key Details: GEMINI={gemini_key[:10]}..., OPENAI={openai_key[:10]}...")
+            
+            # Test API connection directly
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=gemini_key)
+                model = genai.GenerativeModel('gemini-2.0-flash')
+                test_response = model.generate_content("Hello, test message")
+                st.success(f"✅ Gemini API Test: {test_response.text[:50]}...")
+            except Exception as api_error:
+                st.error(f"❌ Gemini API Test Failed: {str(api_error)}")
+            
+            # Test OpenAI API connection
+            try:
+                from openai import OpenAI
+                client = OpenAI(api_key=openai_key)
+                test_response = client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[{"role": "user", "content": "Hello, test message"}]
+                )
+                st.success(f"✅ OpenAI API Test: {test_response.choices[0].message.content[:50]}...")
+            except Exception as api_error:
+                st.error(f"❌ OpenAI API Test Failed: {str(api_error)}")
             
             # Detect if query is project-related
             project_keywords = [
