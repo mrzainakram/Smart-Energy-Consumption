@@ -274,15 +274,32 @@ body {
     .stMarkdown h4 {
         /* Yellow title format like main title */
         font-family: 'Poppins', sans-serif !important;
-        font-size: 2.5rem !important;
+        font-size: 4.5rem !important;
         font-weight: 900 !important;
         color: #ff8c00 !important;
         -webkit-text-fill-color: #ff8c00 !important;
         background: none !important;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
         text-align: center !important;
-        margin: 1.5rem 0 !important;
-        letter-spacing: 1px !important;
+        margin: 2rem 0 !important;
+        letter-spacing: 2px !important;
+        position: relative !important;
+    }
+    
+    /* Chat with SECPARS underline like main title */
+    .stMarkdown h3:contains("Chat with SECPARS")::after,
+    .stMarkdown h4:contains("Chat with SECPARS")::after,
+    .stMarkdown h3::after,
+    .stMarkdown h4::after {
+        content: '' !important;
+        position: absolute !important;
+        bottom: -5px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 80% !important;
+        height: 3px !important;
+        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
+        border-radius: 2px !important;
     }
     
     /* Light Mode Chat Header Override */
@@ -293,7 +310,40 @@ body {
         .stMarkdown h4 {
             color: #ff8c00 !important;
             -webkit-text-fill-color: #ff8c00 !important;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
+        }
+    }
+    
+    /* NAVBAR TEXT - WHITE IN DARK MODE */
+    .css-1d391kg .stMarkdown,
+    .css-1d391kg h1,
+    .css-1d391kg h2,
+    .css-1d391kg h3,
+    .css-1d391kg p,
+    .css-1d391kg .stCaption,
+    .css-1d391kg .stSubheader {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+    
+    /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
+    .stExpander > div > div > div > div {
+        color: #000000 !important;
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 1rem !important;
+        font-weight: 900 !important;
+        font-size: 1.2rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
+    }
+    
+    /* Light Mode Bar Text */
+    @media (prefers-color-scheme: light) {
+        .stExpander > div > div > div > div {
+            color: #000000 !important;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8) !important;
         }
     }
     
