@@ -1,7 +1,7 @@
 {
   "name": "smart-energy-consumption",
   "version": "1.0.0",
-  "description": "Smart Energy Consumption Frontend",
+  "description": "Smart Energy Consumption Frontend - FIXED INFINITE LOOP",
   "scripts": {
     "build": "cd frontend && npm run build",
     "start": "cd frontend && npm start",
