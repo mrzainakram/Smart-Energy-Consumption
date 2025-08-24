@@ -480,26 +480,11 @@ body {
         font-size: 24px !important;
     }
 
-    @media (prefers-color-scheme: light) {
-        .stSidebar .st-emotion-cache-nahz7x,
-        .stSidebar .st-emotion-cache-1cpx4v7
-        {
-            color: #000000 !important;
-        }
-    }
-
     /* Selectbox Labels (LLM Provider Preference, Language) */
     .stSidebar .st-emotion-cache-1s4n6e9 > label /* Targets label text for selectbox */
     {
         color: #ffffff !important;
         font-weight: bold !important;
-    }
-
-    @media (prefers-color-scheme: light) {
-        .stSidebar .st-emotion-cache-1s4n6e9 > label
-        {
-            color: #000000 !important;
-        }
     }
 
     /* Selectbox Values (auto, auto) */
@@ -510,26 +495,11 @@ body {
         border: 1px solid #ff8c00 !important;
     }
 
-    @media (prefers-color-scheme: light) {
-        .stSidebar .st-emotion-cache-192z83 > div > div > div
-        {
-            color: #000000 !important;
-            background-color: #ffffff !important;
-        }
-    }
-
     /* Caption Text (Project data, Chroma DB, API keys) */
     .stSidebar .st-emotion-cache-10q7j36 /* Targets st.caption text */
     {
         color: #ffffff !important;
         font-weight: bold !important;
-    }
-
-    @media (prefers-color-scheme: light) {
-        .stSidebar .st-emotion-cache-10q7j36
-        {
-            color: #000000 !important;
-        }
     }
 
     /* Re-ingest button */
@@ -571,8 +541,6 @@ body {
         background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
         border-radius: 2px !important;
     }
-
-    /* --- END NEW, ROBUST CSS --- */
     
     /* Force All Headers Visibility - REMOVE CUSTOM */
     h3, h4 {
@@ -748,6 +716,61 @@ body {
         font-weight: 600;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
+
+    /* Project Information Bar - BOLD BLACK TEXT (Original Request) */
+    /* This specific rule will make the expander button text black on orange */
+    .stExpander > div > div > div > div {
+        color: #000000 !important; /* Force black text */
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 1rem !important;
+        font-weight: 900 !important;
+        font-size: 1.2rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
+    }
+
+    /* Light Mode Bar Text */
+    @media (prefers-color-scheme: light) {
+        .stExpander > div > div > div > div {
+            color: #000000 !important;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8) !important;
+        }
+    }
+    
+    /* Chat with SECPARS Header */
+    .stMarkdown h3:contains("Chat with SECPARS"),
+    .stMarkdown h4:contains("Chat with SECPARS")
+    {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 4.5rem !important;
+        font-weight: 900 !important;
+        color: #ff8c00 !important;
+        -webkit-text-fill-color: #ff8c00 !important;
+        background: none !important;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
+        text-align: center !important;
+        margin: 2rem 0 !important;
+        letter-spacing: 2px !important;
+        position: relative !important;
+        line-height: 1.2 !important;
+    }
+
+    .stMarkdown h3:contains("Chat with SECPARS")::after,
+    .stMarkdown h4:contains("Chat with SECPARS")::after
+    {
+        content: '' !important;
+        position: absolute !important;
+        bottom: -5px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 80% !important;
+        height: 3px !important;
+        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
+        border-radius: 2px !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
