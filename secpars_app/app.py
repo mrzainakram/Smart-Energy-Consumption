@@ -81,7 +81,7 @@ body {
 
 .title-main {
     font-family: 'Poppins', sans-serif;
-    font-size: 4.5rem;
+    font-size: 4rem; /* Slightly reduced font size */
     font-weight: 900;
     color: #ffffff;
     margin-bottom: 1rem;
@@ -94,20 +94,25 @@ body {
     position: relative;
 }
 
-    .title-main::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80%;
-        height: 3px;
-        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
-        border-radius: 2px;
-    }
+.title-main::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
+    border-radius: 2px;
+}
 
     /* --- NEW, TARGETED CSS FOR SIDEBAR & CHAT HEADER --- */
     
+    /* Overall App Background to Dark Black */
+    .stApp {
+        background-color: #1a1a1a !important; /* Dark black background */
+    }
+
     /* Sidebar Background - Default Dark Gray */
     .stSidebar {
         background-color: #262730; /* Streamlit's default dark mode sidebar color */
@@ -179,15 +184,15 @@ body {
     .stMarkdown h3:contains("Chat with SECPARS")::after,
     .stMarkdown h4:contains("Chat with SECPARS")::after
     {
-        content: '' !important;
-        position: absolute !important;
-        bottom: -5px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 80% !important;
-        height: 3px !important;
-        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
-        border-radius: 2px !important;
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 3px;
+        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
+        border-radius: 2px;
     }
 
     /* Subtitle Styling */
@@ -230,6 +235,12 @@ body {
     .stApp h6 {
         color: #ffffff !important;
         font-weight: 800 !important; /* Extra bold */
+    }
+
+    /* Input Fields Text Color */
+    .stTextInput > div > div > input, 
+    .stTextInput > div > div > textarea {
+        color: #000000 !important; /* Black text inside input fields */
     }
 
     /* Override for elements that should maintain their specific color/gradient */
@@ -307,7 +318,7 @@ st.markdown("""
     
     /* Button text visibility */
     .stButton > button {
-        color: #ffffff !important;
+    color: #ffffff !important;
         background-color: #667eea !important;
         border: 1px solid #5a67d8 !important;
     }
@@ -335,7 +346,7 @@ st.markdown("""
     .stSubheader {
         color: #374151 !important;
         font-weight: 600 !important;
-    }
+}
 </style>
 """, unsafe_allow_html=True)
 
