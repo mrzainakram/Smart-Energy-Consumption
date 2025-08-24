@@ -225,6 +225,97 @@ body {
         color: #e5e7eb !important;
     }
     
+    /* LIGHT MODE TITLE VISIBILITY */
+    .title-main {
+        color: #1f2937 !important;
+        -webkit-text-fill-color: #1f2937 !important;
+        background: none !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* LIGHT MODE SUBTITLE VISIBILITY */
+    .subtitle-main {
+        color: #374151 !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* LIGHT MODE CAPTION VISIBILITY */
+    .caption-main {
+        color: #6b7280 !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* CHAT WITH SECPARS HEADER - BOTH MODES */
+    .chat-header, .chat-section h3, .chat-section h4 {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        margin: 1rem 0 !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+    }
+    
+    /* LIGHT MODE CHAT HEADER OVERRIDE */
+    @media (prefers-color-scheme: light) {
+        .chat-header, .chat-section h3, .chat-section h4 {
+            color: #1f2937 !important;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+            border: 2px solid #d1d5db !important;
+            text-shadow: none !important;
+        }
+    }
+    
+    /* SPECIFIC CHAT WITH SECPARS STYLING */
+    /* Dark Mode */
+    .stMarkdown h3:contains("Chat with SECPARS"),
+    .stMarkdown h4:contains("Chat with SECPARS"),
+    .stMarkdown h3,
+    .stMarkdown h4 {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        margin: 1rem 0 !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        display: block !important;
+    }
+    
+    /* Light Mode Override */
+    @media (prefers-color-scheme: light) {
+        .stMarkdown h3:contains("Chat with SECPARS"),
+        .stMarkdown h4:contains("Chat with SECPARS"),
+        .stMarkdown h3,
+        .stMarkdown h4 {
+            color: #1f2937 !important;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+            border: 2px solid #d1d5db !important;
+            text-shadow: none !important;
+        }
+    }
+    
+    /* Force All Headers Visibility */
+    h3, h4 {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        margin: 1rem 0 !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+    }
+    
+    /* Light Mode Header Override */
+    @media (prefers-color-scheme: light) {
+        h3, h4 {
+            color: #1f2937 !important;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+            border: 2px solid #d1d5db !important;
+            text-shadow: none !important;
+        }
+    }
+    
     /* Universal Text Visibility (Both Modes) */
     .stMarkdown, .stText {
         color: inherit !important;
