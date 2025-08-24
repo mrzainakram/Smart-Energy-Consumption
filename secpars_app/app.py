@@ -372,35 +372,53 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Initialize state BEFORE using in sidebar
+# Initialize session state
 if "vs" not in st.session_state:
     st.session_state["vs"] = build_or_load_vectorstore()
+
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
-        {"role": "assistant", "content": "Hello! 👋 I'm your AI Smart Energy Assistant, here to help you understand and optimize your energy consumption. \n\nFeel free to ask me anything about SECPARS, energy predictions, bill scanning, recommendations, or general energy-related topics. \n\nHow can I assist you today?"}
+        {"role": "assistant", "content": "Hello! 👋 I'm your AI Smart Energy Assistant. How can I help you today?"}
     ]
-if "welcomed" not in st.session_state:
-    st.session_state["welcomed"] = False
 
 # Clean Native Sidebar
 with st.sidebar:
-    st.markdown('<div class="sidebar-modern">', unsafe_allow_html=True)
-    st.markdown("### ⚙️ Configuration")
-    prefer = st.selectbox("LLM Provider Preference", ["auto", "gemini", "openai"], index=0)
-    language = st.selectbox("Language", ["auto (English)", "en (English)", "ur (Urdu)", "roman-ur (Roman Urdu)"], index=0)
-    lang_code = "en" if language.startswith("auto") else language.split(" ")[0]
+    st.title("🔧 Configuration")
+    
+    # LLM Provider Preference
+    prefer = st.selectbox(
+        "LLM Provider Preference",
+        ["auto", "gemini", "openai"],
+        help="Choose your preferred AI model"
+    )
+    
+    # Language Selection
+    lang_code = st.selectbox(
+        "Language",
+        ["auto", "en", "ur"],
+        help="Choose your preferred language"
+    )
     
     st.markdown("---")
-    st.markdown("### 🔧 System Status")
-    st.write(f"Project data: `{PROJECT_DATA_DIR}`")
-    st.write(f"Chroma DB: `{CHROMA_DIR}`")
+    
+    # System Status
+    st.subheader("📊 System Status")
+    
+    # Project data path
+    st.caption(f"Project data: {PROJECT_DATA_DIR}")
+    
+    # Chroma DB path
+    st.caption(f"Chroma DB: {CHROMA_DIR}")
+    
+    # API Key Status
     st.caption(f"GEMINI_API_KEY: {'set' if os.getenv('GEMINI_API_KEY') else 'missing'}")
     st.caption(f"OPENAI_API_KEY: {'set' if os.getenv('OPENAI_API_KEY') else 'missing'}")
-    if st.button("🔄 Re-ingest project_data/ now"):
-        with st.spinner("Rebuilding vector store..."):
-            ingest_directory_into_store(st.session_state["vs"], PROJECT_DATA_DIR)
-        st.success("Re-ingested project data.")
-    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Re-ingest button
+    if st.button("Re-ingest project_data/now"):
+        with st.spinner("Re-ingesting project data..."):
+            st.session_state["vs"] = build_or_load_vectorstore()
+        st.success("✅ Project data re-ingested!")
 
 # Project Information (Hidden by default - Click to expand)
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
@@ -449,17 +467,6 @@ st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">💬 Chat with SECPARS</div>', unsafe_allow_html=True)
 
 
-
-if not st.session_state["welcomed"]:
-    hour = datetime.now().hour
-    greet = "Good morning" if hour < 12 else ("Good afternoon" if hour < 18 else "Good evening")
-    
-    # Then show greeting
-    with st.chat_message("assistant"):
-        st.markdown(f"🎉 **Welcome to SECPARS!** I'm your AI-powered energy management assistant, designed specifically for Pakistani households! 🇵🇰\n\n**🚀 What I Can Do For You:**\n\n**📊 Energy Predictions:**\n• Predict your monthly energy consumption using 16 advanced ML models\n• Identify peak usage times and seasonal patterns\n• Calculate future bills based on LESCO 2025 rates\n• Detect unusual energy usage patterns\n\n**📷 Bill Analysis:**\n• Scan and analyze your electricity, gas, and water bills\n• Extract meter readings, consumption units, and amounts\n• Provide detailed breakdowns and insights\n• Track your consumption history\n\n**🤖 Smart Recommendations:**\n• Personalized energy-saving tips based on your usage\n• Optimal appliance usage schedules\n• Cost reduction strategies\n• Appliance efficiency ratings\n\n**🏠 Comparative Analytics:**\n• Compare your usage with similar households\n• Benchmark your energy efficiency\n• Track your progress over time\n• Regional consumption insights\n\n**💡 How to Get Started:**\n• **Ask about features**: \"What can you do?\" or \"Tell me about SECPARS\"\n• **Energy predictions**: \"How much energy will I use next month?\"\n• **Bill analysis**: \"How do I analyze my electricity bill?\"\n• **Saving tips**: \"How can I reduce my energy bill?\"\n• **Technical details**: \"How does your prediction system work?\"\n\n**🎯 I'm here to help you understand, optimize, and save on your energy consumption! Just ask me anything about SECPARS or energy management!** 💪✨")
-    
-    st.session_state["messages"].append({"role":"assistant","content":f"🎉 Welcome to SECPARS! I'm your AI-powered energy management assistant for Pakistani households! I can help with energy predictions, bill analysis, smart recommendations, and much more. Just ask me anything about SECPARS or energy management!"})
-    st.session_state["welcomed"] = True
 
 for m in st.session_state["messages"]:
     with st.chat_message(m["role"]):
