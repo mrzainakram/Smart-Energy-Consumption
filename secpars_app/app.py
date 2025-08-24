@@ -134,7 +134,7 @@ body {
 
     /* Selectbox values should have a dark background and orange border */
     .stSidebar .st-emotion-cache-192z83 > div > div > div {
-        background-color: #333333 !important; /* Darker grey for contrast */
+        background-color: #000000 !important; /* Black background for selectbox */
         border: 1px solid #ff8c00 !important; /* Orange border */
     }
 
