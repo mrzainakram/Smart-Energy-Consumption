@@ -147,28 +147,6 @@ ML_MODELS_CONFIG = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email Configuration (Real Gmail SMTP)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-# Check if .env file exists and has email credentials
-import os
-env_file = os.path.join(BASE_DIR, '.env')
-if os.path.exists(env_file):
-    # Load from .env file if it exists
-    EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-    DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='Smart Energy AI <noreply@smartenergy.ai>')
-else:
-    # Console fallback - OTP will be shown in terminal
-    EMAIL_HOST_USER = ''
-    EMAIL_HOST_PASSWORD = ''
-    DEFAULT_FROM_EMAIL = 'Smart Energy AI <console@smartenergy.ai>'
-    print("📧 Email not configured - OTP will be shown in console only")
-    print("🔧 Create .env file with EMAIL_HOST_USER and EMAIL_HOST_PASSWORD to enable email OTP")
-
 # Google OAuth Configuration
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
