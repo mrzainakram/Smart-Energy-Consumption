@@ -22,11 +22,27 @@ def _ensure_gemini():
     else:
         api_key = os.getenv("GEMINI_API_KEY", "")
         if not api_key:
+            # Try to get from Streamlit secrets as fallback
+            try:
+                import streamlit as st
+                if hasattr(st, 'secrets') and 'GEMINI_API_KEY' in st.secrets:
+                    api_key = st.secrets['GEMINI_API_KEY']
+            except:
+                pass
+        if not api_key:
             raise RuntimeError("GEMINI_API_KEY or GEMINI_API_KEYS not configured")
     genai.configure(api_key=api_key)
 
 def _ensure_openai() -> OpenAI:
     api_key = os.getenv("OPENAI_API_KEY", "")
+    if not api_key:
+        # Try to get from Streamlit secrets as fallback
+        try:
+            import streamlit as st
+            if hasattr(st, 'secrets') and 'OPENAI_API_KEY' in st.secrets:
+                api_key = st.secrets['OPENAI_API_KEY']
+        except:
+            pass
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY not configured")
     return OpenAI(api_key=api_key)

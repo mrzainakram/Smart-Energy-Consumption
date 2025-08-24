@@ -13,7 +13,20 @@ from rag_utils import (
 )
 from llm_providers import answer_text
 
+# Load environment variables from .env (local) or Streamlit secrets (cloud)
 load_dotenv()
+
+# Load Streamlit secrets for cloud deployment
+if hasattr(st, 'secrets'):
+    # Set environment variables from Streamlit secrets
+    if 'GEMINI_API_KEY' in st.secrets:
+        os.environ['GEMINI_API_KEY'] = st.secrets['GEMINI_API_KEY']
+    if 'OPENAI_API_KEY' in st.secrets:
+        os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+    if 'PROJECT_DATA_DIR' in st.secrets:
+        os.environ['PROJECT_DATA_DIR'] = st.secrets['PROJECT_DATA_DIR']
+    if 'CHROMA_DIR' in st.secrets:
+        os.environ['CHROMA_DIR'] = st.secrets['CHROMA_DIR']
 
 # Clean Native Streamlit SECPARS Interface
 st.markdown("""
@@ -586,6 +599,9 @@ if user_q:
 
     with st.chat_message("assistant"):
         try:
+            # Debug: Show current environment status
+            st.info(f"🔍 Debug Info: GEMINI_API_KEY={'set' if os.getenv('GEMINI_API_KEY') else 'missing'}, OPENAI_API_KEY={'set' if os.getenv('OPENAI_API_KEY') else 'missing'}")
+            
             # Detect if query is project-related
             project_keywords = [
                 # Specific energy-related phrases
@@ -689,8 +705,11 @@ if user_q:
             st.session_state["messages"].append({"role":"assistant","content":ans})
             st.markdown(ans)
         except Exception as e: # Corrected indentation
+            st.error(f"❌ Error Details: {str(e)}")
+            st.error(f"❌ Error Type: {type(e).__name__}")
+            import traceback
+            st.code(traceback.format_exc())
             st.session_state["messages"].append({"role":"assistant","content":f"Error: {e}"})
-            st.error(str(e))
 
     # Mark sent to clear input on next render
     st.session_state["_sent_once"] = True
