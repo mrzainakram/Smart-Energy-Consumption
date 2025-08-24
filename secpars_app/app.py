@@ -326,6 +326,112 @@ body {
         font-weight: 600 !important;
     }
     
+    /* HIGHLIGHTED TEXT VISIBILITY - DARK MODE */
+    .stMarkdown strong,
+    .stMarkdown b,
+    .stMarkdown em,
+    .stMarkdown mark,
+    .stMarkdown code,
+    .stMarkdown pre {
+        color: #ffffff !important;
+        background-color: #ff8c00 !important;
+        padding: 2px 6px !important;
+        border-radius: 4px !important;
+        font-weight: bold !important;
+    }
+    
+    /* Light Mode Highlighted Text */
+    @media (prefers-color-scheme: light) {
+        .stMarkdown strong,
+        .stMarkdown b,
+        .stMarkdown em,
+        .stMarkdown mark,
+        .stMarkdown code,
+        .stMarkdown pre {
+            color: #000000 !important;
+            background-color: #ff8c00 !important;
+        }
+    }
+    
+    /* CHAT WITH SECPARS - EXACT TITLE STYLE */
+    .stMarkdown h3:contains("Chat with SECPARS"),
+    .stMarkdown h4:contains("Chat with SECPARS"),
+    .stMarkdown h3,
+    .stMarkdown h4 {
+        /* EXACT same style as main title */
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 4.5rem !important;
+        font-weight: 900 !important;
+        color: #ff8c00 !important;
+        -webkit-text-fill-color: #ff8c00 !important;
+        background: none !important;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
+        text-align: center !important;
+        margin: 2rem 0 !important;
+        letter-spacing: 2px !important;
+        position: relative !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Chat with SECPARS underline EXACT like main title */
+    .stMarkdown h3:contains("Chat with SECPARS")::after,
+    .stMarkdown h4:contains("Chat with SECPARS")::after,
+    .stMarkdown h3::after,
+    .stMarkdown h4::after {
+        content: '' !important;
+        position: absolute !important;
+        bottom: -5px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 80% !important;
+        height: 3px !important;
+        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
+        border-radius: 2px !important;
+    }
+    
+    /* Light Mode Chat Header Override */
+    @media (prefers-color-scheme: light) {
+        .stMarkdown h3:contains("Chat with SECPARS"),
+        .stMarkdown h4:contains("Chat with SECPARS"),
+        .stMarkdown h3,
+        .stMarkdown h4 {
+            color: #ff8c00 !important;
+            -webkit-text-fill-color: #ff8c00 !important;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
+        }
+    }
+    
+    /* FORCE ALL NAVBAR ELEMENTS WHITE */
+    .css-1d391kg * {
+        color: #ffffff !important;
+    }
+    
+    /* Specific navbar elements */
+    .css-1d391kg label,
+    .css-1d391kg .stSelectbox,
+    .css-1d391kg .stTextInput,
+    .css-1d391kg .stButton {
+        color: #ffffff !important;
+    }
+    
+    /* Navbar dropdown text */
+    .css-1d391kg .stSelectbox > div > div > div {
+        color: #ffffff !important;
+        background-color: #374151 !important;
+        border: 2px solid #ff8c00 !important;
+    }
+    
+    /* Navbar button text */
+    .css-1d391kg .stButton > button {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        padding: 0.8rem 1.5rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+    }
+    
     /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
     .stExpander > div > div > div > div {
         color: #000000 !important;
