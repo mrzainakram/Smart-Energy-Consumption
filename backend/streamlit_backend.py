@@ -29,36 +29,508 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Add responsive meta tags
+st.markdown("""
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#667eea">
+""", unsafe_allow_html=True)
+
 # Custom CSS
 st.markdown("""
 <style>
-    .main-header {
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 10px;
-        color: white;
-        text-align: center;
-        margin-bottom: 2rem;
+    /* Responsive Design for All Devices */
+    @media (max-width: 768px) {
+        .main-header h1 { font-size: 2rem !important; }
+        .main-header p { font-size: 1rem !important; }
+        .api-section { padding: 1rem !important; margin: 0.5rem 0 !important; }
+        .endpoint { display: block !important; margin: 0.5rem 0 !important; }
+        .stMetric { min-width: 120px !important; }
     }
+    
+    @media (max-width: 480px) {
+        .main-header h1 { font-size: 1.5rem !important; }
+        .main-header p { font-size: 0.9rem !important; }
+        .api-section { padding: 0.8rem !important; }
+        .endpoint { font-size: 0.7rem !important; }
+        .stMetric { min-width: 100px !important; }
+    }
+    
+    /* Landscape Mode */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .main-header { padding: 1rem !important; margin: 0.5rem 0 !important; }
+        .stSidebar { min-height: 100vh !important; }
+    }
+    
+    /* Touch-Friendly Buttons */
+    .stButton > button {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        padding: 12px 20px !important;
+    }
+    
+    /* Responsive Grid */
+    .stColumns {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .stColumn {
+        flex: 1 1 300px !important;
+        min-width: 300px !important;
+    }
+    
+    /* Mobile-First Layout */
+    .main-container {
+        max-width: 100% !important;
+        padding: 10px !important;
+        margin: 0 !important;
+    }
+    
+    /* Responsive Text */
+    h1, h2, h3, h4, h5, h6 {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Responsive Tables */
+    .stDataFrame {
+        overflow-x: auto !important;
+        max-width: 100% !important;
+    }
+    
+    /* Responsive Images */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Forms */
+    .stTextInput, .stSelectbox, .stTextArea {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Responsive Sidebar */
+    .css-1d391kg {
+        min-width: 250px !important;
+        max-width: 100% !important;
+    }
+    
+    /* Responsive Metrics */
+    .stMetric {
+        text-align: center !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive API Sections */
     .api-section {
-        background: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 8px;
-        margin: 1rem 0;
-        border-left: 4px solid #667eea;
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
     }
+    
+    /* Responsive Endpoints */
     .endpoint {
-        display: inline-block;
-        padding: 0.25rem 0.5rem;
-        border-radius: 3px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        margin-right: 0.5rem;
+        margin: 8px 0 !important;
+        padding: 8px 12px !important;
+        border-radius: 4px !important;
     }
-    .get { background: #d4edda; color: #155724; }
-    .post { background: #cce5ff; color: #004085; }
-    .put { background: #fff3cd; color: #856404; }
-    .delete { background: #f8d7da; color: #721c24; }
+    
+    /* Responsive Headers */
+    .main-header {
+        text-align: center !important;
+        padding: 20px !important;
+        margin: 10px 0 !important;
+        border-radius: 10px !important;
+    }
+    
+    /* Responsive Spacing */
+    .stMarkdown {
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Buttons */
+    .stButton {
+        text-align: center !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Input Fields */
+    .stTextInput > div > div > input {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+    
+    /* Responsive Select Boxes */
+    .stSelectbox > div > div > div {
+        font-size: 16px !important;
+    }
+    
+    /* Responsive Text Areas */
+    .stTextArea > div > div > textarea {
+        font-size: 16px !important;
+        min-height: 100px !important;
+    }
+    
+    /* Responsive Sidebar Navigation */
+    .css-1d391kg .css-1v0mbdj {
+        padding: 10px !important;
+    }
+    
+    /* Responsive Main Content */
+    .main .block-container {
+        padding: 20px !important;
+        max-width: 100% !important;
+    }
+    
+    /* Responsive Footer */
+    .stMarkdown:last-child {
+        text-align: center !important;
+        padding: 20px 0 !important;
+    }
+    
+    /* Responsive Error Messages */
+    .stAlert {
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Responsive Success Messages */
+    .stSuccess {
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Responsive Info Messages */
+    .stInfo {
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Responsive Warning Messages */
+    .stWarning {
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Responsive Error Messages */
+    .stError {
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Responsive Spinners */
+    .stSpinner {
+        text-align: center !important;
+        margin: 20px 0 !important;
+    }
+    
+    /* Responsive Expanders */
+    .streamlit-expanderHeader {
+        font-size: 16px !important;
+        padding: 15px !important;
+    }
+    
+    /* Responsive File Uploaders */
+    .stFileUploader {
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Charts */
+    .stPlotlyChart {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Data Tables */
+    .stDataFrame {
+        font-size: 14px !important;
+    }
+    
+    /* Responsive Code Blocks */
+    .stCodeBlock {
+        font-size: 14px !important;
+        overflow-x: auto !important;
+    }
+    
+    /* Responsive JSON */
+    .stJson {
+        font-size: 12px !important;
+        overflow-x: auto !important;
+    }
+    
+    /* Responsive Markdown */
+    .stMarkdown {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+    }
+    
+    /* Responsive Lists */
+    ul, ol {
+        padding-left: 20px !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Links */
+    a {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Responsive Blockquotes */
+    blockquote {
+        margin: 15px 0 !important;
+        padding: 10px 15px !important;
+        border-left: 4px solid #667eea !important;
+        background: #f8f9fa !important;
+        border-radius: 4px !important;
+    }
+    
+    /* Responsive Code Inline */
+    code {
+        font-size: 14px !important;
+        padding: 2px 6px !important;
+        background: #f1f3f4 !important;
+        border-radius: 3px !important;
+    }
+    
+    /* Responsive Pre Blocks */
+    pre {
+        font-size: 14px !important;
+        padding: 15px !important;
+        background: #f8f9fa !important;
+        border-radius: 8px !important;
+        overflow-x: auto !important;
+    }
+    
+    /* Responsive Tables */
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin: 15px 0 !important;
+    }
+    
+    th, td {
+        padding: 8px 12px !important;
+        text-align: left !important;
+        border-bottom: 1px solid #ddd !important;
+    }
+    
+    th {
+        background-color: #f8f9fa !important;
+        font-weight: bold !important;
+    }
+    
+    /* Responsive Horizontal Rules */
+    hr {
+        margin: 20px 0 !important;
+        border: none !important;
+        border-top: 1px solid #ddd !important;
+    }
+    
+    /* Responsive Images */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 8px !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Videos */
+    video {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 8px !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Audio */
+    audio {
+        width: 100% !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive PDF */
+    .stPDF {
+        width: 100% !important;
+        height: 600px !important;
+    }
+    
+    /* Responsive HTML */
+    .stHTML {
+        width: 100% !important;
+        overflow-x: auto !important;
+    }
+    
+    /* Responsive IFrame */
+    iframe {
+        width: 100% !important;
+        height: 400px !important;
+        border: none !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Responsive Canvas */
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive SVG */
+    svg {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Math */
+    .stMath {
+        font-size: 16px !important;
+        overflow-x: auto !important;
+    }
+    
+    /* Responsive LaTeX */
+    .stLatex {
+        font-size: 16px !important;
+        overflow-x: auto !important;
+    }
+    
+    /* Responsive Plotly */
+    .js-plotly-plot {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Bokeh */
+    .bk-root {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Altair */
+    .vega-embed {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Matplotlib */
+    .matplotlib-figure {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Seaborn */
+    .seaborn-figure {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Responsive Folium */
+    .folium-map {
+        width: 100% !important;
+        height: 400px !important;
+    }
+    
+    /* Responsive PyDeck */
+    .pydeck-container {
+        width: 100% !important;
+        height: 400px !important;
+    }
+    
+    /* Responsive Streamlit Components */
+    .stComponent {
+        width: 100% !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Custom Components */
+    .custom-component {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Navigation */
+    .stNavigation {
+        width: 100% !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Responsive Tabs */
+    .stTabs {
+        width: 100% !important;
+    }
+    
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 0 !important;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        height: 50px !important;
+        white-space: nowrap !important;
+        background-color: transparent !important;
+        border-radius: 4px 4px 0px 0px !important;
+        gap: 0 !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+    
+    /* Responsive Sidebar */
+    .css-1d391kg {
+        background-color: #f0f2f6 !important;
+        padding: 1rem !important;
+    }
+    
+    /* Responsive Main Content */
+    .main .block-container {
+        background-color: #ffffff !important;
+        padding: 2rem !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* Responsive Headers */
+    .main-header {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        padding: 2rem !important;
+        border-radius: 10px !important;
+        color: white !important;
+        text-align: center !important;
+        margin-bottom: 2rem !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* Responsive API Sections */
+    .api-section {
+        background: #f8f9fa !important;
+        padding: 1.5rem !important;
+        border-radius: 8px !important;
+        margin: 1rem 0 !important;
+        border-left: 4px solid #667eea !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* Responsive Endpoints */
+    .endpoint {
+        display: inline-block !important;
+        padding: 0.25rem 0.5rem !important;
+        border-radius: 3px !important;
+        font-size: 0.8rem !important;
+        font-weight: bold !important;
+        margin-right: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .get { background: #d4edda !important; color: #155724 !important; }
+    .post { background: #cce5ff !important; color: #004085 !important; }
+    .put { background: #fff3cd !important; color: #856404 !important; }
+    .delete { background: #f8d7da !important; color: #721c24 !important; }
 </style>
 """, unsafe_allow_html=True)
 
