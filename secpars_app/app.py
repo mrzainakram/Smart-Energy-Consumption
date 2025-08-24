@@ -461,93 +461,89 @@ body {
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
-    /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
-    .stExpander > div > div > div > div {
-        color: #000000 !important;
-        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 1rem !important;
-        font-weight: 900 !important;
-        font-size: 1.2rem !important;
-        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
-        text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
-    }
-    
-    /* --- NEW ROBUST CSS FOR SIDEBAR & CHAT HEADER --- */
-    
-    /* General Sidebar Text - Dark Mode */
-    .css-1d391kg .stMarkdown, 
-    .css-1d391kg p, 
-    .css-1d391kg span, 
-    .css-1d391kg div:not([data-testid^="stExpander"]), 
-    .css-1d391kg label {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-    }
-    
-    /* General Sidebar Text - Light Mode (BOLD) */
+    /* Light Mode Bar Text */
     @media (prefers-color-scheme: light) {
-        .css-1d391kg .stMarkdown, 
-        .css-1d391kg p, 
-        .css-1d391kg span, 
-        .css-1d391kg div:not([data-testid^="stExpander"]), 
-        .css-1d391kg label {
+        .stExpander > div > div > div > div {
             color: #000000 !important;
-            font-weight: 700 !important;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8) !important;
         }
     }
+
+    /* --- NEW, ROBUST CSS FOR SIDEBAR & CHAT HEADER --- */
     
-    /* Sidebar Headers (h1, h2, h3, st.subheader) - Dark Mode */
-    .css-1d391kg h1, 
-    .css-1d391kg h2, 
-    .css-1d391kg h3, 
-    .css-1d391kg .stSubheader {
+    /* Configuration & System Status Headers */
+    .stSidebar .st-emotion-cache-nahz7x, /* Targets st.title "Configuration" */
+    .stSidebar .st-emotion-cache-1cpx4v7 /* Targets st.subheader "📊 System Status" */
+    {
         color: #ffffff !important;
-        font-weight: 800 !important;
+        font-weight: bold !important;
+        font-size: 24px !important;
     }
-    
-    /* Sidebar Headers (h1, h2, h3, st.subheader) - Light Mode */
+
     @media (prefers-color-scheme: light) {
-        .css-1d391kg h1, 
-        .css-1d391kg h2, 
-        .css-1d391kg h3, 
-        .css-1d391kg .stSubheader {
-            color: #1f2937 !important;
-            font-weight: 900 !important;
+        .stSidebar .st-emotion-cache-nahz7x,
+        .stSidebar .st-emotion-cache-1cpx4v7
+        {
+            color: #000000 !important;
         }
     }
-    
-    /* Sidebar Selectbox Text - Dark Mode */
-    .css-1d391kg .stSelectbox > div > div > div {
+
+    /* Selectbox Labels (LLM Provider Preference, Language) */
+    .stSidebar .st-emotion-cache-1s4n6e9 > label /* Targets label text for selectbox */
+    {
         color: #ffffff !important;
-        background-color: #374151 !important;
-        border: 2px solid #ff8c00 !important;
+        font-weight: bold !important;
     }
-    
-    /* Sidebar Selectbox Text - Light Mode */
+
     @media (prefers-color-scheme: light) {
-        .css-1d391kg .stSelectbox > div > div > div {
+        .stSidebar .st-emotion-cache-1s4n6e9 > label
+        {
+            color: #000000 !important;
+        }
+    }
+
+    /* Selectbox Values (auto, auto) */
+    .stSidebar .st-emotion-cache-192z83 > div > div > div /* Targets displayed value in selectbox */
+    {
+        color: #ffffff !important;
+        background-color: #333333 !important;
+        border: 1px solid #ff8c00 !important;
+    }
+
+    @media (prefers-color-scheme: light) {
+        .stSidebar .st-emotion-cache-192z83 > div > div > div
+        {
             color: #000000 !important;
             background-color: #ffffff !important;
-            border: 2px solid #ff8c00 !important;
         }
     }
-    
-    /* Sidebar Button Text - Dual Mode */
-    .css-1d391kg .stButton > button {
+
+    /* Caption Text (Project data, Chroma DB, API keys) */
+    .stSidebar .st-emotion-cache-10q7j36 /* Targets st.caption text */
+    {
+        color: #ffffff !important;
+        font-weight: bold !important;
+    }
+
+    @media (prefers-color-scheme: light) {
+        .stSidebar .st-emotion-cache-10q7j36
+        {
+            color: #000000 !important;
+        }
+    }
+
+    /* Re-ingest button */
+    .stSidebar .st-emotion-cache-v02bni > button /* Targets the Re-ingest button */
+    {
         color: #ffffff !important;
         background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border: none !important;
-        border-radius: 12px !important;
-        font-weight: 700 !important;
-        padding: 0.8rem 1.5rem !important;
-        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+        font-weight: bold !important;
     }
-    
-    /* Chat with SECPARS Header - EXACT TITLE STYLE & COLOR */
+
+    /* Chat with SECPARS Header */
     .stMarkdown h3:contains("Chat with SECPARS"),
-    .stMarkdown h4:contains("Chat with SECPARS") {
+    .stMarkdown h4:contains("Chat with SECPARS")
+    {
         font-family: 'Poppins', sans-serif !important;
         font-size: 4.5rem !important;
         font-weight: 900 !important;
@@ -561,10 +557,10 @@ body {
         position: relative !important;
         line-height: 1.2 !important;
     }
-    
-    /* Chat with SECPARS Underline */
+
     .stMarkdown h3:contains("Chat with SECPARS")::after,
-    .stMarkdown h4:contains("Chat with SECPARS")::after {
+    .stMarkdown h4:contains("Chat with SECPARS")::after
+    {
         content: '' !important;
         position: absolute !important;
         bottom: -5px !important;
@@ -575,16 +571,8 @@ body {
         background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
         border-radius: 2px !important;
     }
-    
-    /* --- END NEW ROBUST CSS --- */
-    
-    /* Light Mode Bar Text */
-    @media (prefers-color-scheme: light) {
-        .stExpander > div > div > div > div {
-            color: #000000 !important;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8) !important;
-        }
-    }
+
+    /* --- END NEW, ROBUST CSS --- */
     
     /* Force All Headers Visibility - REMOVE CUSTOM */
     h3, h4 {
