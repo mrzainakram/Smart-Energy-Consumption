@@ -544,6 +544,42 @@ body {
         color: #ffffff !important;
     }
     
+    /* NUCLEAR OPTION - FORCE ALL SIDEBAR TEXT WHITE */
+    .css-1d391kg,
+    .css-1d391kg *,
+    .css-1d391kg .stMarkdown,
+    .css-1d391kg .stMarkdown *,
+    .css-1d391kg .stCaption,
+    .css-1d391kg .stSubheader,
+    .css-1d391kg p,
+    .css-1d391kg span,
+    .css-1d391kg div,
+    .css-1d391kg label,
+    .css-1d391kg h1,
+    .css-1d391kg h2,
+    .css-1d391kg h3,
+    .css-1d391kg h4,
+    .css-1d391kg h5,
+    .css-1d391kg h6 {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+    
+    /* EXTREME FORCE - OVERRIDE EVERYTHING */
+    .css-1d391kg *,
+    .css-1d391kg * *,
+    .css-1d391kg * * * {
+        color: #ffffff !important;
+    }
+    
+    /* SPECIFIC SYSTEM STATUS FORCE */
+    .css-1d391kg .stCaption,
+    .css-1d391kg .stSubheader {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 16px !important;
+    }
+    
     /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
     .stExpander > div > div > div > div {
         color: #000000 !important;
