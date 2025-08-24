@@ -12,14 +12,50 @@ OPENAI_MODEL_VISION = os.getenv("OPENAI_MODEL_VISION", "gpt-4o-mini")
 # Multi-key rotation support: set GEMINI_API_KEYS=key1,key2,... in env
 _GEMINI_KEYS = [k.strip() for k in os.getenv("GEMINI_API_KEYS", "").split(",") if k.strip()]
 _GEMINI_IDX = 0
+_GEMINI_FAILED_KEYS = set()  # Track failed keys
 
 def _ensure_gemini():
-    global _GEMINI_IDX
-    # Prefer rotating keys if provided; else fallback to single key
+    global _GEMINI_IDX, _GEMINI_FAILED_KEYS
+    
+    # Try rotation keys first
     if _GEMINI_KEYS:
-        api_key = _GEMINI_KEYS[_GEMINI_IDX % len(_GEMINI_KEYS)]
-        _GEMINI_IDX = (_GEMINI_IDX + 1) % max(1, len(_GEMINI_KEYS))
+        # Find next working key
+        attempts = 0
+        while attempts < len(_GEMINI_KEYS):
+            api_key = _GEMINI_KEYS[_GEMINI_IDX % len(_GEMINI_KEYS)]
+            _GEMINI_IDX = (_GEMINI_IDX + 1) % len(_GEMINI_KEYS)
+            
+            if api_key not in _GEMINI_FAILED_KEYS:
+                try:
+                    genai.configure(api_key=api_key)
+                    # Test the key with a simple request
+                    model = genai.GenerativeModel(GEMINI_MODEL)
+                    test_response = model.generate_content("test")
+                    if test_response.text:
+                        return  # Key working, exit function
+                except Exception:
+                    _GEMINI_FAILED_KEYS.add(api_key)
+                    attempts += 1
+                    continue
+            
+            attempts += 1
+        
+        # All rotation keys failed, try single key
+        api_key = os.getenv("GEMINI_API_KEY", "")
+        if not api_key:
+            # Try to get from Streamlit secrets as fallback
+            try:
+                import streamlit as st
+                if hasattr(st, 'secrets') and 'GEMINI_API_KEY' in st.secrets:
+                    api_key = st.secrets['GEMINI_API_KEY']
+            except:
+                pass
+        if not api_key:
+            raise RuntimeError("All Gemini API keys failed. Please check your keys.")
+        
+        genai.configure(api_key=api_key)
     else:
+        # No rotation keys, use single key
         api_key = os.getenv("GEMINI_API_KEY", "")
         if not api_key:
             # Try to get from Streamlit secrets as fallback
@@ -31,7 +67,24 @@ def _ensure_gemini():
                 pass
         if not api_key:
             raise RuntimeError("GEMINI_API_KEY or GEMINI_API_KEYS not configured")
-    genai.configure(api_key=api_key)
+        genai.configure(api_key=api_key)
+
+def _reset_failed_keys():
+    """Reset failed keys list - useful for retry logic"""
+    global _GEMINI_FAILED_KEYS
+    _GEMINI_FAILED_KEYS.clear()
+
+def get_working_gemini_keys():
+    """Get list of working Gemini API keys"""
+    working_keys = []
+    for key in _GEMINI_KEYS:
+        if key not in _GEMINI_FAILED_KEYS:
+            working_keys.append(key)
+    return working_keys
+
+def get_failed_gemini_keys():
+    """Get list of failed Gemini API keys"""
+    return list(_GEMINI_FAILED_KEYS)
 
 def _ensure_openai() -> OpenAI:
     api_key = os.getenv("OPENAI_API_KEY", "")

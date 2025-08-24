@@ -72,3 +72,32 @@ backend/media/
 # Temporary files
 *.tmp
 *.temp
+
+# API Keys and Secrets - NEVER COMMIT THESE!
+*.env
+.env
+.env.local
+.env.production
+.env.development
+**/.env*
+**/secrets.toml
+**/.streamlit/secrets.toml
+secpars_app/.streamlit/secrets.toml
+**/config.toml
+**/credentials.json
+**/service-account.json
+
+# Streamlit specific
+.streamlit/
+**/.streamlit/
+
+# Environment variables
+.env*
+secrets.toml
+config.toml
+
+# API Keys in any format
+*api*key*
+*API*KEY*
+*secret*
+*SECRET*

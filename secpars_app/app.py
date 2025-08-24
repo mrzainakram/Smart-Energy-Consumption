@@ -614,6 +614,12 @@ if user_q:
             openai_key = os.getenv('OPENAI_API_KEY', '')
             st.info(f"🔑 API Key Details: GEMINI={gemini_key[:10]}..., OPENAI={openai_key[:10]}...")
             
+            # Debug: Show rotation keys status
+            from llm_providers import get_working_gemini_keys, get_failed_gemini_keys
+            working_keys = get_working_gemini_keys()
+            failed_keys = get_failed_gemini_keys()
+            st.info(f"🔄 Rotation Keys: Working={len(working_keys)}, Failed={len(failed_keys)}")
+            
             # Test API connection directly
             try:
                 import google.generativeai as genai
