@@ -189,7 +189,7 @@ body {
     
     /* DARK MODE + LIGHT MODE DUAL COMPATIBILITY */
     
-    /* Dark Mode Text Visibility */
+    /* Dark Mode Text Visibility - ORIGINAL STYLING */
     [data-testid="stAppViewContainer"] {
         color: #ffffff !important;
     }
@@ -225,27 +225,27 @@ body {
         color: #e5e7eb !important;
     }
     
-    /* LIGHT MODE TITLE VISIBILITY */
-    .title-main {
-        color: #1f2937 !important;
-        -webkit-text-fill-color: #1f2937 !important;
-        background: none !important;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2) !important;
+    /* LIGHT MODE TITLE VISIBILITY - ONLY YELLOW TITLE FIX */
+    @media (prefers-color-scheme: light) {
+        .title-main {
+            color: #ff8c00 !important;
+            -webkit-text-fill-color: #ff8c00 !important;
+            background: none !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+        }
+        
+        .subtitle-main {
+            color: #ffa500 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        }
+        
+        .caption-main {
+            color: #ff8c00 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        }
     }
     
-    /* LIGHT MODE SUBTITLE VISIBILITY */
-    .subtitle-main {
-        color: #374151 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
-    }
-    
-    /* LIGHT MODE CAPTION VISIBILITY */
-    .caption-main {
-        color: #6b7280 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.2) !important;
-    }
-    
-    /* CHAT WITH SECPARS HEADER - BOTH MODES */
+    /* CHAT WITH SECPARS HEADER - ORIGINAL DARK MODE */
     .chat-header, .chat-section h3, .chat-section h4 {
         color: #ffffff !important;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
@@ -267,7 +267,7 @@ body {
     }
     
     /* SPECIFIC CHAT WITH SECPARS STYLING */
-    /* Dark Mode */
+    /* Dark Mode - ORIGINAL */
     .stMarkdown h3:contains("Chat with SECPARS"),
     .stMarkdown h4:contains("Chat with SECPARS"),
     .stMarkdown h3,
