@@ -8,6 +8,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "comment": "FORCE UPDATE: Latest infinite loop fix - $(date)"
+  ]
 } 
