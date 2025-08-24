@@ -338,7 +338,7 @@ st.markdown("""
     /* Selectbox text visibility */
     .stSelectbox > div > div > div {
         color: #1f2937 !important;
-        background-color: #ffffff !important;
+        background-color: #000000 !important; /* Black background for selectbox input field */
     }
     
     /* Caption text visibility */
