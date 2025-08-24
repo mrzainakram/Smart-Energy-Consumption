@@ -461,19 +461,32 @@ body {
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
-    /* --- START NEW ROBUST CSS FOR SIDEBAR & CHAT HEADER --- */
+    /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
+    .stExpander > div > div > div > div {
+        color: #000000 !important;
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 1rem !important;
+        font-weight: 900 !important;
+        font-size: 1.2rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
+    }
     
-    /* Sidebar Text (General) - Dark Mode */
+    /* --- NEW ROBUST CSS FOR SIDEBAR & CHAT HEADER --- */
+    
+    /* General Sidebar Text - Dark Mode */
     .css-1d391kg .stMarkdown, 
     .css-1d391kg p, 
     .css-1d391kg span, 
     .css-1d391kg div:not([data-testid^="stExpander"]), 
     .css-1d391kg label {
         color: #ffffff !important;
-        font-weight: 600 !important; /* Slightly bold for dark mode */
+        font-weight: 600 !important;
     }
     
-    /* Sidebar Text (General) - Light Mode */
+    /* General Sidebar Text - Light Mode (BOLD) */
     @media (prefers-color-scheme: light) {
         .css-1d391kg .stMarkdown, 
         .css-1d391kg p, 
@@ -481,27 +494,27 @@ body {
         .css-1d391kg div:not([data-testid^="stExpander"]), 
         .css-1d391kg label {
             color: #000000 !important;
-            font-weight: 700 !important; /* Bold for light mode */
+            font-weight: 700 !important;
         }
     }
     
-    /* Sidebar Headers (h1, h2, h3, subheader) - Dark Mode */
+    /* Sidebar Headers (h1, h2, h3, st.subheader) - Dark Mode */
     .css-1d391kg h1, 
     .css-1d391kg h2, 
     .css-1d391kg h3, 
     .css-1d391kg .stSubheader {
         color: #ffffff !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
     }
     
-    /* Sidebar Headers (h1, h2, h3, subheader) - Light Mode */
+    /* Sidebar Headers (h1, h2, h3, st.subheader) - Light Mode */
     @media (prefers-color-scheme: light) {
         .css-1d391kg h1, 
         .css-1d391kg h2, 
         .css-1d391kg h3, 
         .css-1d391kg .stSubheader {
             color: #1f2937 !important;
-            font-weight: 800 !important;
+            font-weight: 900 !important;
         }
     }
     
@@ -521,18 +534,15 @@ body {
         }
     }
     
-    /* Project Information Bar - BOLD BLACK TEXT (Original Request) */
-    /* This specific rule will make the expander button text black on orange */
-    .stExpander > div > div > div > div {
-        color: #000000 !important; /* Force black text */
+    /* Sidebar Button Text - Dual Mode */
+    .css-1d391kg .stButton > button {
+        color: #ffffff !important;
         background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
         border: none !important;
         border-radius: 12px !important;
-        padding: 1rem !important;
-        font-weight: 900 !important;
-        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        padding: 0.8rem 1.5rem !important;
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
-        text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
     }
     
     /* Chat with SECPARS Header - EXACT TITLE STYLE & COLOR */
