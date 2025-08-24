@@ -17,8 +17,9 @@ def _ensure_gemini():
             import streamlit as st
             if hasattr(st, 'secrets') and 'GEMINI_API_KEY' in st.secrets:
                 api_key = st.secrets['GEMINI_API_KEY']
-        except:
-            pass
+        except Exception:
+            pass # Suppress import error if streamlit is not available or other error
+
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY not configured")
     genai.configure(api_key=api_key)
