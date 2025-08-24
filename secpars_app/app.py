@@ -245,73 +245,75 @@ body {
         }
     }
     
-    /* CHAT WITH SECPARS HEADER - ORIGINAL DARK MODE */
+    /* CHAT WITH SECPARS HEADER - ORIGINAL STYLING */
     .chat-header, .chat-section h3, .chat-section h4 {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        padding: 0.5rem 1rem !important;
-        border-radius: 8px !important;
-        text-align: center !important;
-        margin: 1rem 0 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        /* Remove custom styling - use original */
+        color: inherit !important;
+        background: none !important;
+        padding: inherit !important;
+        border-radius: inherit !important;
+        text-align: inherit !important;
+        margin: inherit !important;
+        text-shadow: none !important;
     }
     
-    /* LIGHT MODE CHAT HEADER OVERRIDE */
+    /* LIGHT MODE CHAT HEADER OVERRIDE - REMOVE */
     @media (prefers-color-scheme: light) {
         .chat-header, .chat-section h3, .chat-section h4 {
-            color: #1f2937 !important;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
-            border: 2px solid #d1d5db !important;
+            color: inherit !important;
+            background: none !important;
+            border: none !important;
             text-shadow: none !important;
         }
     }
     
-    /* SPECIFIC CHAT WITH SECPARS STYLING */
-    /* Dark Mode - ORIGINAL */
+    /* SPECIFIC CHAT WITH SECPARS STYLING - REMOVE CUSTOM */
     .stMarkdown h3:contains("Chat with SECPARS"),
     .stMarkdown h4:contains("Chat with SECPARS"),
     .stMarkdown h3,
     .stMarkdown h4 {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        padding: 0.5rem 1rem !important;
-        border-radius: 8px !important;
-        text-align: center !important;
-        margin: 1rem 0 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
-        display: block !important;
+        /* Remove custom styling - use original */
+        color: inherit !important;
+        background: none !important;
+        padding: inherit !important;
+        border-radius: inherit !important;
+        text-align: inherit !important;
+        margin: inherit !important;
+        text-shadow: none !important;
+        display: inherit !important;
     }
     
-    /* Light Mode Override */
+    /* Light Mode Override - REMOVE */
     @media (prefers-color-scheme: light) {
         .stMarkdown h3:contains("Chat with SECPARS"),
         .stMarkdown h4:contains("Chat with SECPARS"),
         .stMarkdown h3,
         .stMarkdown h4 {
-            color: #1f2937 !important;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
-            border: 2px solid #d1d5db !important;
+            color: inherit !important;
+            background: none !important;
+            border: none !important;
             text-shadow: none !important;
         }
     }
     
-    /* Force All Headers Visibility */
+    /* Force All Headers Visibility - REMOVE CUSTOM */
     h3, h4 {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        padding: 0.5rem 1rem !important;
-        border-radius: 8px !important;
-        text-align: center !important;
-        margin: 1rem 0 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
+        /* Remove custom styling - use original */
+        color: inherit !important;
+        background: none !important;
+        padding: inherit !important;
+        border-radius: inherit !important;
+        text-align: inherit !important;
+        margin: inherit !important;
+        text-shadow: none !important;
     }
     
-    /* Light Mode Header Override */
+    /* Light Mode Header Override - REMOVE */
     @media (prefers-color-scheme: light) {
         h3, h4 {
-            color: #1f2937 !important;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
-            border: 2px solid #d1d5db !important;
+            color: inherit !important;
+            background: none !important;
+            border: none !important;
             text-shadow: none !important;
         }
     }
