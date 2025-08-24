@@ -192,23 +192,65 @@ body {
 
     /* Subtitle Styling */
     .subtitle-main {
-        font-family: 'Metal Mania', system-ui !important; /* Apply Metal Mania */
-        font-size: 1.8rem !important; /* Slightly increased size */
-        font-weight: 400 !important; /* Metal Mania default weight */
+        font-family: 'Metal Mania', system-ui !important;
+        font-size: 1.8rem !important;
+        font-weight: 400 !important;
         color: #ffffff !important;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.5) !important; /* Shiny text shadow */
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.5) !important;
         background: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
-        border: 1px solid #ff8c00 !important; /* Border */
+        border: 1px solid #ff8c00 !important;
         border-image: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) 1 !important;
         padding: 10px 20px !important;
         border-radius: 8px !important;
         box-shadow: 0 0 15px rgba(255, 140, 0, 0.4) !important;
-        display: inline-block; /* Essential for text background/border to work */
+        display: inline-block;
         margin-bottom: 1.2rem;
     }
     
+    /* Global Text Styling - White and Bold */
+    .stApp .stMarkdown, 
+    .stApp .stText, 
+    .stApp p, 
+    .stApp span, 
+    .stApp li, 
+    .stApp strong, 
+    .stApp em, 
+    .stApp div:not(.stExpander) {
+        color: #ffffff !important;
+        font-weight: 700 !important; /* Bold */
+    }
+
+    .stApp h1, 
+    .stApp h2, 
+    .stApp h3, 
+    .stApp h4, 
+    .stApp h5, 
+    .stApp h6 {
+        color: #ffffff !important;
+        font-weight: 800 !important; /* Extra bold */
+    }
+
+    /* Override for elements that should maintain their specific color/gradient */
+    .title-main, 
+    .subtitle-main, 
+    .stMarkdown h3:contains("Chat with SECPARS"), 
+    .stMarkdown h4:contains("Chat with SECPARS") {
+        -webkit-text-fill-color: unset !important; /* Allow background-clip to work */
+        color: unset !important; /* Reset color for gradient to apply */
+    }
+
+    .title-main,
+    .stMarkdown h3:contains("Chat with SECPARS"), 
+    .stMarkdown h4:contains("Chat with SECPARS") {
+        color: #ff8c00 !important; /* Re-apply specific color for these */
+        -webkit-text-fill-color: #ff8c00 !important;
+    }
+
+    .subtitle-main {
+        -webkit-text-fill-color: transparent !important; /* Maintain transparent for gradient */
+    }
 </style>
 """, unsafe_allow_html=True)
 
