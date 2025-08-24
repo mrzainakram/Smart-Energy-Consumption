@@ -432,26 +432,65 @@ body {
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
-    /* SYSTEM STATUS TEXT - WHITE */
+    /* NAVBAR TEXT - DUAL MODE COLORS */
+    
+    /* Dark Mode - White Text */
+    .css-1d391kg .stMarkdown,
+    .css-1d391kg h1,
+    .css-1d391kg h2,
+    .css-1d391kg h3,
+    .css-1d391kg p,
     .css-1d391kg .stCaption,
     .css-1d391kg .stSubheader,
-    .css-1d391kg p,
+    .css-1d391kg label,
     .css-1d391kg span,
     .css-1d391kg div {
         color: #ffffff !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
     }
     
-    /* System Status specific elements */
-    .css-1d391kg .stMarkdown p,
-    .css-1d391kg .stMarkdown span,
-    .css-1d391kg .stMarkdown div {
-        color: #ffffff !important;
+    /* Light Mode - Black Text */
+    @media (prefers-color-scheme: light) {
+        .css-1d391kg .stMarkdown,
+        .css-1d391kg h1,
+        .css-1d391kg h2,
+        .css-1d391kg h3,
+        .css-1d391kg p,
+        .css-1d391kg .stCaption,
+        .css-1d391kg .stSubheader,
+        .css-1d391kg label,
+        .css-1d391kg span,
+        .css-1d391kg div {
+            color: #000000 !important;
+            font-weight: 600 !important;
+        }
     }
     
-    /* Force all text in sidebar white */
-    .css-1d391kg * {
+    /* Navbar dropdown text - Dark Mode */
+    .css-1d391kg .stSelectbox > div > div > div {
         color: #ffffff !important;
+        background-color: #374151 !important;
+        border: 2px solid #ff8c00 !important;
+    }
+    
+    /* Navbar dropdown text - Light Mode */
+    @media (prefers-color-scheme: light) {
+        .css-1d391kg .stSelectbox > div > div > div {
+            color: #000000 !important;
+            background-color: #ffffff !important;
+            border: 2px solid #ff8c00 !important;
+        }
+    }
+    
+    /* Navbar button text - Both Modes */
+    .css-1d391kg .stButton > button {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        padding: 0.8rem 1.5rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
     /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
