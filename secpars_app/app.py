@@ -21,19 +21,12 @@ if hasattr(st, 'secrets'):
     # Set environment variables from Streamlit secrets
     if 'GEMINI_API_KEY' in st.secrets:
         os.environ['GEMINI_API_KEY'] = st.secrets['GEMINI_API_KEY']
-        st.success("✅ GEMINI_API_KEY loaded from Streamlit secrets")
     if 'OPENAI_API_KEY' in st.secrets:
         os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
-        st.success("✅ OPENAI_API_KEY loaded from Streamlit secrets")
     if 'PROJECT_DATA_DIR' in st.secrets:
         os.environ['PROJECT_DATA_DIR'] = st.secrets['PROJECT_DATA_DIR']
     if 'CHROMA_DIR' in st.secrets:
         os.environ['CHROMA_DIR'] = st.secrets['CHROMA_DIR']
-    
-    # Debug: Show what's in secrets
-    st.info(f"🔐 Streamlit Secrets Available: {list(st.secrets.keys())}")
-else:
-    st.warning("⚠️ Streamlit secrets not available (running locally)")
 
 # Clean Native Streamlit SECPARS Interface
 st.markdown("""
