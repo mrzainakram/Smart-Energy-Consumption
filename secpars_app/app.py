@@ -187,6 +187,95 @@ body {
         font-weight: 600 !important;
     }
     
+    /* DARK MODE + LIGHT MODE DUAL COMPATIBILITY */
+    
+    /* Dark Mode Text Visibility */
+    [data-testid="stAppViewContainer"] {
+        color: #ffffff !important;
+    }
+    
+    /* Dark Mode Chat Messages */
+    .stChatMessage .stMarkdown {
+        color: #ffffff !important;
+    }
+    
+    .stChatMessage .stMarkdown p, 
+    .stChatMessage .stMarkdown li, 
+    .stChatMessage .stMarkdown strong, 
+    .stChatMessage .stMarkdown em {
+        color: #ffffff !important;
+    }
+    
+    /* Dark Mode Sidebar */
+    .css-1d391kg .stMarkdown,
+    .css-1d391kg h1,
+    .css-1d391kg h2,
+    .css-1d391kg h3,
+    .css-1d391kg p {
+        color: #ffffff !important;
+    }
+    
+    /* Dark Mode Captions */
+    .stCaption {
+        color: #d1d5db !important;
+    }
+    
+    /* Dark Mode Subheaders */
+    .stSubheader {
+        color: #e5e7eb !important;
+    }
+    
+    /* Universal Text Visibility (Both Modes) */
+    .stMarkdown, .stText {
+        color: inherit !important;
+    }
+    
+    /* Chat Container Universal */
+    .stChatMessage {
+        color: inherit !important;
+    }
+    
+    /* Sidebar Universal */
+    .css-1d391kg {
+        color: inherit !important;
+    }
+    
+    /* Force Text Visibility in Both Themes */
+    .stMarkdown p, .stMarkdown li, .stMarkdown strong, .stMarkdown em,
+    .stText p, .stText li, .stText strong, .stText em {
+        color: inherit !important;
+    }
+    
+    /* Streamlit Theme Detection and Override */
+    .stApp {
+        color: inherit !important;
+    }
+    
+    /* Ensure All Text Elements are Visible */
+    div[data-testid="stMarkdownContainer"] {
+        color: inherit !important;
+    }
+    
+    /* Chat Input Universal */
+    .stTextInput > div > div > input {
+        color: #1f2937 !important;
+        background-color: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+    }
+    
+    /* Selectbox Universal */
+    .stSelectbox > div > div > div {
+        color: #1f2937 !important;
+        background-color: #ffffff !important;
+    }
+    
+    /* Button Universal */
+    .stButton > button {
+        color: #ffffff !important;
+        background-color: #667eea !important;
+        border: 1px solid #5a67d8 !important;
+    }
+    
     .subtitle-main {
         font-family: 'Poppins', sans-serif;
         font-size: 1.5rem;
