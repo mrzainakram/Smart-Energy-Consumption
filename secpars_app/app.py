@@ -432,6 +432,28 @@ body {
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
+    /* SYSTEM STATUS TEXT - WHITE */
+    .css-1d391kg .stCaption,
+    .css-1d391kg .stSubheader,
+    .css-1d391kg p,
+    .css-1d391kg span,
+    .css-1d391kg div {
+        color: #ffffff !important;
+        font-weight: 500 !important;
+    }
+    
+    /* System Status specific elements */
+    .css-1d391kg .stMarkdown p,
+    .css-1d391kg .stMarkdown span,
+    .css-1d391kg .stMarkdown div {
+        color: #ffffff !important;
+    }
+    
+    /* Force all text in sidebar white */
+    .css-1d391kg * {
+        color: #ffffff !important;
+    }
+    
     /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
     .stExpander > div > div > div > div {
         color: #000000 !important;
