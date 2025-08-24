@@ -267,32 +267,33 @@ body {
         }
     }
     
-    /* SPECIFIC CHAT WITH SECPARS STYLING - REMOVE CUSTOM */
+    /* SPECIFIC CHAT WITH SECPARS STYLING - YELLOW TITLE FORMAT */
     .stMarkdown h3:contains("Chat with SECPARS"),
     .stMarkdown h4:contains("Chat with SECPARS"),
     .stMarkdown h3,
     .stMarkdown h4 {
-        /* Remove custom styling - use original */
-        color: inherit !important;
+        /* Yellow title format like main title */
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 2.5rem !important;
+        font-weight: 900 !important;
+        color: #ff8c00 !important;
+        -webkit-text-fill-color: #ff8c00 !important;
         background: none !important;
-        padding: inherit !important;
-        border-radius: inherit !important;
-        text-align: inherit !important;
-        margin: inherit !important;
-        text-shadow: none !important;
-        display: inherit !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+        text-align: center !important;
+        margin: 1.5rem 0 !important;
+        letter-spacing: 1px !important;
     }
     
-    /* Light Mode Override - REMOVE */
+    /* Light Mode Chat Header Override */
     @media (prefers-color-scheme: light) {
         .stMarkdown h3:contains("Chat with SECPARS"),
         .stMarkdown h4:contains("Chat with SECPARS"),
         .stMarkdown h3,
         .stMarkdown h4 {
-            color: inherit !important;
-            background: none !important;
-            border: none !important;
-            text-shadow: none !important;
+            color: #ff8c00 !important;
+            -webkit-text-fill-color: #ff8c00 !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
         }
     }
     
@@ -316,6 +317,91 @@ body {
             border: none !important;
             text-shadow: none !important;
         }
+    }
+    
+    /* DARK MODE VISIBILITY FIXES */
+    
+    /* Dark Mode Text Visibility - ORIGINAL STYLING */
+    [data-testid="stAppViewContainer"] {
+        color: #ffffff !important;
+    }
+    
+    /* Dark Mode Chat Messages */
+    .stChatMessage .stMarkdown {
+        color: #ffffff !important;
+    }
+    
+    .stChatMessage .stMarkdown p, 
+    .stChatMessage .stMarkdown li, 
+    .stChatMessage .stMarkdown strong, 
+    .stChatMessage .stMarkdown em {
+        color: #ffffff !important;
+    }
+    
+    /* Dark Mode Sidebar */
+    .css-1d391kg .stMarkdown,
+    .css-1d391kg h1,
+    .css-1d391kg h2,
+    .css-1d391kg h3,
+    .css-1d391kg p {
+        color: #ffffff !important;
+    }
+    
+    /* Dark Mode Captions */
+    .stCaption {
+        color: #d1d5db !important;
+    }
+    
+    /* Dark Mode Subheaders */
+    .stSubheader {
+        color: #e5e7eb !important;
+    }
+    
+    /* Dark Mode All Text Elements */
+    .stMarkdown, .stText {
+        color: #ffffff !important;
+    }
+    
+    .stMarkdown p, .stMarkdown li, .stMarkdown strong, .stMarkdown em {
+        color: #ffffff !important;
+    }
+    
+    /* Dark Mode Buttons */
+    .stButton > button {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        padding: 0.8rem 1.5rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+    }
+    
+    /* Dark Mode Input Fields */
+    .stTextInput > div > div > input {
+        color: #ffffff !important;
+        background-color: #374151 !important;
+        border: 2px solid #ff8c00 !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Dark Mode Selectbox */
+    .stSelectbox > div > div > div {
+        color: #ffffff !important;
+        background-color: #374151 !important;
+        border: 2px solid #ff8c00 !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Dark Mode Project Information Button */
+    .stExpander > div > div > div > div {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 1rem !important;
+        font-weight: 700 !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
     /* Universal Text Visibility (Both Modes) */
