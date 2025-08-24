@@ -267,12 +267,12 @@ body {
         }
     }
     
-    /* SPECIFIC CHAT WITH SECPARS STYLING - YELLOW TITLE FORMAT */
+    /* CHAT WITH SECPARS - EXACT TITLE STYLE */
     .stMarkdown h3:contains("Chat with SECPARS"),
     .stMarkdown h4:contains("Chat with SECPARS"),
     .stMarkdown h3,
     .stMarkdown h4 {
-        /* Yellow title format like main title */
+        /* EXACT same style as main title */
         font-family: 'Poppins', sans-serif !important;
         font-size: 4.5rem !important;
         font-weight: 900 !important;
@@ -284,9 +284,10 @@ body {
         margin: 2rem 0 !important;
         letter-spacing: 2px !important;
         position: relative !important;
+        line-height: 1.2 !important;
     }
     
-    /* Chat with SECPARS underline like main title */
+    /* Chat with SECPARS underline EXACT like main title */
     .stMarkdown h3:contains("Chat with SECPARS")::after,
     .stMarkdown h4:contains("Chat with SECPARS")::after,
     .stMarkdown h3::after,
@@ -402,6 +403,62 @@ body {
         color: #ffffff !important;
         font-weight: 700 !important;
         font-size: 16px !important;
+    }
+    
+    /* SIDEBAR GENERAL TEXT - DUAL MODE VISIBILITY */
+    .css-1d391kg .stMarkdown,
+    .css-1d391kg h1,
+    .css-1d391kg h2,
+    .css-1d391kg h3,
+    .css-1d391kg p,
+    .css-1d391kg .stCaption,
+    .css-1d391kg .stSubheader,
+    .css-1d391kg label,
+    .css-1d391kg span,
+    .css-1d391kg div {
+        color: #ffffff !important; /* Default to white for dark mode */
+        font-weight: 600 !important;
+    }
+    
+    @media (prefers-color-scheme: light) {
+        .css-1d391kg .stMarkdown,
+        .css-1d391kg h1,
+        .css-1d391kg h2,
+        .css-1d391kg h3,
+        .css-1d391kg p,
+        .css-1d391kg .stCaption,
+        .css-1d391kg .stSubheader,
+        .css-1d391kg label,
+        .css-1d391kg span,
+        .css-1d391kg div {
+            color: #000000 !important; /* Black for light mode */
+            font-weight: 700 !important; /* Bold for light mode */
+        }
+    }
+    
+    /* Navbar dropdown text - Dual Mode */
+    .css-1d391kg .stSelectbox > div > div > div {
+        color: #ffffff !important; /* Default white */
+        background-color: #374151 !important; /* Dark background */
+        border: 2px solid #ff8c00 !important;
+    }
+    
+    @media (prefers-color-scheme: light) {
+        .css-1d391kg .stSelectbox > div > div > div {
+            color: #000000 !important; /* Black text */
+            background-color: #ffffff !important; /* White background */
+        }
+    }
+    
+    /* Navbar button text - Dual Mode */
+    .css-1d391kg .stButton > button {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        padding: 0.8rem 1.5rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
     
     /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
