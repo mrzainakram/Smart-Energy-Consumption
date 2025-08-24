@@ -523,6 +523,27 @@ body {
         font-weight: 600 !important;
     }
     
+    /* GRAY TEXT TO WHITE - SYSTEM STATUS BAR */
+    .css-1d391kg .stCaption,
+    .css-1d391kg .stSubheader {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+    
+    /* ALL GRAY TEXT IN SIDEBAR TO WHITE */
+    .css-1d391kg p,
+    .css-1d391kg span,
+    .css-1d391kg div,
+    .css-1d391kg label {
+        color: #ffffff !important;
+        font-weight: 500 !important;
+    }
+    
+    /* FORCE WHITE - NO GRAY */
+    .css-1d391kg * {
+        color: #ffffff !important;
+    }
+    
     /* PROJECT INFORMATION BAR - BOLD BLACK TEXT */
     .stExpander > div > div > div > div {
         color: #000000 !important;
