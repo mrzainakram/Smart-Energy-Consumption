@@ -36,7 +36,6 @@ st.markdown("""
 
 body {
     font-family: 'Poppins', sans-serif;
-    color: #ffffff;
 }
 
 .main-container {
@@ -223,8 +222,8 @@ body {
     .stApp strong, 
     .stApp em, 
     .stApp div:not(.stExpander) {
-        color: #ffffff !important;
-        font-weight: 700 !important; /* Bold */
+        /* color: #ffffff !important; */
+        /* font-weight: 700 !important; */ /* Bold */
     }
 
     .stApp h1, 
@@ -233,8 +232,8 @@ body {
     .stApp h4, 
     .stApp h5, 
     .stApp h6 {
-        color: #ffffff !important;
-        font-weight: 800 !important; /* Extra bold */
+        /* color: #ffffff !important; */
+        /* font-weight: 800 !important; */ /* Extra bold */
     }
 
     /* Input Fields Text Color */
