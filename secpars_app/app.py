@@ -36,6 +36,7 @@ st.markdown("""
 
 body {
     font-family: 'Poppins', sans-serif;
+    color: #ffffff; /* Ensure default text is white in dark mode */
 }
 
 .main-container {
@@ -213,27 +214,49 @@ body {
         margin-bottom: 1.2rem;
     }
     
-    /* Global Text Styling - White and Bold */
-    .stApp .stMarkdown, 
-    .stApp .stText, 
-    .stApp p, 
-    .stApp span, 
-    .stApp li, 
-    .stApp strong, 
-    .stApp em, 
-    .stApp div:not(.stExpander) {
-        /* color: #ffffff !important; */
-        /* font-weight: 700 !important; */ /* Bold */
+    /* Global Text Styling for Dark Mode - White and Bold */
+    /* This targets all text within the main app container when the base theme is dark */
+    html[data-theme='dark'] .stApp,
+    html[data-theme='dark'] .stApp .stMarkdown, 
+    html[data-theme='dark'] .stApp .stText, 
+    html[data-theme='dark'] .stApp p, 
+    html[data-theme='dark'] .stApp span, 
+    html[data-theme='dark'] .stApp li, 
+    html[data-theme='dark'] .stApp strong, 
+    html[data-theme='dark'] .stApp em, 
+    html[data-theme='dark'] .stApp div:not(.stExpander) {
+        color: #ffffff !important;
+        font-weight: 700 !important; /* Bold */
     }
 
-    .stApp h1, 
-    .stApp h2, 
-    .stApp h3, 
-    .stApp h4, 
-    .stApp h5, 
-    .stApp h6 {
-        /* color: #ffffff !important; */
-        /* font-weight: 800 !important; */ /* Extra bold */
+    html[data-theme='dark'] .stApp h1, 
+    html[data-theme='dark'] .stApp h2, 
+    html[data-theme='dark'] .stApp h3, 
+    html[data-theme='dark'] .stApp h4, 
+    html[data-theme='dark'] .stApp h5, 
+    html[data-theme='dark'] .stApp h6 {
+        color: #ffffff !important;
+        font-weight: 800 !important; /* Extra bold */
+    }
+
+    /* Override for elements that should maintain their specific color/gradient in dark mode */
+    html[data-theme='dark'] .title-main, 
+    html[data-theme='dark'] .subtitle-main, 
+    html[data-theme='dark'] .stMarkdown h3:contains("Chat with SECPARS"), 
+    html[data-theme='dark'] .stMarkdown h4:contains("Chat with SECPARS") {
+        -webkit-text-fill-color: unset !important; /* Allow background-clip to work */
+        color: unset !important; /* Reset color for gradient to apply */
+    }
+
+    html[data-theme='dark'] .title-main,
+    html[data-theme='dark'] .stMarkdown h3:contains("Chat with SECPARS"), 
+    html[data-theme='dark'] .stMarkdown h4:contains("Chat with SECPARS") {
+        color: #ff8c00 !important; /* Re-apply specific color for these */
+        -webkit-text-fill-color: #ff8c00 !important;
+    }
+
+    html[data-theme='dark'] .subtitle-main {
+        -webkit-text-fill-color: transparent !important; /* Maintain transparent for gradient */
     }
 
     /* Input Fields Text Color */
@@ -245,26 +268,6 @@ body {
     /* Streamlit Chat Input Text */
     .stApp [data-testid="stForm"] input[type="text"] {
         color: #000000 !important; /* Black text for the chat input field */
-    }
-
-    /* Override for elements that should maintain their specific color/gradient */
-    .title-main, 
-    .subtitle-main, 
-    .stMarkdown h3:contains("Chat with SECPARS"), 
-    .stMarkdown h4:contains("Chat with SECPARS") {
-        -webkit-text-fill-color: unset !important; /* Allow background-clip to work */
-        color: unset !important; /* Reset color for gradient to apply */
-    }
-
-    .title-main,
-    .stMarkdown h3:contains("Chat with SECPARS"), 
-    .stMarkdown h4:contains("Chat with SECPARS") {
-        color: #ff8c00 !important; /* Re-apply specific color for these */
-        -webkit-text-fill-color: #ff8c00 !important;
-    }
-
-    .subtitle-main {
-        -webkit-text-fill-color: transparent !important; /* Maintain transparent for gradient */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -297,60 +300,62 @@ st.markdown("""
         }
     }
     
-    /* Light Mode Text Visibility */
-    .stMarkdown, .stText, .stChatMessage {
-        color: #1f2937 !important;
-        background-color: transparent !important;
+    @media (prefers-color-scheme: light) {
+        /* Light Mode Text Visibility */
+        .stMarkdown, .stText, .stChatMessage {
+            color: #1f2937 !important;
+            background-color: transparent !important;
+        }
+        
+        /* Chat message text visibility */
+        .stChatMessage .stMarkdown {
+            color: #1f2937 !important;
+            background-color: transparent !important;
+        }
+        
+        /* Sidebar text visibility */
+        .css-1d391kg .stMarkdown {
+            color: #1f2937 !important;
+        }
+        
+        /* Title text visibility */
+        h1, h2, h3, h4, h5, h6 {
+            color: #1f2937 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Button text visibility */
+        .stButton > button {
+            color: #ffffff !important;
+            background-color: #667eea !important;
+            border: 1px solid #5a67d8 !important;
+        }
+        
+        /* Input text visibility */
+        .stTextInput > div > div > input {
+            color: #1f2937 !important;
+            background-color: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+        }
+        
+        /* Selectbox text visibility */
+        .stSelectbox > div > div > div {
+            color: #1f2937 !important;
+            background-color: #000000 !important; /* Black background for selectbox input field in light mode */
+        }
+        
+        /* Caption text visibility */
+        .stCaption {
+            color: #6b7280 !important;
+            font-size: 14px !important;
+        }
+        
+        /* Subheader text visibility */
+        .stSubheader {
+            color: #374151 !important;
+            font-weight: 600 !important;
+        }
     }
-    
-    /* Chat message text visibility */
-    .stChatMessage .stMarkdown {
-        color: #1f2937 !important;
-        background-color: transparent !important;
-    }
-    
-    /* Sidebar text visibility */
-    .css-1d391kg .stMarkdown {
-        color: #1f2937 !important;
-    }
-    
-    /* Title text visibility */
-    h1, h2, h3, h4, h5, h6 {
-        color: #1f2937 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-    }
-    
-    /* Button text visibility */
-    .stButton > button {
-    color: #ffffff !important;
-        background-color: #667eea !important;
-        border: 1px solid #5a67d8 !important;
-    }
-    
-    /* Input text visibility */
-    .stTextInput > div > div > input {
-        color: #1f2937 !important;
-        background-color: #ffffff !important;
-        border: 1px solid #d1d5db !important;
-    }
-    
-    /* Selectbox text visibility */
-    .stSelectbox > div > div > div {
-        color: #1f2937 !important;
-        background-color: #000000 !important; /* Black background for selectbox input field */
-    }
-    
-    /* Caption text visibility */
-    .stCaption {
-        color: #6b7280 !important;
-        font-size: 14px !important;
-    }
-    
-    /* Subheader text visibility */
-    .stSubheader {
-        color: #374151 !important;
-        font-weight: 600 !important;
-}
 </style>
 """, unsafe_allow_html=True)
 
