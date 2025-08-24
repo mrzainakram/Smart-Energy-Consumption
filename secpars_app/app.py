@@ -104,625 +104,61 @@ body {
         background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
         border-radius: 2px;
     }
+
+    /* --- NEW, TARGETED CSS FOR SIDEBAR & CHAT HEADER --- */
     
-    /* Mobile Text Visibility Fix */
-    @media (max-width: 768px) {
-        .stMarkdown, .stText, .stChatMessage {
-            font-size: 16px !important;
-            line-height: 1.5 !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-        }
-        
-        /* Fix SECPARS title on mobile */
-        .main-header h1, .title-main {
-            font-size: 2rem !important;
-            font-weight: bold !important;
-            color: #1f2937 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-            -webkit-text-fill-color: #1f2937 !important;
-            background: none !important;
-        }
-        
-        /* Mobile button sizing */
-        .stButton > button {
-            min-height: 44px !important;
-            min-width: 44px !important;
-            font-size: 16px !important;
-        }
-    }
-    
-    /* Light Mode Text Visibility */
-    .stMarkdown, .stText, .stChatMessage {
-        color: #1f2937 !important;
-        background-color: transparent !important;
-    }
-    
-    /* Chat message text visibility */
-    .stChatMessage .stMarkdown {
-        color: #1f2937 !important;
-        background-color: transparent !important;
-    }
-    
-    /* Sidebar text visibility */
-    .css-1d391kg .stMarkdown {
-        color: #1f2937 !important;
-    }
-    
-    /* Title text visibility */
-    h1, h2, h3, h4, h5, h6 {
-        color: #1f2937 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-    }
-    
-    /* Button text visibility */
-    .stButton > button {
-        color: #ffffff !important;
-        background-color: #667eea !important;
-        border: 1px solid #5a67d8 !important;
-    }
-    
-    /* Input text visibility */
-    .stTextInput > div > div > input {
-        color: #1f2937 !important;
-        background-color: #ffffff !important;
-        border: 1px solid #d1d5db !important;
-    }
-    
-    /* Selectbox text visibility */
-    .stSelectbox > div > div > div {
-        color: #1f2937 !important;
-        background-color: #ffffff !important;
-    }
-    
-    /* Caption text visibility */
-    .stCaption {
-        color: #6b7280 !important;
-        font-size: 14px !important;
-    }
-    
-    /* Subheader text visibility */
-    .stSubheader {
-        color: #374151 !important;
-        font-weight: 600 !important;
-    }
-    
-    /* DARK MODE + LIGHT MODE DUAL COMPATIBILITY */
-    
-    /* Dark Mode Text Visibility - ORIGINAL STYLING */
-    [data-testid="stAppViewContainer"] {
-        color: #ffffff !important;
-    }
-    
-    /* Dark Mode Chat Messages */
-    .stChatMessage .stMarkdown {
-        color: #ffffff !important;
-    }
-    
-    .stChatMessage .stMarkdown p, 
-    .stChatMessage .stMarkdown li, 
-    .stChatMessage .stMarkdown strong, 
-    .stChatMessage .stMarkdown em {
-        color: #ffffff !important;
-    }
-    
-    /* Dark Mode Sidebar */
-    .css-1d391kg .stMarkdown,
-    .css-1d391kg h1,
-    .css-1d391kg h2,
-    .css-1d391kg h3,
-    .css-1d391kg p {
-        color: #ffffff !important;
-    }
-    
-    /* Dark Mode Captions */
-    .stCaption {
-        color: #d1d5db !important;
-    }
-    
-    /* Dark Mode Subheaders */
-    .stSubheader {
-        color: #e5e7eb !important;
-    }
-    
-    /* LIGHT MODE TITLE VISIBILITY - ONLY YELLOW TITLE FIX */
-    @media (prefers-color-scheme: light) {
-        .title-main {
-            color: #ff8c00 !important;
-            -webkit-text-fill-color: #ff8c00 !important;
-            background: none !important;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
-        }
-        
-        .subtitle-main {
-            color: #ffa500 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
-        }
-        
-        .caption-main {
-            color: #ff8c00 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
-        }
-    }
-    
-    /* CHAT WITH SECPARS HEADER - ORIGINAL STYLING */
-    .chat-header, .chat-section h3, .chat-section h4 {
-        /* Remove custom styling - use original */
-        color: inherit !important;
-        background: none !important;
-        padding: inherit !important;
-        border-radius: inherit !important;
-        text-align: inherit !important;
-        margin: inherit !important;
-        text-shadow: none !important;
-    }
-    
-    /* LIGHT MODE CHAT HEADER OVERRIDE - REMOVE */
-    @media (prefers-color-scheme: light) {
-        .chat-header, .chat-section h3, .chat-section h4 {
-            color: inherit !important;
-            background: none !important;
-            border: none !important;
-            text-shadow: none !important;
-        }
-    }
-    
-    /* CHAT WITH SECPARS - EXACT TITLE STYLE */
-    .stMarkdown h3:contains("Chat with SECPARS"),
-    .stMarkdown h4:contains("Chat with SECPARS"),
-    .stMarkdown h3,
-    .stMarkdown h4 {
-        /* EXACT same style as main title */
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 4.5rem !important;
-        font-weight: 900 !important;
-        color: #ff8c00 !important;
-        -webkit-text-fill-color: #ff8c00 !important;
-        background: none !important;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
-        text-align: center !important;
-        margin: 2rem 0 !important;
-        letter-spacing: 2px !important;
-        position: relative !important;
-        line-height: 1.2 !important;
-    }
-    
-    /* Chat with SECPARS underline EXACT like main title */
-    .stMarkdown h3:contains("Chat with SECPARS")::after,
-    .stMarkdown h4:contains("Chat with SECPARS")::after,
-    .stMarkdown h3::after,
-    .stMarkdown h4::after {
-        content: '' !important;
-        position: absolute !important;
-        bottom: -5px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 80% !important;
-        height: 3px !important;
-        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
-        border-radius: 2px !important;
-    }
-    
-    /* Light Mode Chat Header Override */
-    @media (prefers-color-scheme: light) {
-        .stMarkdown h3:contains("Chat with SECPARS"),
-        .stMarkdown h4:contains("Chat with SECPARS"),
-        .stMarkdown h3,
-        .stMarkdown h4 {
-            color: #ff8c00 !important;
-            -webkit-text-fill-color: #ff8c00 !important;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
-        }
-    }
-    
-    /* NAVBAR - ORIGINAL RESTORE (NO CUSTOM STYLING) */
-    /* All custom navbar CSS removed - using original Streamlit styling */
-    
-    /* SYSTEM STATUS TEXT - FORCE WHITE */
-    .css-1d391kg .stCaption,
-    .css-1d391kg .stSubheader,
-    .css-1d391kg p,
-    .css-1d391kg span,
-    .css-1d391kg div,
-    .css-1d391kg .stMarkdown,
-    .css-1d391kg .stMarkdown p,
-    .css-1d391kg .stMarkdown span,
-    .css-1d391kg .stMarkdown div {
-        color: #ffffff !important;
-        font-weight: 500 !important;
-    }
-    
-    /* Force ALL sidebar text white */
-    .css-1d391kg * {
-        color: #ffffff !important;
-    }
-    
-    /* Specific System Status elements */
-    .css-1d391kg h1,
-    .css-1d391kg h2,
-    .css-1d391kg h3,
-    .css-1d391kg h4,
-    .css-1d391kg h5,
-    .css-1d391kg h6 {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-    }
-    
-    /* GRAY TEXT TO WHITE - SYSTEM STATUS BAR */
-    .css-1d391kg .stCaption,
-    .css-1d391kg .stSubheader {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-    }
-    
-    /* ALL GRAY TEXT IN SIDEBAR TO WHITE */
-    .css-1d391kg p,
-    .css-1d391kg span,
-    .css-1d391kg div,
-    .css-1d391kg label {
-        color: #ffffff !important;
-        font-weight: 500 !important;
-    }
-    
-    /* FORCE WHITE - NO GRAY */
-    .css-1d391kg * {
-        color: #ffffff !important;
-    }
-    
-    /* NUCLEAR OPTION - FORCE ALL SIDEBAR TEXT WHITE */
-    .css-1d391kg,
-    .css-1d391kg *,
-    .css-1d391kg .stMarkdown,
-    .css-1d391kg .stMarkdown *,
-    .css-1d391kg .stCaption,
-    .css-1d391kg .stSubheader,
-    .css-1d391kg p,
-    .css-1d391kg span,
-    .css-1d391kg div,
-    .css-1d391kg label,
-    .css-1d391kg h1,
-    .css-1d391kg h2,
-    .css-1d391kg h3,
-    .css-1d391kg h4,
-    .css-1d391kg h5,
-    .css-1d391kg h6 {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-    }
-    
-    /* EXTREME FORCE - OVERRIDE EVERYTHING */
-    .css-1d391kg *,
-    .css-1d391kg * *,
-    .css-1d391kg * * * {
-        color: #ffffff !important;
-    }
-    
-    /* SPECIFIC SYSTEM STATUS FORCE */
-    .css-1d391kg .stCaption,
-    .css-1d391kg .stSubheader {
-        color: #ffffff !important;
-        font-weight: 700 !important;
-        font-size: 16px !important;
-    }
-    
-    /* SIDEBAR GENERAL TEXT - DUAL MODE VISIBILITY */
-    .css-1d391kg .stMarkdown,
-    .css-1d391kg h1,
-    .css-1d391kg h2,
-    .css-1d391kg h3,
-    .css-1d391kg p,
-    .css-1d391kg .stCaption,
-    .css-1d391kg .stSubheader,
-    .css-1d391kg label,
-    .css-1d391kg span,
-    .css-1d391kg div {
-        color: #ffffff !important; /* Default to white for dark mode */
-        font-weight: 600 !important;
-    }
-    
-    @media (prefers-color-scheme: light) {
-        .css-1d391kg .stMarkdown,
-        .css-1d391kg h1,
-        .css-1d391kg h2,
-        .css-1d391kg h3,
-        .css-1d391kg p,
-        .css-1d391kg .stCaption,
-        .css-1d391kg .stSubheader,
-        .css-1d391kg label,
-        .css-1d391kg span,
-        .css-1d391kg div {
-            color: #000000 !important; /* Black for light mode */
-            font-weight: 700 !important; /* Bold for light mode */
-        }
-    }
-    
-    /* Navbar dropdown text - Dual Mode */
-    .css-1d391kg .stSelectbox > div > div > div {
-        color: #ffffff !important; /* Default white */
-        background-color: #374151 !important; /* Dark background */
-        border: 2px solid #ff8c00 !important;
-    }
-    
-    @media (prefers-color-scheme: light) {
-        .css-1d391kg .stSelectbox > div > div > div {
-            color: #000000 !important; /* Black text */
-            background-color: #ffffff !important; /* White background */
-        }
-    }
-    
-    /* Navbar button text - Both Modes */
-    .css-1d391kg .stButton > button {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border: none !important;
-        border-radius: 12px !important;
-        font-weight: 700 !important;
-        padding: 0.8rem 1.5rem !important;
-        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
-    }
-    
-    /* Light Mode Bar Text */
-    @media (prefers-color-scheme: light) {
-        .stExpander > div > div > div > div {
-            color: #000000 !important;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8) !important;
-        }
+    /* Sidebar Background - Default Dark Gray */
+    .stSidebar {
+        background-color: #262730; /* Streamlit's default dark mode sidebar color */
     }
 
-    /* --- NEW, ROBUST CSS FOR SIDEBAR & CHAT HEADER --- */
-    
-    /* Configuration & System Status Headers */
-    .stSidebar .st-emotion-cache-nahz7x, /* Targets st.title "Configuration" */
-    .stSidebar .st-emotion-cache-1cpx4v7 /* Targets st.subheader "📊 System Status" */
+    /* Sidebar Titles (Configuration, System Status) */
+    /* Targets st.title "Configuration" */
+    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-nahz7x,
+    /* Targets st.subheader "📊 System Status" */
+    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-1cpx4v7
     {
         color: #ffffff !important;
-        font-weight: bold !important;
+        font-weight: 800 !important;
         font-size: 24px !important;
     }
 
-    /* Selectbox Labels (LLM Provider Preference, Language) */
-    .stSidebar .st-emotion-cache-1s4n6e9 > label /* Targets label text for selectbox */
+    /* Sidebar Labels (LLM Provider, Language) */
+    /* Targets label text for selectbox */
+    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-1s4n6e9 > label,
+    /* Caption text (Project data, Chroma DB, API keys) */
+    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-10q7j36
     {
         color: #ffffff !important;
-        font-weight: bold !important;
+        font-weight: 600 !important;
     }
 
-    /* Selectbox Values (auto, auto) */
-    .stSidebar .st-emotion-cache-192z83 > div > div > div /* Targets displayed value in selectbox */
+    /* Sidebar Selectbox Values (auto, auto) */
+    /* Targets displayed value in selectbox */
+    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-192z83 > div > div > div
     {
         color: #ffffff !important;
-        background-color: #333333 !important;
-        border: 1px solid #ff8c00 !important;
+        background-color: #333333 !important; /* Darker grey for contrast */
+        border: 1px solid #ff8c00 !important; /* Orange border */
+        font-weight: 600 !important;
     }
 
-    /* Caption Text (Project data, Chroma DB, API keys) */
-    .stSidebar .st-emotion-cache-10q7j36 /* Targets st.caption text */
-    {
-        color: #ffffff !important;
-        font-weight: bold !important;
-    }
-
-    /* Re-ingest button */
-    .stSidebar .st-emotion-cache-v02bni > button /* Targets the Re-ingest button */
+    /* Sidebar Button (Re-ingest) */
+    /* Targets Re-ingest button */
+    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-v02bni > button
     {
         color: #ffffff !important;
         background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        font-weight: bold !important;
-    }
-
-    /* Chat with SECPARS Header */
-    .stMarkdown h3:contains("Chat with SECPARS"),
-    .stMarkdown h4:contains("Chat with SECPARS")
-    {
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 4.5rem !important;
-        font-weight: 900 !important;
-        color: #ff8c00 !important;
-        -webkit-text-fill-color: #ff8c00 !important;
-        background: none !important;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
-        text-align: center !important;
-        margin: 2rem 0 !important;
-        letter-spacing: 2px !important;
-        position: relative !important;
-        line-height: 1.2 !important;
-    }
-
-    .stMarkdown h3:contains("Chat with SECPARS")::after,
-    .stMarkdown h4:contains("Chat with SECPARS")::after
-    {
-        content: '' !important;
-        position: absolute !important;
-        bottom: -5px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 80% !important;
-        height: 3px !important;
-        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
-        border-radius: 2px !important;
-    }
-    
-    /* Force All Headers Visibility - REMOVE CUSTOM */
-    h3, h4 {
-        /* Remove custom styling - use original */
-        color: inherit !important;
-        background: none !important;
-        padding: inherit !important;
-        border-radius: inherit !important;
-        text-align: inherit !important;
-        margin: inherit !important;
-        text-shadow: none !important;
-    }
-    
-    /* Light Mode Header Override - REMOVE */
-    @media (prefers-color-scheme: light) {
-        h3, h4 {
-            color: inherit !important;
-            background: none !important;
-            border: none !important;
-            text-shadow: none !important;
-        }
-    }
-    
-    /* DARK MODE VISIBILITY FIXES */
-    
-    /* Dark Mode Text Visibility - ORIGINAL STYLING */
-    [data-testid="stAppViewContainer"] {
-        color: #ffffff !important;
-    }
-    
-    /* Dark Mode Chat Messages */
-    .stChatMessage .stMarkdown {
-        color: #ffffff !important;
-    }
-    
-    .stChatMessage .stMarkdown p, 
-    .stChatMessage .stMarkdown li, 
-    .stChatMessage .stMarkdown strong, 
-    .stChatMessage .stMarkdown em {
-        color: #ffffff !important;
-    }
-    
-    /* Dark Mode Sidebar */
-    .css-1d391kg .stMarkdown,
-    .css-1d391kg h1,
-    .css-1d391kg h2,
-    .css-1d391kg h3,
-    .css-1d391kg p {
-        color: #ffffff !important;
-    }
-    
-    /* Dark Mode Captions */
-    .stCaption {
-        color: #d1d5db !important;
-    }
-    
-    /* Dark Mode Subheaders */
-    .stSubheader {
-        color: #e5e7eb !important;
-    }
-    
-    /* Dark Mode All Text Elements */
-    .stMarkdown, .stText {
-        color: #ffffff !important;
-    }
-    
-    .stMarkdown p, .stMarkdown li, .stMarkdown strong, .stMarkdown em {
-        color: #ffffff !important;
-    }
-    
-    /* Dark Mode Buttons */
-    .stButton > button {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border: none !important;
-        border-radius: 12px !important;
         font-weight: 700 !important;
+        border-radius: 12px !important;
         padding: 0.8rem 1.5rem !important;
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
     }
-    
-    /* Dark Mode Input Fields */
-    .stTextInput > div > div > input {
-        color: #ffffff !important;
-        background-color: #374151 !important;
-        border: 2px solid #ff8c00 !important;
-        border-radius: 8px !important;
-    }
-    
-    /* Dark Mode Selectbox */
-    .stSelectbox > div > div > div {
-        color: #ffffff !important;
-        background-color: #374151 !important;
-        border: 2px solid #ff8c00 !important;
-        border-radius: 8px !important;
-    }
-    
-    /* Dark Mode Project Information Button */
-    .stExpander > div > div > div > div {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 1rem !important;
-        font-weight: 700 !important;
-        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
-    }
-    
-    /* Universal Text Visibility (Both Modes) */
-    .stMarkdown, .stText {
-        color: inherit !important;
-    }
-    
-    /* Chat Container Universal */
-    .stChatMessage {
-        color: inherit !important;
-    }
-    
-    /* Sidebar Universal */
-    .css-1d391kg {
-        color: inherit !important;
-    }
-    
-    /* Force Text Visibility in Both Themes */
-    .stMarkdown p, .stMarkdown li, .stMarkdown strong, .stMarkdown em,
-    .stText p, .stText li, .stText strong, .stText em {
-        color: inherit !important;
-    }
-    
-    /* Streamlit Theme Detection and Override */
-    .stApp {
-        color: inherit !important;
-    }
-    
-    /* Ensure All Text Elements are Visible */
-    div[data-testid="stMarkdownContainer"] {
-        color: inherit !important;
-    }
-    
-    /* Chat Input Universal */
-    .stTextInput > div > div > input {
-        color: #1f2937 !important;
-        background-color: #ffffff !important;
-        border: 1px solid #d1d5db !important;
-    }
-    
-    /* Selectbox Universal */
-    .stSelectbox > div > div > div {
-        color: #1f2937 !important;
-        background-color: #ffffff !important;
-    }
-    
-    /* Button Universal */
-    .stButton > button {
-        color: #ffffff !important;
-        background-color: #667eea !important;
-        border: 1px solid #5a67d8 !important;
-    }
-    
-    .subtitle-main {
-        font-family: 'Poppins', sans-serif;
-        font-size: 1.5rem;
-        color: #ffffff;
-        margin-bottom: 1.2rem;
-        font-weight: 700;
-        line-height: 1.5;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    
-    .caption-main {
-        font-size: 1.3rem;
-        color: #ffffff;
-        font-weight: 600;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
 
-    /* Project Information Bar - BOLD BLACK TEXT (Original Request) */
-    /* This specific rule will make the expander button text black on orange */
+    /* Project Information Bar */
     .stExpander > div > div > div > div {
-        color: #000000 !important; /* Force black text */
+        color: #000000 !important; /* Black text */
         background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border: none !important;
         border-radius: 12px !important;
         padding: 1rem !important;
         font-weight: 900 !important;
@@ -731,14 +167,6 @@ body {
         text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
     }
 
-    /* Light Mode Bar Text */
-    @media (prefers-color-scheme: light) {
-        .stExpander > div > div > div > div {
-            color: #000000 !important;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8) !important;
-        }
-    }
-    
     /* Chat with SECPARS Header */
     .stMarkdown h3:contains("Chat with SECPARS"),
     .stMarkdown h4:contains("Chat with SECPARS")
@@ -770,92 +198,7 @@ body {
         background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
         border-radius: 2px !important;
     }
-
-</style>
-""", unsafe_allow_html=True)
-
-# Custom CSS for mobile responsiveness and light mode compatibility
-st.markdown("""
-<style>
-    /* Mobile Text Visibility Fix */
-    @media (max-width: 768px) {
-        .stMarkdown, .stText, .stChatMessage {
-            font-size: 16px !important;
-            line-height: 1.5 !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-        }
-        
-        /* Fix SECPARS title on mobile */
-        .main-header h1 {
-            font-size: 2rem !important;
-            font-weight: bold !important;
-            color: #1f2937 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-        }
-        
-        /* Mobile button sizing */
-        .stButton > button {
-            min-height: 44px !important;
-            min-width: 44px !important;
-            font-size: 16px !important;
-        }
-    }
     
-    /* Light Mode Text Visibility */
-    .stMarkdown, .stText, .stChatMessage {
-        color: #1f2937 !important;
-        background-color: transparent !important;
-    }
-    
-    /* Chat message text visibility */
-    .stChatMessage .stMarkdown {
-        color: #1f2937 !important;
-        background-color: transparent !important;
-    }
-    
-    /* Sidebar text visibility */
-    .css-1d391kg .stMarkdown {
-        color: #1f2937 !important;
-    }
-    
-    /* Title text visibility */
-    h1, h2, h3, h4, h5, h6 {
-        color: #1f2937 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-    }
-    
-    /* Button text visibility */
-    .stButton > button {
-        color: #ffffff !important;
-        background-color: #667eea !important;
-        border: 1px solid #5a67d8 !important;
-    }
-    
-    /* Input text visibility */
-    .stTextInput > div > div > input {
-        color: #1f2937 !important;
-        background-color: #ffffff !important;
-        border: 1px solid #d1d5db !important;
-    }
-    
-    /* Selectbox text visibility */
-    .stSelectbox > div > div > div {
-        color: #1f2937 !important;
-        background-color: #ffffff !important;
-    }
-    
-    /* Caption text visibility */
-    .stCaption {
-        color: #6b7280 !important;
-        font-size: 14px !important;
-    }
-    
-    /* Subheader text visibility */
-    .stSubheader {
-        color: #374151 !important;
-        font-weight: 600 !important;
-    }
 </style>
 """, unsafe_allow_html=True)
 
