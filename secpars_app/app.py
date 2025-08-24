@@ -32,6 +32,7 @@ if hasattr(st, 'secrets'):
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap');
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -112,44 +113,29 @@ body {
         background-color: #262730; /* Streamlit's default dark mode sidebar color */
     }
 
-    /* Sidebar Titles (Configuration, System Status) */
-    /* Targets st.title "Configuration" */
-    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-nahz7x,
-    /* Targets st.subheader "📊 System Status" */
-    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-1cpx4v7
-    {
+    /* All text within the sidebar to be white and bold */
+    .stSidebar * {
         color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+
+    /* Specifically ensure titles/subheaders are extra bold */
+    .stSidebar .st-emotion-cache-nahz7x, /* st.title "Configuration" */
+    .stSidebar .st-emotion-cache-1cpx4v7 /* st.subheader "📊 System Status" */
+    {
         font-weight: 800 !important;
         font-size: 24px !important;
     }
 
-    /* Sidebar Labels (LLM Provider, Language) */
-    /* Targets label text for selectbox */
-    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-1s4n6e9 > label,
-    /* Caption text (Project data, Chroma DB, API keys) */
-    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-10q7j36
-    {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-    }
-
-    /* Sidebar Selectbox Values (auto, auto) */
-    /* Targets displayed value in selectbox */
-    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-192z83 > div > div > div
-    {
-        color: #ffffff !important;
+    /* Selectbox values should have a dark background and orange border */
+    .stSidebar .st-emotion-cache-192z83 > div > div > div {
         background-color: #333333 !important; /* Darker grey for contrast */
         border: 1px solid #ff8c00 !important; /* Orange border */
-        font-weight: 600 !important;
     }
 
-    /* Sidebar Button (Re-ingest) */
-    /* Targets Re-ingest button */
-    .stSidebar section.main > div:nth-child(1) > div:nth-child(1) .st-emotion-cache-v02bni > button
-    {
-        color: #ffffff !important;
+    /* Re-ingest button styling */
+    .stSidebar .st-emotion-cache-v02bni > button {
         background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        font-weight: 700 !important;
         border-radius: 12px !important;
         padding: 0.8rem 1.5rem !important;
         box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
@@ -171,18 +157,23 @@ body {
     .stMarkdown h3:contains("Chat with SECPARS"),
     .stMarkdown h4:contains("Chat with SECPARS")
     {
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 4.5rem !important;
-        font-weight: 900 !important;
+        font-family: 'Metal Mania', system-ui !important; /* Apply Metal Mania */
+        font-size: 5rem !important; /* Increased font size */
+        font-weight: 400 !important; /* Metal Mania default weight */
         color: #ff8c00 !important;
         -webkit-text-fill-color: #ff8c00 !important;
         background: none !important;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.3) !important;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.5), 0 0 15px rgba(255,215,0,0.7) !important; /* Shiny effect */
         text-align: center !important;
         margin: 2rem 0 !important;
-        letter-spacing: 2px !important;
+        letter-spacing: 3px !important; /* Increased letter spacing */
         position: relative !important;
         line-height: 1.2 !important;
+        border: 2px solid #ff8c00 !important; /* Border */
+        border-image: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) 1 !important;
+        padding: 15px 25px !important;
+        border-radius: 10px !important;
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.6) !important;
     }
 
     .stMarkdown h3:contains("Chat with SECPARS")::after,
@@ -198,7 +189,111 @@ body {
         background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00) !important;
         border-radius: 2px !important;
     }
+
+    /* Subtitle Styling */
+    .subtitle-main {
+        font-family: 'Metal Mania', system-ui !important; /* Apply Metal Mania */
+        font-size: 1.8rem !important; /* Slightly increased size */
+        font-weight: 400 !important; /* Metal Mania default weight */
+        color: #ffffff !important;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.5) !important; /* Shiny text shadow */
+        background: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        border: 1px solid #ff8c00 !important; /* Border */
+        border-image: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) 1 !important;
+        padding: 10px 20px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 0 15px rgba(255, 140, 0, 0.4) !important;
+        display: inline-block; /* Essential for text background/border to work */
+        margin-bottom: 1.2rem;
+    }
     
+</style>
+""", unsafe_allow_html=True)
+
+# Custom CSS for mobile responsiveness and light mode compatibility
+st.markdown("""
+<style>
+    /* Mobile Text Visibility Fix */
+    @media (max-width: 768px) {
+        .stMarkdown, .stText, .stChatMessage {
+            font-size: 16px !important;
+            line-height: 1.5 !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+        
+        /* Fix SECPARS title on mobile */
+        .main-header h1 {
+            font-size: 2rem !important;
+            font-weight: bold !important;
+            color: #1f2937 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Mobile button sizing */
+        .stButton > button {
+            min-height: 44px !important;
+            min-width: 44px !important;
+            font-size: 16px !important;
+        }
+    }
+    
+    /* Light Mode Text Visibility */
+    .stMarkdown, .stText, .stChatMessage {
+        color: #1f2937 !important;
+        background-color: transparent !important;
+    }
+    
+    /* Chat message text visibility */
+    .stChatMessage .stMarkdown {
+        color: #1f2937 !important;
+        background-color: transparent !important;
+    }
+    
+    /* Sidebar text visibility */
+    .css-1d391kg .stMarkdown {
+        color: #1f2937 !important;
+    }
+    
+    /* Title text visibility */
+    h1, h2, h3, h4, h5, h6 {
+        color: #1f2937 !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* Button text visibility */
+    .stButton > button {
+        color: #ffffff !important;
+        background-color: #667eea !important;
+        border: 1px solid #5a67d8 !important;
+    }
+    
+    /* Input text visibility */
+    .stTextInput > div > div > input {
+        color: #1f2937 !important;
+        background-color: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+    }
+    
+    /* Selectbox text visibility */
+    .stSelectbox > div > div > div {
+        color: #1f2937 !important;
+        background-color: #ffffff !important;
+    }
+    
+    /* Caption text visibility */
+    .stCaption {
+        color: #6b7280 !important;
+        font-size: 14px !important;
+    }
+    
+    /* Subheader text visibility */
+    .stSubheader {
+        color: #374151 !important;
+        font-weight: 600 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
