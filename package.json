@@ -3,7 +3,6 @@
   "version": "1.0.0-production",
   "description": "Smart Energy Consumption Frontend - FIXED INFINITE LOOP - TIMESTAMP: 2024-12-24",
   "scripts": {
-    "build": "npm run build --workspace frontend",
     "start": "cd frontend && npm start",
     "dev": "cd frontend && npm run dev"
   },
