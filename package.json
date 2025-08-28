@@ -1,11 +1,10 @@
 {
   "name": "smart-energy-consumption",
   "version": "1.0.0-production",
-  "description": "Smart Energy Consumption Frontend ",
+  "description": "Smart Energy Consumption Frontend - FIXED INFINITE LOOP - TIMESTAMP: 2024-12-24",
   "scripts": {
     "start": "cd frontend && npm start",
-    "dev": "cd frontend && npm run dev",
-    "build": "cd frontend && npm run build"
+    "dev": "cd frontend && npm run dev"
   },
   "workspaces": [
     "frontend"
