@@ -326,7 +326,7 @@ st.markdown("""
         
         /* Button text visibility */
         .stButton > button {
-            color: #ffffff !important;
+    color: #ffffff !important;
             background-color: #667eea !important;
             border: 1px solid #5a67d8 !important;
         }
@@ -355,7 +355,7 @@ st.markdown("""
             color: #374151 !important;
             font-weight: 600 !important;
         }
-    }
+}
 </style>
 """, unsafe_allow_html=True)
 

@@ -10,8 +10,8 @@ OPENAI_MODEL_TEXT = os.getenv("OPENAI_MODEL_TEXT", "gpt-4o-mini")
 OPENAI_MODEL_VISION = os.getenv("OPENAI_MODEL_VISION", "gpt-4o-mini")
 
 def _ensure_gemini():
-    api_key = os.getenv("GEMINI_API_KEY", "")
-    if not api_key:
+        api_key = os.getenv("GEMINI_API_KEY", "")
+        if not api_key:
         # Try to get from Streamlit secrets as fallback
         try:
             import streamlit as st

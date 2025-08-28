@@ -376,7 +376,7 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Start Free Trial
+                Get Started
               </motion.button>
               <button className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white/30 text-white font-semibold rounded-xl hover:border-white/50 hover:bg-white/10 transition-all duration-300 text-sm sm:text-base md:text-lg">
                 Learn More
