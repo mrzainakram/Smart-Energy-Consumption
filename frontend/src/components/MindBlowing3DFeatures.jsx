@@ -7,6 +7,503 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
       {/* 3D Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
       
+      {/* 3D Rotating Background Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating Geometric Shapes */}
+        <motion.div
+          className="absolute top-20 left-20 w-32 h-32 border border-cyan-500/20 rounded-full"
+          animate={{
+            rotate: 360,
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-40 right-32 w-24 h-24 border border-purple-500/20 rotate-45"
+          animate={{
+            rotate: -360,
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-32 left-32 w-40 h-40 border border-green-500/20 rounded-full"
+          animate={{
+            rotate: 360,
+            scale: [1, 1.1, 1],
+            opacity: [0.4, 0.7, 0.4]
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-20 right-20 w-28 h-28 border border-blue-500/20 rotate-12"
+          animate={{
+            rotate: -360,
+            scale: [1, 1.4, 1],
+            opacity: [0.2, 0.6, 0.2]
+          }}
+          transition={{
+            duration: 22,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        {/* Floating Particles */}
+        <motion.div
+          className="absolute top-1/4 left-1/3 w-2 h-2 bg-cyan-400 rounded-full"
+          animate={{
+            y: [-20, 20, -20],
+            x: [-10, 10, -10],
+            opacity: [0.5, 1, 0.5]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-purple-400 rounded-full"
+          animate={{
+            y: [20, -20, 20],
+            x: [10, -10, 10],
+            opacity: [0.3, 0.8, 0.3]
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-1/3 left-1/4 w-1 h-1 bg-green-400 rounded-full"
+          animate={{
+            y: [-15, 15, -15],
+            x: [-8, 8, -8],
+            opacity: [0.4, 0.9, 0.4]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-1/4 right-1/3 w-1.5 h-1.5 bg-blue-400 rounded-full"
+          animate={{
+            y: [15, -15, 15],
+            x: [8, -8, 8],
+            opacity: [0.2, 0.7, 0.2]
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        {/* Rotating Rings */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-cyan-500/10 rounded-full"
+          animate={{
+            rotate: 360
+          }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-purple-500/10 rounded-full"
+          animate={{
+            rotate: -360
+          }}
+          transition={{
+            duration: 35,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-green-500/10 rounded-full"
+          animate={{
+            rotate: 360
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        {/* Floating Energy Icons */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 text-cyan-400 text-4xl opacity-20"
+          animate={{
+            y: [-10, 10, -10],
+            rotate: [0, 5, 0]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          ⚡
+        </motion.div>
+        
+        <motion.div
+          className="absolute top-1/3 right-1/3 text-purple-400 text-3xl opacity-20"
+          animate={{
+            y: [10, -10, 10],
+            rotate: [0, -5, 0]
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          🔋
+        </motion.div>
+        
+        <motion.div
+          className="absolute bottom-1/3 left-1/3 text-green-400 text-3xl opacity-20"
+          animate={{
+            y: [-8, 8, -8],
+            rotate: [0, 3, 0]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          💡
+        </motion.div>
+        
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 text-blue-400 text-4xl opacity-20"
+          animate={{
+            y: [8, -8, 8],
+            rotate: [0, -3, 0]
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          🌟
+        </motion.div>
+        
+        {/* Matrix-style Digital Rain Effect */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-cyan-400/30 text-xs font-mono"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`
+              }}
+              animate={{
+                y: [-100, window.innerHeight + 100],
+                opacity: [0, 1, 0]
+              }}
+              transition={{
+                duration: Math.random() * 10 + 10,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: "linear"
+              }}
+            >
+              {['01', '10', '11', '00'][Math.floor(Math.random() * 4)]}
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Wave Effect */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cyan-500/20 to-transparent"
+          animate={{
+            scaleY: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        {/* Energy Pulse Effect */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-cyan-400 rounded-full"
+          animate={{
+            scale: [0, 100, 0],
+            opacity: [1, 0, 0]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeOut"
+          }}
+        />
+        
+        {/* Floating Hexagons */}
+        <motion.div
+          className="absolute top-1/6 left-1/6 w-16 h-16 border border-purple-500/30 transform rotate-45"
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-2/6 right-1/6 w-12 h-12 border border-green-500/30 transform rotate-30"
+          animate={{
+            rotate: [360, 0],
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        {/* Orbital Elements */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48"
+          animate={{
+            rotate: 360
+          }}
+          transition={{
+            duration: 50,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-cyan-400 rounded-full opacity-60" />
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-purple-400 rounded-full opacity-60" />
+          <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-green-400 rounded-full opacity-60" />
+          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-blue-400 rounded-full opacity-60" />
+        </motion.div>
+        
+        {/* Floating Data Points */}
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={`data-${i}`}
+            className="absolute w-1 h-1 bg-cyan-400/50 rounded-full"
+            style={{
+              left: `${20 + (i * 10)}%`,
+              top: `${30 + (i * 5)}%`
+            }}
+            animate={{
+              y: [-5, 5, -5],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{
+              duration: 3 + i * 0.5,
+              repeat: Infinity,
+              delay: i * 0.2,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Energy Flow Lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-20">
+          <motion.path
+            d="M 100 200 Q 300 100 500 200 T 900 200"
+            stroke="url(#energyGradient)"
+            strokeWidth="2"
+            fill="none"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <defs>
+            <linearGradient id="energyGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#00ffff" stopOpacity="0" />
+              <stop offset="50%" stopColor="#00ffff" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#00ffff" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
+        
+        {/* Additional Floating Elements */}
+        <motion.div
+          className="absolute top-1/5 left-1/5 w-20 h-20 border border-yellow-500/20 rounded-full"
+          animate={{
+            rotate: [0, 180, 360],
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-3/5 right-1/5 w-16 h-16 border border-pink-500/20 transform rotate-12"
+          animate={{
+            rotate: [360, 180, 0],
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        {/* Dynamic Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          {[...Array(10)].map((_, i) => (
+            <motion.div
+              key={`grid-${i}`}
+              className="absolute border-l border-cyan-500/20 h-full"
+              style={{ left: `${i * 10}%` }}
+              animate={{
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{
+                duration: 4 + i * 0.5,
+                repeat: Infinity,
+                delay: i * 0.2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={`grid-h-${i}`}
+              className="absolute border-t border-cyan-500/20 w-full"
+              style={{ top: `${i * 12.5}%` }}
+              animate={{
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{
+                duration: 3 + i * 0.3,
+                repeat: Infinity,
+                delay: i * 0.1,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Energy Sparks */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={`spark-${i}`}
+            className="absolute w-1 h-1 bg-yellow-400 rounded-full"
+            style={{
+              left: `${15 + (i * 6)}%`,
+              top: `${20 + (i * 4)}%`
+            }}
+            animate={{
+              scale: [0, 1, 0],
+              opacity: [0, 1, 0],
+              y: [0, -10, 0]
+            }}
+            transition={{
+              duration: 2 + i * 0.3,
+              repeat: Infinity,
+              delay: i * 0.2,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Rotating Energy Core */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32"
+          animate={{
+            rotate: 360
+          }}
+          transition={{
+            duration: 60,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          <div className="absolute inset-0 border-2 border-cyan-500/30 rounded-full" />
+          <div className="absolute inset-2 border-2 border-purple-500/30 rounded-full" />
+          <div className="absolute inset-4 border-2 border-green-500/30 rounded-full" />
+          <div className="absolute inset-6 border-2 border-blue-500/30 rounded-full" />
+        </motion.div>
+        
+        {/* Floating Energy Orbs */}
+        <motion.div
+          className="absolute top-1/4 right-1/4 w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full opacity-40"
+          animate={{
+            y: [-15, 15, -15],
+            x: [0, 10, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-1/4 left-1/4 w-6 h-6 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-40"
+          animate={{
+            y: [15, -15, 15],
+            x: [0, -8, 0],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
+      
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
         <motion.div
