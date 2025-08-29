@@ -298,3 +298,1651 @@ body {
     font-size: 2rem;
   }
 }
+
+/* ===== COMPLETE RESPONSIVE DESIGN SYSTEM ===== */
+
+/* Base Responsive Setup */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== UNIVERSAL RESPONSIVE BREAKPOINTS ===== */
+
+/* Mobile First Approach */
+:root {
+  --mobile: 320px;
+  --tablet: 768px;
+  --desktop: 1024px;
+  --large: 1440px;
+  --xl: 1920px;
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY SYSTEM ===== */
+
+/* Base Font Sizes - Mobile First */
+h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 6vw, 3rem);
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 5vw, 2.5rem);
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: clamp(1.125rem, 4vw, 2rem);
+  line-height: 1.4;
+}
+
+p {
+  font-size: clamp(0.875rem, 3vw, 1.125rem);
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE SPACING SYSTEM ===== */
+
+.responsive-padding {
+  padding: clamp(1rem, 4vw, 3rem);
+}
+
+.responsive-margin {
+  margin: clamp(1rem, 4vw, 3rem);
+}
+
+.responsive-gap {
+  gap: clamp(0.5rem, 2vw, 2rem);
+}
+
+/* ===== MOBILE OPTIMIZATIONS ===== */
+
+@media (max-width: 767px) {
+  /* Touch-friendly buttons */
+  button, .btn, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 16px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Mobile navigation */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Mobile-friendly forms */
+  input, select, textarea {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  /* Mobile grid layouts */
+  .mobile-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  /* Mobile card layouts */
+  .mobile-card {
+    margin: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* ===== TABLET OPTIMIZATIONS ===== */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablet grid layouts */
+  .tablet-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  /* Tablet navigation */
+  .tablet-nav {
+    padding: 0 2rem;
+  }
+  
+  /* Tablet typography */
+  h1 { font-size: clamp(2.5rem, 6vw, 3.5rem); }
+  h2 { font-size: clamp(2rem, 5vw, 2.8rem); }
+  h3 { font-size: clamp(1.5rem, 4vw, 2.2rem); }
+}
+
+/* ===== DESKTOP OPTIMIZATIONS ===== */
+
+@media (min-width: 1024px) {
+  /* Desktop grid layouts */
+  .desktop-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  /* Desktop navigation */
+  .desktop-nav {
+    padding: 0 3rem;
+  }
+  
+  /* Hover effects for desktop */
+  .desktop-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* ===== LARGE SCREEN OPTIMIZATIONS ===== */
+
+@media (min-width: 1440px) {
+  .large-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+  
+  .large-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+/* ===== DEVICE-SPECIFIC OPTIMIZATIONS ===== */
+
+/* iOS Safari Optimizations */
+@supports (-webkit-touch-callout: none) {
+  .ios-optimized {
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translateZ(0);
+  }
+  
+  /* iOS safe areas */
+  .ios-safe {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Android Optimizations */
+@supports not (-webkit-touch-callout: none) {
+  .android-optimized {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Windows High DPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .windows-hidpi {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* macOS Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+  .macos-optimized {
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ===== RESPONSIVE COMPONENTS ===== */
+
+/* Responsive Cards */
+.responsive-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-lg;
+  padding: clamp(1rem, 3vw, 2rem);
+  margin: clamp(0.5rem, 2vw, 1rem);
+  transition: all 0.3s ease;
+}
+
+/* Responsive Buttons */
+.responsive-btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-300;
+  min-height: 44px;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+/* Responsive Forms */
+.responsive-form {
+  @apply space-y-4;
+}
+
+.responsive-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  min-height: 44px;
+}
+
+/* Responsive Grid */
+.responsive-grid {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+
+/* ===== RESPONSIVE ANIMATIONS ===== */
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== RESPONSIVE UTILITIES ===== */
+
+/* Hide/Show based on screen size */
+.mobile-only { display: block; }
+.tablet-only { display: none; }
+.desktop-only { display: none; }
+
+@media (min-width: 768px) {
+  .mobile-only { display: none; }
+  .tablet-only { display: block; }
+}
+
+@media (min-width: 1024px) {
+  .tablet-only { display: none; }
+  .desktop-only { display: block; }
+}
+
+/* ===== ENHANCED SCROLLBAR ===== */
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(55, 65, 81, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(55, 65, 81, 0.3);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== ENHANCED 3D GRAPHICS ANIMATIONS ===== */
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg) scale(1); 
+    opacity: 0.3;
+  }
+  25% { 
+    transform: translateY(-20px) rotate(90deg) scale(1.1); 
+    opacity: 0.5;
+  }
+  50% { 
+    transform: translateY(-40px) rotate(180deg) scale(0.9); 
+    opacity: 0.7;
+  }
+  75% { 
+    transform: translateY(-20px) rotate(270deg) scale(1.05); 
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
+  }
+}
+
+@keyframes rotate-3d {
+  0% { transform: rotateY(0deg) rotateX(0deg); }
+  100% { transform: rotateY(360deg) rotateX(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ===== RESPONSIVE ANIMATION CLASSES ===== */
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-rotate-3d {
+  animation: rotate-3d 20s linear infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ===== RESPONSIVE LAYOUT HELPERS ===== */
+
+.container-responsive {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+.section-responsive {
+  padding: clamp(2rem, 6vw, 4rem) 0;
+}
+
+.grid-responsive {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+/* ===== RESPONSIVE NAVIGATION ===== */
+
+.nav-responsive {
+  @apply flex items-center justify-between;
+  padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
+}
+
+.nav-menu-responsive {
+  @apply hidden md:flex items-center space-x-6;
+}
+
+.nav-menu-mobile {
+  @apply md:hidden fixed inset-0 bg-black bg-opacity-50 z-50;
+}
+
+/* ===== RESPONSIVE FOOTER ===== */
+
+.footer-responsive {
+  @apply bg-gray-900 text-white;
+  padding: clamp(2rem, 6vw, 4rem) 0;
+}
+
+.footer-grid-responsive {
+  @apply grid gap-8;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* ===== RESPONSIVE HERO SECTION ===== */
+
+.hero-responsive {
+  @apply min-h-screen flex items-center justify-center text-center;
+  padding: clamp(2rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+}
+
+.hero-title-responsive {
+  @apply font-bold text-white;
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  line-height: 1.1;
+}
+
+.hero-subtitle-responsive {
+  @apply text-gray-300 mt-4;
+  font-size: clamp(1.125rem, 4vw, 1.5rem);
+}
+
+/* ===== RESPONSIVE FEATURE CARDS ===== */
+
+.feature-card-responsive {
+  @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6;
+  transition: all 0.3s ease;
+}
+
+.feature-card-responsive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== RESPONSIVE TESTIMONIALS ===== */
+
+.testimonial-responsive {
+  @apply bg-gray-50 dark:bg-gray-700 rounded-lg p-6;
+  margin: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* ===== RESPONSIVE CONTACT FORM ===== */
+
+.contact-form-responsive {
+  @apply max-w-2xl mx-auto;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.contact-input-responsive {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+/* ===== RESPONSIVE MODAL ===== */
+
+.modal-responsive {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.modal-content-responsive {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-xl;
+  max-width: min(90vw, 600px);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ===== RESPONSIVE SIDEBAR ===== */
+
+.sidebar-responsive {
+  @apply fixed inset-y-0 left-0 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out;
+  width: clamp(250px, 80vw, 300px);
+  z-index: 40;
+}
+
+.sidebar-mobile {
+  @apply md:hidden;
+}
+
+.sidebar-desktop {
+  @apply hidden md:block;
+}
+
+/* ===== RESPONSIVE DASHBOARD ===== */
+
+.dashboard-responsive {
+  @apply grid gap-6;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.dashboard-card-responsive {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-4;
+  min-height: 200px;
+}
+
+/* ===== RESPONSIVE CHARTS ===== */
+
+.chart-responsive {
+  @apply w-full h-64 md:h-80 lg:h-96;
+  min-height: 250px;
+}
+
+/* ===== RESPONSIVE TABLES ===== */
+
+.table-responsive {
+  @apply w-full overflow-x-auto;
+}
+
+.table-responsive table {
+  @apply min-w-full divide-y divide-gray-200;
+}
+
+.table-responsive th,
+.table-responsive td {
+  @apply px-3 py-2 text-sm;
+  white-space: nowrap;
+}
+
+/* ===== RESPONSIVE IMAGES ===== */
+
+.img-responsive {
+  @apply w-full h-auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-responsive-cover {
+  @apply w-full h-full object-cover;
+}
+
+/* ===== RESPONSIVE VIDEOS ===== */
+
+.video-responsive {
+  @apply relative w-full;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+
+.video-responsive iframe,
+.video-responsive video {
+  @apply absolute inset-0 w-full h-full;
+}
+
+/* ===== RESPONSIVE MAPS ===== */
+
+.map-responsive {
+  @apply w-full h-64 md:h-80 lg:h-96;
+  min-height: 250px;
+}
+
+/* ===== RESPONSIVE CALENDAR ===== */
+
+.calendar-responsive {
+  @apply w-full;
+}
+
+.calendar-responsive .calendar-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.calendar-responsive .calendar-grid {
+  @apply grid gap-1;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* ===== RESPONSIVE NOTIFICATIONS ===== */
+
+.notification-responsive {
+  @apply fixed top-4 right-4 z-50;
+  max-width: min(90vw, 400px);
+}
+
+.notification-mobile {
+  @apply top-0 right-0 left-0 mx-4 mt-4;
+  max-width: none;
+}
+
+/* ===== RESPONSIVE LOADING ===== */
+
+.loading-responsive {
+  @apply flex items-center justify-center;
+  min-height: clamp(100px, 20vh, 200px);
+}
+
+.loading-spinner-responsive {
+  @apply animate-spin rounded-full border-4 border-gray-300 border-t-blue-600;
+  width: clamp(2rem, 6vw, 3rem);
+  height: clamp(2rem, 6vw, 3rem);
+}
+
+/* ===== RESPONSIVE ERROR STATES ===== */
+
+.error-responsive {
+  @apply bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded;
+  margin: clamp(0.5rem, 2vw, 1rem);
+}
+
+.success-responsive {
+  @apply bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded;
+  margin: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* ===== RESPONSIVE EMPTY STATES ===== */
+
+.empty-responsive {
+  @apply text-center py-12;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
+}
+
+.empty-responsive .empty-icon {
+  @apply text-gray-400 mx-auto mb-4;
+  font-size: clamp(3rem, 10vw, 5rem);
+}
+
+.empty-responsive .empty-text {
+  @apply text-gray-500;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+/* ===== RESPONSIVE PAGINATION ===== */
+
+.pagination-responsive {
+  @apply flex items-center justify-center space-x-2;
+  margin: clamp(1rem, 4vw, 2rem) 0;
+}
+
+.pagination-responsive .page-item {
+  @apply px-3 py-2 border border-gray-300 rounded hover:bg-gray-50;
+  min-width: 44px;
+  text-align: center;
+}
+
+.pagination-responsive .page-item.active {
+  @apply bg-blue-600 text-white border-blue-600;
+}
+
+/* ===== RESPONSIVE SEARCH ===== */
+
+.search-responsive {
+  @apply relative w-full max-w-md mx-auto;
+}
+
+.search-responsive input {
+  @apply w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.search-responsive .search-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
+}
+
+/* ===== RESPONSIVE FILTERS ===== */
+
+.filters-responsive {
+  @apply flex flex-wrap gap-2 mb-4;
+}
+
+.filter-chip-responsive {
+  @apply px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm cursor-pointer hover:bg-gray-300;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.filter-chip-responsive.active {
+  @apply bg-blue-600 text-white;
+}
+
+/* ===== RESPONSIVE BREADCRUMBS ===== */
+
+.breadcrumbs-responsive {
+  @apply flex items-center space-x-2 text-sm text-gray-500 mb-4;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.breadcrumbs-responsive .breadcrumb-item {
+  @apply hover:text-gray-700;
+}
+
+.breadcrumbs-responsive .breadcrumb-separator {
+  @apply text-gray-400;
+}
+
+/* ===== RESPONSIVE TABS ===== */
+
+.tabs-responsive {
+  @apply border-b border-gray-200;
+}
+
+.tabs-responsive .tab-list {
+  @apply flex space-x-8 overflow-x-auto;
+}
+
+.tabs-responsive .tab-item {
+  @apply py-2 px-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  white-space: nowrap;
+}
+
+.tabs-responsive .tab-item.active {
+  @apply border-blue-500 text-blue-600;
+}
+
+/* ===== RESPONSIVE ACCORDION ===== */
+
+.accordion-responsive {
+  @apply space-y-2;
+}
+
+.accordion-responsive .accordion-item {
+  @apply border border-gray-200 rounded-lg;
+}
+
+.accordion-responsive .accordion-header {
+  @apply flex items-center justify-between w-full px-4 py-3 text-left bg-gray-50 hover:bg-gray-100;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.accordion-responsive .accordion-content {
+  @apply px-4 py-3 border-t border-gray-200;
+}
+
+/* ===== RESPONSIVE TOOLTIPS ===== */
+
+.tooltip-responsive {
+  @apply relative inline-block;
+}
+
+.tooltip-responsive .tooltip-text {
+  @apply absolute z-10 px-2 py-1 text-sm text-white bg-gray-900 rounded opacity-0 invisible;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  white-space: nowrap;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip-responsive:hover .tooltip-text {
+  @apply opacity-100 visible;
+}
+
+/* ===== RESPONSIVE PROGRESS BARS ===== */
+
+.progress-responsive {
+  @apply w-full bg-gray-200 rounded-full h-2;
+}
+
+.progress-responsive .progress-bar {
+  @apply bg-blue-600 h-2 rounded-full transition-all duration-300;
+  min-width: 0%;
+}
+
+/* ===== RESPONSIVE ALERTS ===== */
+
+.alert-responsive {
+  @apply p-4 rounded-lg mb-4;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.alert-responsive.info {
+  @apply bg-blue-50 border border-blue-200 text-blue-700;
+}
+
+.alert-responsive.success {
+  @apply bg-green-50 border border-green-200 text-green-700;
+}
+
+.alert-responsive.warning {
+  @apply bg-yellow-50 border border-yellow-200 text-yellow-700;
+}
+
+.alert-responsive.error {
+  @apply bg-red-50 border border-red-200 text-red-700;
+}
+
+/* ===== RESPONSIVE BADGES ===== */
+
+.badge-responsive {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  font-size: clamp(0.625rem, 1.8vw, 0.75rem);
+}
+
+.badge-responsive.primary {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.badge-responsive.secondary {
+  @apply bg-gray-100 text-gray-800;
+}
+
+.badge-responsive.success {
+  @apply bg-green-100 text-green-800;
+}
+
+.badge-responsive.danger {
+  @apply bg-red-100 text-red-800;
+}
+
+/* ===== RESPONSIVE AVATARS ===== */
+
+.avatar-responsive {
+  @apply rounded-full;
+  width: clamp(2rem, 6vw, 3rem);
+  height: clamp(2rem, 6vw, 3rem);
+}
+
+.avatar-responsive.large {
+  width: clamp(3rem, 8vw, 4rem);
+  height: clamp(3rem, 8vw, 4rem);
+}
+
+.avatar-responsive.small {
+  width: clamp(1.5rem, 4vw, 2rem);
+  height: clamp(1.5rem, 4vw, 2rem);
+}
+
+/* ===== RESPONSIVE ICONS ===== */
+
+.icon-responsive {
+  @apply inline-block;
+  width: clamp(1rem, 3vw, 1.5rem);
+  height: clamp(1rem, 3vw, 1.5rem);
+}
+
+.icon-responsive.large {
+  width: clamp(1.5rem, 4vw, 2rem);
+  height: clamp(1.5rem, 4vw, 2rem);
+}
+
+.icon-responsive.small {
+  width: clamp(0.75rem, 2vw, 1rem);
+  height: clamp(0.75rem, 2vw, 1rem);
+}
+
+/* ===== RESPONSIVE SPACING UTILITIES ===== */
+
+.space-responsive {
+  @apply space-y-4;
+}
+
+.space-responsive.small {
+  @apply space-y-2;
+}
+
+.space-responsive.medium {
+  @apply space-y-6;
+}
+
+.space-responsive.large {
+  @apply space-y-8;
+}
+
+/* ===== RESPONSIVE FLEXBOX UTILITIES ===== */
+
+.flex-responsive {
+  @apply flex flex-col;
+}
+
+@media (min-width: 768px) {
+  .flex-responsive {
+    @apply flex-row;
+  }
+}
+
+.flex-responsive.center {
+  @apply items-center justify-center;
+}
+
+.flex-responsive.between {
+  @apply justify-between;
+}
+
+.flex-responsive.around {
+  @apply justify-around;
+}
+
+/* ===== RESPONSIVE GRID UTILITIES ===== */
+
+.grid-responsive-1 {
+  @apply grid grid-cols-1 gap-4;
+}
+
+.grid-responsive-2 {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.grid-responsive-3 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+.grid-responsive-4 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4;
+}
+
+/* ===== RESPONSIVE TEXT UTILITIES ===== */
+
+.text-responsive-left {
+  @apply text-left;
+}
+
+.text-responsive-center {
+  @apply text-center;
+}
+
+.text-responsive-right {
+  @apply text-right;
+}
+
+@media (max-width: 767px) {
+  .text-responsive-left,
+  .text-responsive-center,
+  .text-responsive-right {
+    @apply text-center;
+  }
+}
+
+/* ===== RESPONSIVE VISIBILITY UTILITIES ===== */
+
+.hide-on-mobile {
+  @apply hidden md:block;
+}
+
+.show-on-mobile {
+  @apply block md:hidden;
+}
+
+.hide-on-tablet {
+  @apply hidden lg:block;
+}
+
+.show-on-tablet {
+  @apply block lg:hidden;
+}
+
+/* ===== RESPONSIVE PRINT STYLES ===== */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  .page-break {
+    page-break-before: always;
+  }
+}
+
+/* ===== RESPONSIVE DARK MODE ===== */
+
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    @apply bg-gray-900 text-white;
+  }
+  
+  .auto-dark .card {
+    @apply bg-gray-800 border-gray-700;
+  }
+}
+
+/* ===== RESPONSIVE HIGH CONTRAST ===== */
+
+@media (prefers-contrast: high) {
+  .high-contrast {
+    @apply border-2 border-black;
+  }
+  
+  .high-contrast button {
+    @apply border-2 border-black;
+  }
+}
+
+/* ===== RESPONSIVE REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== RESPONSIVE FOCUS STYLES ===== */
+
+.focus-responsive:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+.focus-responsive:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* ===== RESPONSIVE SELECTION STYLES ===== */
+
+::selection {
+  @apply bg-blue-200 text-blue-900;
+}
+
+::-moz-selection {
+  @apply bg-blue-200 text-blue-900;
+}
+
+/* ===== RESPONSIVE PLACEHOLDER STYLES ===== */
+
+.placeholder-responsive::placeholder {
+  @apply text-gray-400;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+/* ===== RESPONSIVE DISABLED STYLES ===== */
+
+.disabled-responsive:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* ===== RESPONSIVE LOADING STATES ===== */
+
+.loading-responsive {
+  @apply relative;
+}
+
+.loading-responsive::after {
+  @apply absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center;
+  content: "Loading...";
+}
+
+/* ===== RESPONSIVE ERROR STATES ===== */
+
+.error-responsive {
+  @apply border-red-500 text-red-700;
+}
+
+.error-responsive:focus {
+  @apply ring-red-500 border-red-500;
+}
+
+/* ===== RESPONSIVE SUCCESS STATES ===== */
+
+.success-responsive {
+  @apply border-green-500 text-green-700;
+}
+
+.success-responsive:focus {
+  @apply ring-green-500 border-green-500;
+}
+
+/* ===== RESPONSIVE WARNING STATES ===== */
+
+.warning-responsive {
+  @apply border-yellow-500 text-yellow-700;
+}
+
+.warning-responsive:focus {
+  @apply ring-yellow-500 border-yellow-500;
+}
+
+/* ===== RESPONSIVE INFO STATES ===== */
+
+.info-responsive {
+  @apply border-blue-500 text-blue-700;
+}
+
+.info-responsive:focus {
+  @apply ring-blue-500 border-blue-500;
+}
+
+/* ===== RESPONSIVE VALIDATION STYLES ===== */
+
+.valid-responsive {
+  @apply border-green-500;
+}
+
+.valid-responsive:focus {
+  @apply ring-green-500 border-green-500;
+}
+
+.invalid-responsive {
+  @apply border-red-500;
+}
+
+.invalid-responsive:focus {
+  @apply ring-red-500 border-red-500;
+}
+
+/* ===== RESPONSIVE ACCESSIBILITY ===== */
+
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+}
+
+.sr-only-focusable:focus {
+  @apply static w-auto h-auto p-0 m-0 overflow-visible whitespace-normal border-0;
+}
+
+/* ===== RESPONSIVE SKELETON LOADING ===== */
+
+.skeleton-responsive {
+  @apply animate-pulse bg-gray-200 rounded;
+  height: clamp(1rem, 3vw, 1.5rem);
+}
+
+.skeleton-responsive.circle {
+  @apply rounded-full;
+}
+
+.skeleton-responsive.rectangle {
+  @apply rounded;
+}
+
+/* ===== RESPONSIVE OVERFLOW HANDLING ===== */
+
+.overflow-responsive {
+  @apply overflow-hidden;
+}
+
+.overflow-responsive-x {
+  @apply overflow-x-auto;
+}
+
+.overflow-responsive-y {
+  @apply overflow-y-auto;
+}
+
+/* ===== RESPONSIVE Z-INDEX MANAGEMENT ===== */
+
+.z-responsive {
+  z-index: 10;
+}
+
+.z-responsive.modal {
+  z-index: 50;
+}
+
+.z-responsive.overlay {
+  z-index: 40;
+}
+
+.z-responsive.dropdown {
+  z-index: 30;
+}
+
+.z-responsive.sticky {
+  z-index: 20;
+}
+
+/* ===== RESPONSIVE TRANSFORM ORIGIN ===== */
+
+.transform-responsive {
+  transform-origin: center;
+}
+
+.transform-responsive.top {
+  transform-origin: top center;
+}
+
+.transform-responsive.bottom {
+  transform-origin: bottom center;
+}
+
+.transform-responsive.left {
+  transform-origin: left center;
+}
+
+.transform-responsive.right {
+  transform-origin: right center;
+}
+
+/* ===== RESPONSIVE BACKDROP FILTER ===== */
+
+.backdrop-responsive {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.backdrop-responsive.light {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.backdrop-responsive.heavy {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ===== RESPONSIVE GRADIENT BACKGROUNDS ===== */
+
+.gradient-responsive {
+  @apply bg-gradient-to-r from-blue-500 to-purple-600;
+}
+
+.gradient-responsive.mobile {
+  @apply bg-gradient-to-b from-blue-500 to-purple-600;
+}
+
+.gradient-responsive.tablet {
+  @apply bg-gradient-to-r from-blue-500 to-purple-600;
+}
+
+.gradient-responsive.desktop {
+  @apply bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500;
+}
+
+/* ===== RESPONSIVE SHADOW SYSTEM ===== */
+
+.shadow-responsive {
+  @apply shadow-lg;
+}
+
+.shadow-responsive.mobile {
+  @apply shadow-md;
+}
+
+.shadow-responsive.tablet {
+  @apply shadow-lg;
+}
+
+.shadow-responsive.desktop {
+  @apply shadow-2xl;
+}
+
+/* ===== RESPONSIVE BORDER RADIUS ===== */
+
+.rounded-responsive {
+  @apply rounded-lg;
+}
+
+.rounded-responsive.mobile {
+  @apply rounded-md;
+}
+
+.rounded-responsive.tablet {
+  @apply rounded-lg;
+}
+
+.rounded-responsive.desktop {
+  @apply rounded-xl;
+}
+
+/* ===== RESPONSIVE BORDER WIDTHS ===== */
+
+.border-responsive {
+  @apply border-2;
+}
+
+.border-responsive.mobile {
+  @apply border;
+}
+
+.border-responsive.tablet {
+  @apply border-2;
+}
+
+.border-responsive.desktop {
+  @apply border-4;
+}
+
+/* ===== RESPONSIVE OPACITY ===== */
+
+.opacity-responsive {
+  @apply opacity-75;
+}
+
+.opacity-responsive.mobile {
+  @apply opacity-50;
+}
+
+.opacity-responsive.tablet {
+  @apply opacity-75;
+}
+
+.opacity-responsive.desktop {
+  @apply opacity-90;
+}
+
+/* ===== RESPONSIVE BLUR ===== */
+
+.blur-responsive {
+  @apply blur-sm;
+}
+
+.blur-responsive.mobile {
+  @apply blur-none;
+}
+
+.blur-responsive.tablet {
+  @apply blur-sm;
+}
+
+.blur-responsive.desktop {
+  @apply blur-md;
+}
+
+/* ===== RESPONSIVE SCALE ===== */
+
+.scale-responsive {
+  @apply scale-100;
+}
+
+.scale-responsive.mobile {
+  @apply scale-95;
+}
+
+.scale-responsive.tablet {
+  @apply scale-100;
+}
+
+.scale-responsive.desktop {
+  @apply scale-105;
+}
+
+/* ===== RESPONSIVE ROTATE ===== */
+
+.rotate-responsive {
+  @apply rotate-0;
+}
+
+.rotate-responsive.mobile {
+  @apply rotate-0;
+}
+
+.rotate-responsive.tablet {
+  @apply rotate-1;
+}
+
+.rotate-responsive.desktop {
+  @apply rotate-2;
+}
+
+/* ===== RESPONSIVE SKEW ===== */
+
+.skew-responsive {
+  @apply skew-x-0;
+}
+
+.skew-responsive.mobile {
+  @apply skew-x-0;
+}
+
+.skew-responsive.tablet {
+  @apply skew-x-1;
+}
+
+.skew-responsive.desktop {
+  @apply skew-x-2;
+}
+
+/* ===== RESPONSIVE TRANSLATE ===== */
+
+.translate-responsive {
+  @apply translate-x-0 translate-y-0;
+}
+
+.translate-responsive.mobile {
+  @apply translate-x-0 translate-y-0;
+}
+
+.translate-responsive.tablet {
+  @apply translate-x-1 translate-y-1;
+}
+
+.translate-responsive.desktop {
+  @apply translate-x-2 translate-y-2;
+}
+
+/* ===== RESPONSIVE TRANSITION DURATIONS ===== */
+
+.transition-responsive {
+  @apply transition-all duration-300;
+}
+
+.transition-responsive.fast {
+  @apply transition-all duration-150;
+}
+
+.transition-responsive.slow {
+  @apply transition-all duration-500;
+}
+
+.transition-responsive.very-slow {
+  @apply transition-all duration-700;
+}
+
+/* ===== RESPONSIVE TRANSITION TIMING FUNCTIONS ===== */
+
+.ease-responsive {
+  @apply ease-in-out;
+}
+
+.ease-responsive.linear {
+  @apply ease-linear;
+}
+
+.ease-responsive.in {
+  @apply ease-in;
+}
+
+.ease-responsive.out {
+  @apply ease-out;
+}
+
+.ease-responsive.in-out {
+  @apply ease-in-out;
+}
+
+/* ===== RESPONSIVE ANIMATION DELAYS ===== */
+
+.delay-responsive {
+  @apply delay-0;
+}
+
+.delay-responsive.small {
+  @apply delay-75;
+}
+
+.delay-responsive.medium {
+  @apply delay-150;
+}
+
+.delay-responsive.large {
+  @apply delay-300;
+}
+
+.delay-responsive.very-large {
+  @apply delay-500;
+}
+
+/* ===== RESPONSIVE ANIMATION ITERATION COUNTS ===== */
+
+.iterate-responsive {
+  animation-iteration-count: infinite;
+}
+
+.iterate-responsive.once {
+  animation-iteration-count: 1;
+}
+
+.iterate-responsive.twice {
+  animation-iteration-count: 2;
+}
+
+.iterate-responsive.thrice {
+  animation-iteration-count: 3;
+}
+
+/* ===== RESPONSIVE ANIMATION FILL MODES ===== */
+
+.fill-responsive {
+  animation-fill-mode: both;
+}
+
+.fill-responsive.forwards {
+  animation-fill-mode: forwards;
+}
+
+.fill-responsive.backwards {
+  animation-fill-mode: backwards;
+}
+
+.fill-responsive.both {
+  animation-fill-mode: both;
+}
+
+/* ===== RESPONSIVE ANIMATION PLAY STATES ===== */
+
+.play-responsive {
+  animation-play-state: running;
+}
+
+.play-responsive.paused {
+  animation-play-state: paused;
+}
+
+/* ===== RESPONSIVE ANIMATION DIRECTION ===== */
+
+.direction-responsive {
+  animation-direction: normal;
+}
+
+.direction-responsive.reverse {
+  animation-direction: reverse;
+}
+
+.direction-responsive.alternate {
+  animation-direction: alternate;
+}
+
+.direction-responsive.alternate-reverse {
+  animation-direction: alternate-reverse;
+}
+
+/* ===== RESPONSIVE ANIMATION EASING ===== */
+
+.easing-responsive {
+  animation-timing-function: ease;
+}
+
+.easing-responsive.linear {
+  animation-timing-function: linear;
+}
+
+.easing-responsive.ease-in {
+  animation-timing-function: ease-in;
+}
+
+.easing-responsive.ease-out {
+  animation-timing-function: ease-out;
+}
+
+.easing-responsive.ease-in-out {
+  animation-timing-function: ease-in-out;
+}
+
+/* ===== RESPONSIVE ANIMATION CUSTOM PROPERTIES ===== */
+
+:root {
+  --animation-duration: 300ms;
+  --animation-delay: 0ms;
+  --animation-iteration-count: 1;
+  --animation-direction: normal;
+  --animation-timing-function: ease;
+  --animation-fill-mode: both;
+}
+
+/* ===== RESPONSIVE ANIMATION UTILITY CLASSES ===== */
+
+.animate-responsive {
+  animation-duration: var(--animation-duration);
+  animation-delay: var(--animation-delay);
+  animation-iteration-count: var(--animation-iteration-count);
+  animation-direction: var(--animation-direction);
+  animation-timing-function: var(--animation-timing-function);
+  animation-fill-mode: var(--animation-fill-mode);
+}
+
+/* ===== RESPONSIVE ANIMATION RESPONSIVE BREAKPOINTS ===== */
+
+@media (max-width: 767px) {
+  :root {
+    --animation-duration: 200ms;
+    --animation-delay: 0ms;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --animation-duration: 250ms;
+    --animation-delay: 50ms;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --animation-duration: 300ms;
+    --animation-delay: 100ms;
+  }
+}
+
+/* ===== RESPONSIVE ANIMATION PERFORMANCE OPTIMIZATIONS ===== */
+
+.animate-responsive {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ===== RESPONSIVE ANIMATION ACCESSIBILITY ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-responsive {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== RESPONSIVE ANIMATION DEBUG ===== */
+
+.debug-animation {
+  outline: 2px solid red;
+  outline-offset: 2px;
+}
+
+.debug-animation * {
+  outline: 1px solid blue;
+  outline-offset: 1px;
+}
+
+/* ===== RESPONSIVE ANIMATION TESTING ===== */
+
+.test-animation {
+  animation: test 1s ease-in-out infinite;
+}
+
+@keyframes test {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ===== RESPONSIVE ANIMATION DOCUMENTATION ===== */
+
+/*
+RESPONSIVE ANIMATION SYSTEM
+
+This system provides responsive animations that adapt to different screen sizes
+and device capabilities. It includes:
+
+1. Responsive breakpoints for different devices
+2. Performance optimizations for smooth animations
+3. Accessibility features for users with motion sensitivity
+4. Custom properties for easy customization
+5. Utility classes for common animation patterns
+
+Usage:
+- Add .animate-responsive class to elements you want to animate
+- Use responsive utility classes for specific behaviors
+- Customize animations using CSS custom properties
+- Test on different devices to ensure smooth performance
+
+Breakpoints:
+- Mobile: max-width: 767px
+- Tablet: 768px - 1023px
+- Desktop: min-width: 1024px
+
+Performance Tips:
+- Use transform and opacity for smooth animations
+- Avoid animating layout properties
+- Use will-change sparingly
+- Test on low-end devices
+*/

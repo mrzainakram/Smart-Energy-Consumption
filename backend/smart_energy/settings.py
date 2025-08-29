@@ -75,9 +75,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='smartenergyai.system@gmail.com')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='smart-energy-app-password-2025')
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='Smart Energy AI <smartenergyai.system@gmail.com>')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='mrzainakram01@gmail.com')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='lpevapaqziiwadow')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='Smart Energy consumption <mrzainakram01@gmail.com>')
 
 # OpenAI Configuration for Chatbot
 OPENAI_API_KEY = config('OPENAI_API_KEY', default='demo-mode')
