@@ -1,20 +1,27 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3001,
-    open: true
-  },
-  resolve: {
-    alias: {
-      'react-three-fiber': '@react-three/fiber',
-      'src': '/src'
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          framer: ['framer-motion']
+        }
+      }
     }
   },
-  define: {
-    'process.env.NODE_ENV': '"development"',
-    '__APP_VERSION__': JSON.stringify(process.env.npm_package_version)
+  server: {
+    port: 3001,
+    host: true
+  },
+  preview: {
+    port: 3001,
+    host: true
   }
-});
+})
