@@ -1,7 +1,20 @@
-﻿/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    screens: {
+      'xs': '320px',   // Small phones
+      'sm': '640px',   // Large phones
+      'md': '768px',   // Tablets
+      'lg': '1024px',  // Small laptops
+      'xl': '1280px',  // Desktops
+      '2xl': '1536px', // Large desktops
+      // Custom device breakpoints
+      'mobile': '320px',
+      'tablet': '768px',
+      'desktop': '1024px',
+      'wide': '1440px',
+    },
     extend: {
       colors: {
         'dark-blue': '#1e3a78',
@@ -32,6 +45,12 @@ export default {
           '50%': { transform: 'scale(1.1)' },
           '100%': { transform: 'scale(1)' },
         },
+      },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+        'safe-left': 'env(safe-area-inset-left)',
+        'safe-right': 'env(safe-area-inset-right)',
       },
     },
   },

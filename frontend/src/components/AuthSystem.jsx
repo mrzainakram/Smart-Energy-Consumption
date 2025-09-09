@@ -478,15 +478,15 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
       <div ref={mountRef} className="absolute inset-0 z-0" />
       
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-2 sm:p-4 lg:p-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full max-w-md"
+          className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
         >
           {/* Auth Card */}
-          <div className="bg-black/30 backdrop-blur-xl rounded-2xl border border-cyan-400/30 p-8 shadow-2xl relative">
+          <div className="bg-black/30 backdrop-blur-xl rounded-lg sm:rounded-xl lg:rounded-2xl border border-cyan-400/30 p-4 sm:p-6 lg:p-8 shadow-2xl relative">
             {onBack && (
               <button
                 onClick={onBack}

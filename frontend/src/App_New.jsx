@@ -8,6 +8,7 @@ import ProjectDashboard from './components/ProjectDashboard'; // Keep this impor
 import AISystemIntro from './components/AISystemIntro';
 import ThreeDBackground from './components/ThreeDBackground';
 import EnhancedPredictionDashboard from './components/EnhancedPredictionDashboard';
+import ResponsiveWrapper from './components/ResponsiveWrapper';
 import { LanguageProvider } from './contexts/LanguageContext';
 
 const App_New = () => {
@@ -160,7 +161,7 @@ const App_New = () => {
 
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-black relative overflow-hidden">
+      <ResponsiveWrapper className="min-h-screen bg-black relative overflow-hidden">
         {/* 3D Background */}
         <div className="absolute inset-0 z-0">
           <ThreeDBackground />
@@ -217,7 +218,7 @@ const App_New = () => {
             />
           )}
         </div>
-      </div>
+      </ResponsiveWrapper>
     </LanguageProvider>
   );
 };
