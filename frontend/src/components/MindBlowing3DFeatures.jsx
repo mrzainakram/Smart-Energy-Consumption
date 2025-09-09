@@ -548,11 +548,11 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
             <motion.div
               className="bg-gradient-to-br from-black/50 to-gray-900/50 backdrop-blur-sm border border-cyan-500/30 rounded-2xl p-6 hover:border-cyan-400/50 transition-all duration-300"
               initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
               whileHover={{ y: -5 }}
-            >
-              <div className="text-center">
+          >
+            <div className="text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -562,14 +562,14 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
                 <p className="text-xs sm:text-sm md:text-base text-gray-300 leading-relaxed">
                   Predict your monthly energy consumption using 16 advanced ML models
                 </p>
-              </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
             {/* Bill Analysis */}
-            <motion.div
+          <motion.div
               className="bg-gradient-to-br from-black/50 to-gray-900/50 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-6 hover:border-purple-400/50 transition-all duration-300"
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.0 }}
               whileHover={{ y: -5 }}
             >
@@ -614,8 +614,8 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1.4 }}
               whileHover={{ y: -5 }}
-            >
-              <div className="text-center">
+          >
+            <div className="text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -625,14 +625,14 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
                 <p className="text-xs sm:text-sm md:text-base text-gray-300 leading-relaxed">
                   Monitor your energy consumption in real-time with detailed analytics and alerts
                 </p>
-              </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
             {/* Energy Efficiency */}
-            <motion.div
+          <motion.div
               className="bg-gradient-to-br from-black/50 to-gray-900/50 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6 hover:border-green-400/50 transition-all duration-300"
               initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1.6 }}
               whileHover={{ y: -5 }}
             >
@@ -656,8 +656,8 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.8 }}
               whileHover={{ y: -5 }}
-            >
-              <div className="text-center">
+          >
+            <div className="text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -668,7 +668,7 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
                 <p className="text-xs sm:text-sm md:text-base text-gray-300 leading-relaxed">
                   Automate your energy systems based on AI insights and user preferences
                 </p>
-              </div>
+            </div>
             </motion.div>
           </motion.div>
 
@@ -686,22 +686,22 @@ const MindBlowing3DFeatures = ({ onGetStarted, onBack, isDarkMode }) => {
               Join thousands of users who have already revolutionized their energy consumption with our AI-powered platform
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <motion.button
+        <motion.button
                 onClick={onGetStarted}
                 className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold rounded-xl hover:from-cyan-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 text-sm sm:text-base md:text-lg shadow-2xl"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
               >
                 Get Started
-              </motion.button>
-              <motion.button
+        </motion.button>
+        <motion.button
                 onClick={onBack}
                 className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white/30 text-white font-semibold rounded-xl hover:border-white/50 hover:bg-white/10 transition-all duration-300 text-sm sm:text-base md:text-lg"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
                 Back
-              </motion.button>
+        </motion.button>
             </div>
           </motion.div>
         </motion.div>

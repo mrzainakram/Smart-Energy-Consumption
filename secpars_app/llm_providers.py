@@ -1,24 +1,20 @@
 import os
-from typing import List, Optional, Dict, Any
+from typing import Optional, Dict, Any
 import base64
 import google.generativeai as genai
-from openai import OpenAI
 from io import BytesIO
 
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
-OPENAI_MODEL_TEXT = os.getenv("OPENAI_MODEL_TEXT", "gpt-4o-mini")
-OPENAI_MODEL_VISION = os.getenv("OPENAI_MODEL_VISION", "gpt-4o-mini")
 
 def _ensure_gemini():
-        api_key = os.getenv("GEMINI_API_KEY", "")
-        if not api_key:
-        # Try to get from Streamlit secrets as fallback
+    api_key = os.getenv("GEMINI_API_KEY", "")
+    if not api_key:
         try:
             import streamlit as st
             if hasattr(st, 'secrets') and 'GEMINI_API_KEY' in st.secrets:
                 api_key = st.secrets['GEMINI_API_KEY']
         except Exception:
-            pass # Suppress import error if streamlit is not available or other error
+            pass
 
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY not configured")
@@ -30,7 +26,7 @@ def call_gemini_text(prompt: str, system: Optional[str] = None) -> str:
     resp = model.generate_content(prompt)
     return (resp.text or "").strip()
 
-def call_gemini_multimodal(prompt: str, images: List[Dict]=None, audios: List[Dict]=None, system: Optional[str]=None) -> str:
+def call_gemini_multimodal(prompt: str, images: list = None, audios: list = None, system: Optional[str] = None) -> str:
     _ensure_gemini()
     model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system or "")
     parts = []
@@ -43,95 +39,44 @@ def call_gemini_multimodal(prompt: str, images: List[Dict]=None, audios: List[Di
     resp = model.generate_content(parts)
     return (resp.text or "").strip()
 
-def call_openai_text(prompt: str, system: Optional[str] = None) -> str:
-    client = _ensure_openai()
-    messages = []
-    if system:
-        messages.append({"role": "system", "content": system})
-    messages.append({"role": "user", "content": prompt})
-    resp = client.chat.completions.create(model=OPENAI_MODEL_TEXT, messages=messages)
-    return resp.choices[0].message.content.strip()
-
-def call_openai_vision(prompt: str, image_bytes: Optional[bytes] = None, image_mime: str = "image/png") -> str:
-    client = _ensure_openai()
-    content = [{"type": "text", "text": prompt}]
-    if image_bytes:
-        b64 = base64.b64encode(image_bytes).decode("utf-8")
-        content.append({"type": "input_image", "image_data": {"b64": b64, "mime_type": image_mime}})
-    resp = client.chat.completions.create(
-        model=OPENAI_MODEL_VISION,
-        messages=[{"role": "user", "content": content}],
-    )
-    return resp.choices[0].message.content.strip()
-
-def choose_llm(prefer: str = "gemini") -> str:
-    has_gemini_single = bool(os.getenv("GEMINI_API_KEY"))
-    has_gemini_multi = bool(os.getenv("GEMINI_API_KEYS"))
-    has_openai = bool(os.getenv("OPENAI_API_KEY"))
-    has_gemini_any = has_gemini_single or has_gemini_multi
-
-    if prefer == "gemini":
-        if has_gemini_any:
-            return "gemini"
-        if has_openai:
-            return "openai"
-    elif prefer == "openai":
-        if has_openai:
-            return "openai"
-        if has_gemini_any:
-            return "gemini"
-    else:  # auto
-        if has_gemini_any:
-            return "gemini"
-        if has_openai:
-            return "openai"
-    raise RuntimeError("No LLM API keys configured. Set GEMINI_API_KEY or GEMINI_API_KEYS or OPENAI_API_KEY.")
-
-def answer_text(prompt: str, system: Optional[str] = None, prefer: str = "gemini") -> str:
-    provider = choose_llm(prefer)
-    if provider == "gemini":
-        return call_gemini_text(prompt, system)
-    return call_openai_text(prompt, system)
-
-def answer_multimodal(prompt: str, image_bytes: Optional[bytes], image_mime: Optional[str], system: Optional[str] = None, prefer: str = "gemini") -> str:
-    provider = choose_llm(prefer)
-    if image_bytes is None:
-        return answer_text(prompt, system, prefer)
-    if provider == "gemini":
-        img_part = {"mime_type": image_mime or "image/png", "data": base64.b64encode(image_bytes).decode("utf-8")}
-        return call_gemini_multimodal(prompt, images=[img_part], audios=None, system=system)
-    return call_openai_vision(prompt, image_bytes, image_mime) 
-
-# ===== Voice helpers =====
-
-def transcribe_audio_with_gemini(audio_bytes: bytes, audio_mime: str = "audio/wav", system: Optional[str] = None) -> str:
-    """Speech-to-text using Gemini. Returns plain transcript text."""
-    au_part = {"mime_type": audio_mime or "audio/wav", "data": base64.b64encode(audio_bytes).decode("utf-8")}
-    return call_gemini_multimodal(
-        "Transcribe this audio accurately. Return ONLY the transcript text without any extra words.",
-        images=None,
-        audios=[au_part],
-        system=system
-    )
-
-def transcribe_audio_with_openai(audio_bytes: bytes, audio_mime: str = "audio/wav") -> str:
-    """Speech-to-text using OpenAI Whisper. Returns plain transcript text."""
-    client = _ensure_openai()
-    resp = client.audio.transcriptions.create(
-        file=BytesIO(audio_bytes),
-        model="whisper-1",
-        response_format="text"
-    )
-    return resp.strip()
-
-def answer_voice(prompt: str, audio_bytes: bytes, audio_mime: str = "audio/wav", system: Optional[str] = None, prefer: str = "gemini") -> str:
-    """Process voice input and return text response."""
-    # First transcribe the audio
-    if prefer == "gemini":
-        transcript = transcribe_audio_with_gemini(audio_bytes, audio_mime, system)
-    else:
-        transcript = transcribe_audio_with_openai(audio_bytes, audio_mime)
+def answer_text(prompt: str, system: Optional[str] = None) -> str:
+    # Optimized system prompt for concise responses
+    concise_system = """
+    You are SECPARS - Smart Energy Consumption Prediction & Recommendation System.
     
-    # Then process the transcript with the LLM
-    full_prompt = f"User said: {transcript}\n\nUser's question: {prompt}"
-    return answer_text(full_prompt, system, prefer) 
+    RESPONSE RULES:
+    1. Keep answers SHORT and CONCISE (max 2-3 sentences)
+    2. Answer ONLY what was asked
+    3. Don't give extra details unless specifically requested
+    4. End with 1-2 relevant follow-up questions
+    5. Suggest related topics user might ask about
+    
+    Example format:
+    [Direct answer to question]
+    
+    💡 You can also ask:
+    - [Related question 1]
+    - [Related question 2]
+    """
+    
+    return call_gemini_text(prompt, system or concise_system)
+
+def answer_multimodal(prompt: str, image_bytes: Optional[bytes], image_mime: Optional[str], system: Optional[str] = None) -> str:
+    if image_bytes is None:
+        return answer_text(prompt, system)
+    return call_gemini_multimodal(prompt, [{"mime_type": image_mime, "data": base64.b64encode(image_bytes).decode("utf-8")}], system=system)
+
+def answer_audio(prompt: str, audio_bytes: Optional[bytes], audio_mime: Optional[str], system: Optional[str] = None) -> str:
+    if audio_bytes is None:
+        return answer_text(prompt, system)
+    return call_gemini_multimodal(prompt, audios=[{"mime_type": audio_mime, "data": base64.b64encode(audio_bytes).decode("utf-8")}], system=system)
+
+def get_available_models() -> Dict[str, list]:
+    return {"gemini": [GEMINI_MODEL]}
+
+def test_connection() -> Dict[str, Any]:
+    try:
+        result = call_gemini_text("Hello, this is a test message.")
+        return {"status": "success", "provider": "gemini", "response": result[:100] + "..." if len(result) > 100 else result}
+    except Exception as e:
+        return {"status": "error", "message": str(e), "provider": "gemini"}

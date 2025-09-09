@@ -1039,9 +1039,9 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
                     >
                       ← Back to OTP
                     </button>
-                  </div>
-                </motion.form>
-              )}
+                    </div>
+                  </motion.form>
+                )}
             </AnimatePresence>
 
 

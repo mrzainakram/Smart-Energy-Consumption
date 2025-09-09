@@ -130,7 +130,7 @@ body {
     {
         font-weight: 800 !important;
         font-size: 24px !important;
-    }
+}
 
     /* Selectbox values should have a dark background and orange border */
     .stSidebar .st-emotion-cache-192z83 > div > div > div {
@@ -179,7 +179,7 @@ body {
         padding: 15px 25px !important;
         border-radius: 10px !important;
         box-shadow: 0 0 20px rgba(255, 140, 0, 0.6) !important;
-    }
+}
 
     .stMarkdown h3:contains("Chat with SECPARS")::after,
     .stMarkdown h4:contains("Chat with SECPARS")::after
@@ -193,7 +193,7 @@ body {
         height: 3px;
         background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
         border-radius: 2px;
-    }
+}
 
     /* Subtitle Styling */
     .subtitle-main {
@@ -212,8 +212,8 @@ body {
         box-shadow: 0 0 15px rgba(255, 140, 0, 0.4) !important;
         display: inline-block;
         margin-bottom: 1.2rem;
-    }
-    
+}
+
     /* Global Text Styling for Dark Mode - White and Bold */
     /* This targets all text within the main app container when the base theme is dark */
     html[data-theme='dark'] .stApp,
@@ -253,7 +253,7 @@ body {
     html[data-theme='dark'] .stMarkdown h4:contains("Chat with SECPARS") {
         color: #ff8c00 !important; /* Re-apply specific color for these */
         -webkit-text-fill-color: #ff8c00 !important;
-    }
+}
 
     html[data-theme='dark'] .subtitle-main {
         -webkit-text-fill-color: transparent !important; /* Maintain transparent for gradient */
@@ -290,14 +290,14 @@ st.markdown("""
             font-weight: bold !important;
             color: #1f2937 !important;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-        }
-        
+}
+
         /* Mobile button sizing */
         .stButton > button {
             min-height: 44px !important;
             min-width: 44px !important;
             font-size: 16px !important;
-        }
+}
     }
     
     @media (prefers-color-scheme: light) {
@@ -316,8 +316,8 @@ st.markdown("""
         /* Sidebar text visibility */
         .css-1d391kg .stMarkdown {
             color: #1f2937 !important;
-        }
-        
+}
+
         /* Title text visibility */
         h1, h2, h3, h4, h5, h6 {
             color: #1f2937 !important;
@@ -336,8 +336,8 @@ st.markdown("""
             color: #1f2937 !important;
             background-color: #ffffff !important;
             border: 1px solid #d1d5db !important;
-        }
-        
+}
+
         /* Selectbox text visibility */
         .stSelectbox > div > div > div {
             color: #1f2937 !important;
