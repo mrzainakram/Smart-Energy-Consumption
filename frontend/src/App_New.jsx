@@ -69,7 +69,7 @@ const App_New = () => {
 
   const checkBackendConnection = async () => {
     try {
-      const response = await fetch('http://localhost:8002/api/health/');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8002'}/api/health/`);
       if (response.ok) {
         setBackendStatus('connected');
       } else {

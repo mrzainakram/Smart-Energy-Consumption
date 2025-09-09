@@ -544,7 +544,7 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
 
       // Also try API call for enhanced predictions
       try {
-        const response = await fetch('http://localhost:8001/api/appliance-prediction/', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/appliance-prediction/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -614,7 +614,7 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8001/api/predict/energy/', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/predict/energy/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -695,7 +695,7 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
 
       // Also try API call for enhanced predictions
       try {
-        const response = await fetch('http://localhost:8001/api/compare-houses/', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/compare-houses/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -845,7 +845,7 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
       const formData = new FormData();
       formData.append('bill_image', file);
 
-      const response = await fetch('http://localhost:8001/api/ocr/scan-bill/', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/ocr/scan-bill/`, {
         method: 'POST',
         body: formData,
       });
@@ -1085,7 +1085,7 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
 
   // SECPARS Integration Function
   const openSECPARS = () => {
-    const secparsUrl = 'http://localhost:8501';
+    const secparsUrl = import.meta.env.VITE_STREAMLIT_CHATBOT_URL || 'http://localhost:8501';
     
     // Show notification
     const notification = document.createElement('div');

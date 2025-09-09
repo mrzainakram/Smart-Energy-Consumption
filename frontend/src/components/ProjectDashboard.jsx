@@ -83,7 +83,7 @@ const ProjectDashboard = ({ onLogout, user, theme = 'dark' }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8001/api/predict/energy/', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/predict/energy/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const ProjectDashboard = ({ onLogout, user, theme = 'dark' }) => {
     formData.append('image', file);
 
     try {
-      const response = await fetch('http://localhost:8001/api/ocr/scan-bill/', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/ocr/scan-bill/`, {
         method: 'POST',
         body: formData,
       });
@@ -145,7 +145,7 @@ const ProjectDashboard = ({ onLogout, user, theme = 'dark' }) => {
 
   const fetchSeasonalFactors = async () => {
     try {
-      const response = await fetch('http://localhost:8001/api/seasonal-factors/');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/seasonal-factors/`);
       if (response.ok) {
         const data = await response.json();
         setSeasonalFactors(data);
@@ -157,7 +157,7 @@ const ProjectDashboard = ({ onLogout, user, theme = 'dark' }) => {
 
   const performHouseComparison = async () => {
     try {
-      const response = await fetch('http://localhost:8001/api/enhanced-compare-houses/', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001'}/api/enhanced-compare-houses/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

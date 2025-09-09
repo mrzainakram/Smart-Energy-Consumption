@@ -21,8 +21,8 @@ const SECPARS = ({ theme = 'dark' }) => {
     const renderer = useRef(null);
     const stars = useRef([]);
 
-    const backendUrl = 'http://localhost:8001';
-    const streamlitUrl = 'http://localhost:8501';
+    const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+    const streamlitUrl = import.meta.env.VITE_STREAMLIT_CHATBOT_URL || 'http://localhost:8501';
 
     useEffect(() => {
         scene.current = new THREE.Scene();
