@@ -1,4 +1,4 @@
-﻿import os
+import os
 from pathlib import Path
 from decouple import config
 import requests
@@ -12,7 +12,7 @@ DATASET_DIR = os.path.join(BASE_DIR, 'dataset')
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-here')
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,0.0.0.0').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,0.0.0.0,*.streamlit.app').split(',')
 
 # Using Django's default User model
 # AUTH_USER_MODEL = 'energy_app.User'  # Commented out to use default User model
@@ -66,7 +66,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'smart_energy.wsgi.application'
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://localhost:3001,http://localhost:3002,http://127.0.0.1:3000,http://127.0.0.1:3001,http://127.0.0.1:3002').split(',')
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://localhost:3001,http://localhost:3002,http://127.0.0.1:3000,http://127.0.0.1:3001,http://127.0.0.1:3002,https://smart-energy-consumption-frontend-onuz.vercel.app').split(',')
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True  # For development only
 
