@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
+import MobileTextFix from './MobileTextFix';
 
 const MindBlowing3DPreWelcome = ({ onComplete, duration = 5000 }) => {
   const mountRef = useRef(null);
@@ -412,13 +413,11 @@ const MindBlowing3DPreWelcome = ({ onComplete, duration = 5000 }) => {
               />
               {/* Welcome Text - Appears first */}
               <motion.h2
-                className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 mb-6"
+                className="text-3xl md:text-5xl mb-6"
                 style={{
                   textShadow: '0 0 25px rgba(255, 165, 0, 0.9), 0 0 50px rgba(255, 140, 0, 0.6), 0 0 75px rgba(255, 69, 0, 0.4), 0 0 100px rgba(255, 0, 0, 0.2)',
                   WebkitTextStroke: '2px rgba(255, 165, 0, 0.8)',
-                  fontFamily: "'Bungee Spice', cursive, sans-serif",
                   letterSpacing: '0.1em',
-                  fontWeight: '800',
                   textTransform: 'uppercase',
                   transform: 'perspective(900px) rotateX(4deg)',
                   filter: 'drop-shadow(0 0 20px rgba(255, 165, 0, 0.8)) drop-shadow(0 0 40px rgba(255, 140, 0, 0.4))'
@@ -432,18 +431,22 @@ const MindBlowing3DPreWelcome = ({ onComplete, duration = 5000 }) => {
                   filter: 'drop-shadow(0 0 25px rgba(255, 165, 0, 1)) drop-shadow(0 0 50px rgba(255, 140, 0, 0.6))'
                 }}
               >
-                Welcome to
+                <MobileTextFix 
+                  gradientColors={['#FFCC80', '#FFA500', '#FF8C00']}
+                  fallbackColor="#FFA500"
+                  style={{ fontWeight: '800' }}
+                >
+                  Welcome to
+                </MobileTextFix>
               </motion.h2>
               
               {/* Title Name - Appears second with 2 second delay */}
               <motion.h1
-                className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600"
+                className="text-5xl md:text-7xl"
                 style={{
                   textShadow: '0 0 30px rgba(255, 165, 0, 0.9), 0 0 60px rgba(255, 140, 0, 0.6), 0 0 90px rgba(255, 69, 0, 0.4), 0 0 120px rgba(255, 0, 0, 0.2)',
                   WebkitTextStroke: '3px rgba(255, 165, 0, 0.8)',
-                  fontFamily: "'Bungee Spice', cursive, sans-serif",
                   letterSpacing: '0.25em',
-                  fontWeight: '900',
                   textTransform: 'uppercase',
                   transform: 'perspective(1000px) rotateX(5deg)',
                   filter: 'drop-shadow(0 0 25px rgba(255, 165, 0, 0.8)) drop-shadow(0 0 50px rgba(255, 140, 0, 0.4))'
@@ -458,13 +461,24 @@ const MindBlowing3DPreWelcome = ({ onComplete, duration = 5000 }) => {
                   filter: 'drop-shadow(0 0 30px rgba(255, 165, 0, 1)) drop-shadow(0 0 50px rgba(255, 140, 0, 0.6))'
                 }}
               >
-                <span style={{ display: 'block', letterSpacing: '0.05em' }}>SMART ENERGY</span>
-                <span style={{ display: 'block', letterSpacing: '0.05em' }}>CONSUMPTION</span>
+                <MobileTextFix 
+                  gradientColors={['#FFA500', '#FF8C00', '#FF6347']}
+                  fallbackColor="#FF8C00"
+                  style={{ fontWeight: '900' }}
+                >
+                  <span style={{ display: 'block', letterSpacing: '0.05em' }}>SMART ENERGY</span>
+                  <span style={{ display: 'block', letterSpacing: '0.05em' }}>CONSUMPTION</span>
+                </MobileTextFix>
               </motion.h1>
               {/* Initializing Text - Appears last with 6 second delay */}
               <motion.p
-                className="mt-6 text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-orange-500"
+                className="mt-6 text-xl md:text-2xl"
                 style={{
+                  color: '#FFCC80', // Fallback orange color for iOS
+                  background: 'linear-gradient(to right, #FFCC80, #FFA500)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                   textShadow: '0 0 20px rgba(255, 165, 0, 0.8), 0 0 40px rgba(255, 140, 0, 0.5), 0 0 60px rgba(255, 69, 0, 0.3), 0 0 80px rgba(255, 0, 0, 0.2)',
                   WebkitTextStroke: '1.5px rgba(255, 165, 0, 0.7)',
                   fontFamily: "'Bungee Spice', cursive, sans-serif",
@@ -484,7 +498,13 @@ const MindBlowing3DPreWelcome = ({ onComplete, duration = 5000 }) => {
                   y: -2
                 }}
               >
-                Initializing...
+                <MobileTextFix 
+                  gradientColors={['#FFCC80', '#FFA500']}
+                  fallbackColor="#FFCC80"
+                  style={{ fontWeight: '700' }}
+                >
+                  Initializing...
+                </MobileTextFix>
               </motion.p>
             </motion.div>
           )}

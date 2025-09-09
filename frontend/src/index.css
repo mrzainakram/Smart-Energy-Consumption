@@ -130,6 +130,38 @@
   }
 }
 
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific styles */
+  .text-gradient-fallback {
+    color: #FFA500 !important;
+    -webkit-text-fill-color: #FFA500 !important;
+  }
+  
+  /* Fix for iOS gradient text rendering */
+  h1, h2, h3, h4, h5, h6 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Ensure text is visible on iOS */
+  .gradient-text {
+    background: linear-gradient(to right, #FFCC80, #FFA500, #FF8C00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: #FFA500; /* Fallback for iOS */
+  }
+}
+
+/* Android Chrome specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .android-text-fix {
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: "liga";
+  }
+}
+
 /* Smooth Scrolling Fix */
 html {
   scroll-behavior: smooth;
