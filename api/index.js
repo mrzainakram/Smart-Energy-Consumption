@@ -9,7 +9,8 @@ app.use(cors({
     'http://localhost:3001', 
     'http://localhost:5173',
     'https://smart-energy-consumption-frontend-onuz.vercel.app',
-    'https://*.vercel.app'
+    'https://*.vercel.app',
+    '*' // Allow all origins for demo (remove in production)
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -31,18 +32,30 @@ app.get('/api/health/', (req, res) => {
 app.post('/api/auth/signup/', (req, res) => {
   const { email, password, username } = req.body;
   
-  if (!email || !password || !username) {
+  console.log('Signup attempt:', { email, username });
+  
+  if (!email || !password) {
     return res.status(400).json({
-      error: 'Email, password, and username are required'
+      error: 'Email and password are required'
     });
   }
   
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      error: 'Please enter a valid email address'
+    });
+  }
+  
+  // For demo purposes, we'll simulate OTP requirement
   res.json({
     success: true,
-    message: 'User registered successfully',
+    message: 'OTP sent to your email! Use 123456 for demo.',
+    requiresOTP: true,
     user: {
       id: Math.floor(Math.random() * 1000),
-      username: username,
+      username: username || email.split('@')[0],
       email: email
     }
   });
@@ -51,19 +64,30 @@ app.post('/api/auth/signup/', (req, res) => {
 app.post('/api/auth/signin/', (req, res) => {
   const { email, password } = req.body;
   
+  console.log('Signin attempt:', { email });
+  
   if (!email || !password) {
     return res.status(400).json({
       error: 'Email and password are required'
     });
   }
   
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      error: 'Please enter a valid email address'
+    });
+  }
+  
+  // For demo purposes, simulate OTP requirement
   res.json({
     success: true,
-    message: 'Login successful',
-    token: 'demo-jwt-token-' + Date.now(),
+    message: 'OTP sent to your email! Use 123456 for demo.',
+    requiresOTP: true,
     user: {
-      id: 1,
-      username: 'demo_user',
+      id: Math.floor(Math.random() * 1000),
+      username: email.split('@')[0],
       email: email
     }
   });
@@ -92,10 +116,34 @@ app.post('/api/auth/reset-password/', (req, res) => {
 });
 
 app.post('/api/auth/verify-otp/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'OTP verified successfully (demo mode)'
-  });
+  const { email, otp } = req.body;
+  
+  console.log('OTP verification:', { email, otp });
+  
+  if (!email || !otp) {
+    return res.status(400).json({
+      error: 'Email and OTP are required'
+    });
+  }
+  
+  // For demo, accept 123456 as valid OTP
+  if (otp === '123456' || otp === 'demo') {
+    res.json({
+      success: true,
+      message: 'Login successful!',
+      token: 'demo-jwt-token-' + Date.now(),
+      user: {
+        id: Math.floor(Math.random() * 1000),
+        username: email.split('@')[0],
+        email: email,
+        isVerified: true
+      }
+    });
+  } else {
+    res.status(400).json({
+      error: 'Invalid OTP. Use 123456 for demo.'
+    });
+  }
 });
 
 app.post('/api/auth/resend-otp/', (req, res) => {

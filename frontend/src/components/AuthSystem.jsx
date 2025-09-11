@@ -232,7 +232,8 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/signup/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${backendUrl}/api/auth/signup/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -274,7 +275,8 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/signin/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${backendUrl}/api/auth/signin/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -312,7 +314,8 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/forgot-password/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${backendUrl}/api/auth/forgot-password/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -349,7 +352,8 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/reset-password/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${backendUrl}/api/auth/reset-password/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -388,7 +392,8 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     setSuccess('');
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/verify-otp/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${backendUrl}/api/auth/verify-otp/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -431,7 +436,8 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     setSuccess('');
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/resend-otp/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${backendUrl}/api/auth/resend-otp/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
