@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CleanNavbar from './CleanNavbar';
+import IntegratedChatbot from './IntegratedChatbot';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const EnhancedPredictionDashboard = ({ user, onLogout }) => {
@@ -12,6 +13,7 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
   const [showAppliances, setShowAppliances] = useState(true);
   const [showHouseComparison, setShowHouseComparison] = useState(true);
   const [showHistory, setShowHistory] = useState(false);
+  const [showChatbot, setShowChatbot] = useState(false);
   const [isLoadingManual, setIsLoadingManual] = useState(false);
   const [isLoadingAppliance, setIsLoadingAppliance] = useState(false);
   const [isLoadingHouse, setIsLoadingHouse] = useState(false);
@@ -2346,6 +2348,31 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
 
         </main>
       </div>
+      
+      {/* Integrated Chatbot */}
+      <IntegratedChatbot 
+        isOpen={showChatbot} 
+        onClose={() => setShowChatbot(false)} 
+      />
+      
+      {/* Floating Chatbot Button */}
+      <motion.button
+        onClick={() => setShowChatbot(true)}
+        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl z-40"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1 }}
+      >
+        <div className="flex items-center space-x-2">
+          <span className="text-2xl">🤖</span>
+          <span className="hidden sm:block font-medium">AI Assistant</span>
+        </div>
+        <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+          !
+        </div>
+      </motion.button>
     </div>
   );
 };
