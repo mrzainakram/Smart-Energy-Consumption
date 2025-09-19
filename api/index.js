@@ -24,7 +24,19 @@ app.get('/api/health/', (req, res) => {
   res.json({ 
     status: 'ok', 
     message: 'Smart Energy Backend API is running',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    version: '1.0.0',
+    environment: 'production'
+  });
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'Smart Energy Backend API is running',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0',
+    environment: 'production'
   });
 });
 
@@ -238,15 +250,19 @@ app.get('/', (req, res) => {
   res.json({
     message: 'Smart Energy Consumption Backend API',
     version: '1.0.0',
+    status: 'running',
+    environment: 'production',
     endpoints: [
       '/api/health/',
       '/api/auth/signup/',
       '/api/auth/signin/',
+      '/api/auth/verify-otp/',
       '/api/predict/energy/',
       '/api/appliance-prediction/',
       '/api/compare-houses/',
       '/api/ocr/scan-bill/'
-    ]
+    ],
+    documentation: 'https://github.com/your-repo/smart-energy-chatbot'
   });
 });
 

@@ -70,7 +70,7 @@ const App_New = () => {
 
   const checkBackendConnection = async () => {
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8002';
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
       const response = await fetch(`${backendUrl}/api/health/`);
       if (response.ok) {
         setBackendStatus('connected');

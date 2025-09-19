@@ -546,7 +546,8 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
 
       // Also try API call for enhanced predictions
       try {
-        const response = await fetch('http://localhost:8001/api/appliance-prediction/', {
+        const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
+        const response = await fetch(`${backendUrl}/api/appliance-prediction/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -616,7 +617,8 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8001/api/predict/energy/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
+      const response = await fetch(`${backendUrl}/api/predict/energy/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -697,7 +699,8 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
 
       // Also try API call for enhanced predictions
       try {
-        const response = await fetch('http://localhost:8001/api/compare-houses/', {
+        const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
+        const response = await fetch(`${backendUrl}/api/compare-houses/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -847,7 +850,8 @@ const EnhancedPredictionDashboard = ({ user, onLogout }) => {
       const formData = new FormData();
       formData.append('bill_image', file);
 
-      const response = await fetch('http://localhost:8001/api/ocr/scan-bill/', {
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
+      const response = await fetch(`${backendUrl}/api/ocr/scan-bill/`, {
         method: 'POST',
         body: formData,
       });

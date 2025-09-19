@@ -232,7 +232,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
       const response = await fetch(`${backendUrl}/api/auth/signup/`, {
         method: 'POST',
         headers: {
@@ -275,7 +275,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
       const response = await fetch(`${backendUrl}/api/auth/signin/`, {
         method: 'POST',
         headers: {
@@ -314,7 +314,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
       const response = await fetch(`${backendUrl}/api/auth/forgot-password/`, {
         method: 'POST',
         headers: {
@@ -352,7 +352,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
       const response = await fetch(`${backendUrl}/api/auth/reset-password/`, {
         method: 'POST',
         headers: {
@@ -392,7 +392,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     setSuccess('');
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
       const response = await fetch(`${backendUrl}/api/auth/verify-otp/`, {
         method: 'POST',
         headers: {
@@ -436,7 +436,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     setSuccess('');
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8001';
+      const backendUrl = import.meta.env.VITE_BACKEND_API_URL || 'https://smart-energy-backend-api.vercel.app';
       const response = await fetch(`${backendUrl}/api/auth/resend-otp/`, {
         method: 'POST',
         headers: {
