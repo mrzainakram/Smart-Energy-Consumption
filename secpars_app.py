@@ -4,26 +4,33 @@ from typing import Optional
 from datetime import datetime
 import streamlit as st
 
-# Try to import optional dependencies
+# Try to import dotenv, but don't fail if it's not available
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
-    st.warning("dotenv not available, using environment variables only")
+    pass
 
-try:
-    from rag_utils import (
-        PROJECT_DATA_DIR, CHROMA_DIR,
-        build_or_load_vectorstore,
-        ingest_directory_into_store,
-        add_uploaded_file,
-        retrieve_with_scores
-    )
-    from llm_providers import answer_text
-    RAG_AVAILABLE = True
-except ImportError as e:
-    st.error(f"RAG utilities not available: {e}")
-    RAG_AVAILABLE = False
+from rag_utils import (
+    PROJECT_DATA_DIR, CHROMA_DIR,
+    build_or_load_vectorstore,
+    ingest_directory_into_store,
+    add_uploaded_file,
+    retrieve_with_scores
+)
+from llm_providers import answer_text
+
+# Load Streamlit secrets for cloud deployment
+if hasattr(st, 'secrets'):
+    # Set environment variables from Streamlit secrets
+    if 'GEMINI_API_KEY' in st.secrets:
+        os.environ['GEMINI_API_KEY'] = st.secrets['GEMINI_API_KEY']
+    if 'OPENAI_API_KEY' in st.secrets:
+        os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+    if 'PROJECT_DATA_DIR' in st.secrets:
+        os.environ['PROJECT_DATA_DIR'] = st.secrets['PROJECT_DATA_DIR']
+    if 'CHROMA_DIR' in st.secrets:
+        os.environ['CHROMA_DIR'] = st.secrets['CHROMA_DIR']
 
 # Load Streamlit secrets for cloud deployment
 if hasattr(st, 'secrets'):
@@ -57,369 +64,670 @@ body {
 .header-section {
     text-align: center;
     padding: 2rem 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 20px;
-    margin-bottom: 2rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    margin: 1rem 0;
 }
 
-.header-title {
-    font-size: 3.5rem;
+.logo-section {
+    margin-bottom: 1.5rem;
+}
+
+.logo-icons {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.logo-icons span {
+    animation: bounce 2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.1s);
+}
+
+.logo-icons span:nth-child(1) { --i: 1; }
+.logo-icons span:nth-child(2) { --i: 2; }
+.logo-icons span:nth-child(3) { --i: 3; }
+.logo-icons span:nth-child(4) { --i: 4; }
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+}
+
+.title-main {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.8rem; /* Slightly reduced font size */
     font-weight: 900;
-    margin: 0;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-    background-size: 400% 400%;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 3s ease-in-out infinite;
+    position: relative;
 }
 
-@keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+.title-main::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
+    border-radius: 2px;
 }
 
-.header-subtitle {
-    font-size: 1.2rem;
-    margin: 1rem 0 0 0;
-    color: rgba(255,255,255,0.9);
-    font-weight: 400;
-}
-
-.chat-container {
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 2rem;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-}
-
-.message {
-    margin: 1rem 0;
-    padding: 1rem;
-    border-radius: 15px;
-    animation: fadeInUp 0.5s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+    /* --- NEW, TARGETED CSS FOR SIDEBAR & CHAT HEADER --- */
+    
+    /* Overall App Background to Dark Black */
+    .stApp {
+        /* background-color: #1a1a1a !important; /* Dark black background */
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    /* Sidebar Background - Default Dark Gray */
+    .stSidebar {
+        background-color: #262730; /* Streamlit's default dark mode sidebar color */
     }
+
+    /* All text within the sidebar to be white and bold */
+    .stSidebar * {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+    }
+
+    /* Specifically ensure titles/subheaders are extra bold */
+    .stSidebar .st-emotion-cache-nahz7x, /* st.title "Configuration" */
+    .stSidebar .st-emotion-cache-1cpx4v7 /* st.subheader "📊 System Status" */
+    {
+        font-weight: 800 !important;
+        font-size: 24px !important;
 }
 
-.user-message {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    margin-left: 20%;
+    /* Selectbox values should have a dark background and orange border */
+    .stSidebar .st-emotion-cache-192z83 > div > div > div {
+        background-color: #000000 !important; /* Black background for selectbox */
+        border: 1px solid #ff8c00 !important; /* Orange border */
+    }
+
+    /* Re-ingest button styling */
+    .stSidebar .st-emotion-cache-v02bni > button {
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border-radius: 12px !important;
+        padding: 0.8rem 1.5rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+    }
+
+    /* Project Information Bar */
+    .stExpander > div > div > div > div {
+        color: #000000 !important; /* Black text */
+        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+        border-radius: 12px !important;
+        padding: 1rem !important;
+        font-weight: 900 !important;
+        font-size: 1.2rem !important;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
+    }
+
+    /* Chat with SECPARS Header */
+    .stMarkdown h3:contains("Chat with SECPARS"),
+    .stMarkdown h4:contains("Chat with SECPARS")
+    {
+        font-family: 'Metal Mania', system-ui !important; /* Apply Metal Mania */
+        font-size: 5rem !important; /* Increased font size */
+        font-weight: 400 !important; /* Metal Mania default weight */
+        color: #ff8c00 !important;
+        -webkit-text-fill-color: #ff8c00 !important;
+        background: none !important;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.5), 0 0 15px rgba(255,215,0,0.7) !important; /* Shiny effect */
+        text-align: center !important;
+        margin: 2rem 0 !important;
+        letter-spacing: 3px !important; /* Increased letter spacing */
+        position: relative !important;
+        line-height: 1.2 !important;
+        border: 2px solid #ff8c00 !important; /* Border */
+        border-image: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) 1 !important;
+        padding: 15px 25px !important;
+        border-radius: 10px !important;
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.6) !important;
 }
 
-.assistant-message {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    margin-right: 20%;
-    border: 1px solid rgba(255,255,255,0.2);
+    .stMarkdown h3:contains("Chat with SECPARS")::after,
+    .stMarkdown h4:contains("Chat with SECPARS")::after
+    {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 3px;
+        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
+        border-radius: 2px;
 }
 
-.input-container {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+    /* Subtitle Styling */
+    .subtitle-main {
+        font-family: 'Metal Mania', system-ui !important;
+        font-size: 1.8rem !important;
+        font-weight: 400 !important;
+        color: #ffffff !important;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.5) !important;
+        background: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        border: 1px solid #ff8c00 !important;
+        border-image: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) 1 !important;
+        padding: 10px 20px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 0 15px rgba(255, 140, 0, 0.4) !important;
+        display: inline-block;
+        margin-bottom: 1.2rem;
 }
 
-.stTextInput > div > div > input {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 25px;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    /* Global Text Styling for Dark Mode - White and Bold */
+    /* This targets all text within the main app container when the base theme is dark */
+    html[data-theme='dark'] .stApp,
+    html[data-theme='dark'] .stApp .stMarkdown, 
+    html[data-theme='dark'] .stApp .stText, 
+    html[data-theme='dark'] .stApp p, 
+    html[data-theme='dark'] .stApp span, 
+    html[data-theme='dark'] .stApp li, 
+    html[data-theme='dark'] .stApp strong, 
+    html[data-theme='dark'] .stApp em, 
+    html[data-theme='dark'] .stApp div:not(.stExpander) {
+        color: #ffffff !important;
+        font-weight: 700 !important; /* Bold */
+    }
+
+    html[data-theme='dark'] .stApp h1, 
+    html[data-theme='dark'] .stApp h2, 
+    html[data-theme='dark'] .stApp h3, 
+    html[data-theme='dark'] .stApp h4, 
+    html[data-theme='dark'] .stApp h5, 
+    html[data-theme='dark'] .stApp h6 {
+        color: #ffffff !important;
+        font-weight: 800 !important; /* Extra bold */
+    }
+
+    /* Override for elements that should maintain their specific color/gradient in dark mode */
+    html[data-theme='dark'] .title-main, 
+    html[data-theme='dark'] .subtitle-main, 
+    html[data-theme='dark'] .stMarkdown h3:contains("Chat with SECPARS"), 
+    html[data-theme='dark'] .stMarkdown h4:contains("Chat with SECPARS") {
+        -webkit-text-fill-color: unset !important; /* Allow background-clip to work */
+        color: unset !important; /* Reset color for gradient to apply */
+    }
+
+    html[data-theme='dark'] .title-main,
+    html[data-theme='dark'] .stMarkdown h3:contains("Chat with SECPARS"), 
+    html[data-theme='dark'] .stMarkdown h4:contains("Chat with SECPARS") {
+        color: #ff8c00 !important; /* Re-apply specific color for these */
+        -webkit-text-fill-color: #ff8c00 !important;
 }
 
-.stTextInput > div > div > input::placeholder {
-    color: rgba(255,255,255,0.6);
+    html[data-theme='dark'] .subtitle-main {
+        -webkit-text-fill-color: transparent !important; /* Maintain transparent for gradient */
+    }
+
+    /* Input Fields Text Color */
+    .stTextInput > div > div > input, 
+    .stTextInput > div > div > textarea {
+        color: #000000 !important; /* Black text inside input fields */
+    }
+
+    /* Streamlit Chat Input Text */
+    .stApp [data-testid="stForm"] input[type="text"] {
+        color: #000000 !important; /* Black text for the chat input field */
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Custom CSS for mobile responsiveness and light mode compatibility
+st.markdown("""
+<style>
+    /* Mobile Text Visibility Fix */
+    @media (max-width: 768px) {
+        .stMarkdown, .stText, .stChatMessage {
+            font-size: 16px !important;
+            line-height: 1.5 !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+        
+        /* Fix SECPARS title on mobile */
+        .main-header h1 {
+            font-size: 2rem !important;
+            font-weight: bold !important;
+            color: #1f2937 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
 }
 
-.stButton > button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 0.75rem 2rem;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        /* Mobile button sizing */
+        .stButton > button {
+            min-height: 44px !important;
+            min-width: 44px !important;
+            font-size: 16px !important;
+}
+    }
+    
+    @media (prefers-color-scheme: light) {
+        /* Light Mode Text Visibility */
+        .stMarkdown, .stText, .stChatMessage {
+            color: #1f2937 !important;
+            background-color: transparent !important;
+        }
+        
+        /* Chat message text visibility */
+        .stChatMessage .stMarkdown {
+            color: #1f2937 !important;
+            background-color: transparent !important;
+        }
+        
+        /* Sidebar text visibility */
+        .css-1d391kg .stMarkdown {
+            color: #1f2937 !important;
 }
 
-.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        /* Title text visibility */
+        h1, h2, h3, h4, h5, h6 {
+            color: #1f2937 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Button text visibility */
+        .stButton > button {
+    color: #ffffff !important;
+            background-color: #667eea !important;
+            border: 1px solid #5a67d8 !important;
+        }
+        
+        /* Input text visibility */
+        .stTextInput > div > div > input {
+            color: #1f2937 !important;
+            background-color: #ffffff !important;
+            border: 1px solid #d1d5db !important;
 }
 
-.status-indicator {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.status-online {
-    background: #4ecdc4;
-    box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
-}
-
-.status-offline {
-    background: #ff6b6b;
-    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-}
-
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem 0;
-}
-
-.feature-card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.feature-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #4ecdc4;
-}
-
-.feature-description {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.4;
-}
-
-.loading-spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    border-top-color: #4ecdc4;
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.error-message {
-    background: rgba(255, 107, 107, 0.1);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    color: #ff6b6b;
-    padding: 1rem;
-    border-radius: 10px;
-    margin: 1rem 0;
-}
-
-.success-message {
-    background: rgba(78, 205, 196, 0.1);
-    border: 1px solid rgba(78, 205, 196, 0.3);
-    color: #4ecdc4;
-    padding: 1rem;
-    border-radius: 10px;
-    margin: 1rem 0;
+        /* Selectbox text visibility */
+        .stSelectbox > div > div > div {
+            color: #1f2937 !important;
+            background-color: #000000 !important; /* Black background for selectbox input field in light mode */
+        }
+        
+        /* Caption text visibility */
+        .stCaption {
+            color: #6b7280 !important;
+            font-size: 14px !important;
+        }
+        
+        /* Subheader text visibility */
+        .stSubheader {
+            color: #374151 !important;
+            font-weight: 600 !important;
+        }
 }
 </style>
 """, unsafe_allow_html=True)
 
-# Main App Interface
-def main():
-    # Header Section
-    st.markdown("""
+# Clean Native Header Section
+st.markdown("""
+<div class="main-container">
     <div class="header-section">
-        <h1 class="header-title">SECPARS</h1>
-        <p class="header-subtitle">Smart Energy Consumption Prediction & Analysis Recommendation System</p>
-        <div style="margin-top: 1rem;">
-            <span class="status-indicator status-online"></span>
-            <span style="color: rgba(255,255,255,0.8);">AI Assistant Online</span>
+        <div class="logo-section">
+            <div class="logo-icons">
+                <span>⚡</span>
+                <span>🔋</span>
+                <span>💡</span>
+                <span>🚀</span>
+            </div>
+            <div class="title-main">SECPARS</div>
+            <div class="subtitle-main">Smart Energy Consumption Prediction & Recommendation System</div>
+            <div class="caption-main">🚀 Your AI-powered energy management assistant. Ask me anything about SECPARS and smart energy consumption!</div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+</div>
+""", unsafe_allow_html=True)
+
+# Initialize session state
+if "vs" not in st.session_state:
+    st.session_state["vs"] = build_or_load_vectorstore()
+
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [
+        {"role": "assistant", "content": "Hello! 👋 I'm your AI Smart Energy Assistant. How can I help you today?"}
+    ]
+
+# Clean Native Sidebar
+with st.sidebar:
+    st.title("🔧 Configuration")
     
-    # Feature Overview
+    # LLM Provider Preference
+    prefer = st.selectbox(
+        "LLM Provider Preference",
+        ["auto", "gemini", "openai"],
+        help="Choose your preferred AI model"
+    )
+    
+    # Language Selection
+    lang_code = st.selectbox(
+        "Language",
+        ["auto", "en", "ur"],
+        help="Choose your preferred language"
+    )
+    
+    st.markdown("---")
+    
+    # System Status
+    st.subheader("📊 System Status")
+    
+    # Project data path
+    st.caption(f"Project data: {PROJECT_DATA_DIR}")
+    
+    # Chroma DB path
+    st.caption(f"Chroma DB: {CHROMA_DIR}")
+    
+    # API Key Status
+    st.caption(f"GEMINI_API_KEY: {'set' if os.getenv('GEMINI_API_KEY') else 'missing'}")
+    st.caption(f"OPENAI_API_KEY: {'set' if os.getenv('OPENAI_API_KEY') else 'missing'}")
+    
+    # Re-ingest button
+    if st.button("Re-ingest project_data/now"):
+        with st.spinner("Re-ingesting project data..."):
+            st.session_state["vs"] = build_or_load_vectorstore()
+        st.success("✅ Project data re-ingested!")
+
+# Project Information (Hidden by default - Click to expand)
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
+with st.expander("📋 **Project Information & How to Use SECPARS**", expanded=False):
+    st.markdown('<div class="project-info-content">', unsafe_allow_html=True)
     st.markdown("""
-    <div class="feature-grid">
-        <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <div class="feature-title">Energy Prediction</div>
-            <div class="feature-description">AI-powered energy consumption forecasting using advanced ML models</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🏠</div>
-            <div class="feature-title">Smart Analysis</div>
-            <div class="feature-description">Comprehensive analysis of household energy patterns and efficiency</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">💡</div>
-            <div class="feature-title">Recommendations</div>
-            <div class="feature-description">Personalized suggestions to optimize energy usage and reduce costs</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <div class="feature-title">Data Insights</div>
-            <div class="feature-description">Detailed analytics and visualizations of your energy consumption</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    ## 🚀 **SECPARS - Smart Energy Consumption Prediction & Recommendation System**
     
-    # Chat Interface
-    st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+    ### **What is SECPARS?**
+    SECPARS is an AI-powered energy management system designed specifically for Pakistani households. It helps you understand, optimize, and save on your energy consumption.
     
-    if not RAG_AVAILABLE:
-        st.error("⚠️ RAG utilities are not available. Some features may be limited.")
-        st.info("This is a simplified version of SECPARS. For full functionality, ensure all dependencies are installed.")
+    ### **Key Features:**
+    - **📊 Energy Predictions**: 16 advanced ML models for consumption forecasting
+    - **📷 Bill Analysis**: OCR-powered bill scanning and data extraction
+    - **🤖 Smart Recommendations**: Personalized energy-saving tips
+    - **🏠 House Comparison**: Benchmark your usage against similar households
+    - **💰 LESCO Integration**: Pakistan-specific billing and rate calculations
     
-    # Initialize chat history
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    ### **How to Use:**
+    1. **Ask Questions**: Type any energy-related question in the chat
+    2. **Get Insights**: Receive AI-powered analysis and recommendations
+    3. **Save Money**: Learn how to reduce your electricity bills
+    4. **Track Progress**: Monitor your energy consumption over time
     
-    # Display chat messages
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+    ### **Example Questions:**
+    - "How can I reduce my electricity bill?"
+    - "What's my peak usage time?"
+    - "How does LESCO billing work?"
+    - "What appliances use the most power?"
     
-    # Chat input
-    if prompt := st.chat_input("Ask me about energy consumption, predictions, or recommendations..."):
-        # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
+    ### **Technology Stack:**
+    - **Backend**: Django + Python
+    - **AI Models**: LSTM, Random Forest, Gradient Boosting
+    - **Frontend**: React + Modern UI
+    - **Database**: ChromaDB for vector search
+    - **OCR**: OpenCV for bill processing
+    
+    ---
+    *Click this expander anytime to review this information!*
+    """)
+    st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Chat Interface After Project Information
+st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+st.markdown('<div class="section-title">💬 Chat with SECPARS</div>', unsafe_allow_html=True)
+
+
+
+for m in st.session_state["messages"]:
+    with st.chat_message(m["role"]):
+        st.markdown(m["content"])
+st.markdown('</div>', unsafe_allow_html=True)
+
+def _system(lang: str) -> str:
+    pol = {"en":"Respond ONLY in English.","ur":"Respond ONLY in Urdu script.","roman-ur":"Respond ONLY in Roman Urdu."}.get(lang,"Respond ONLY in English.")
+    return (
+        "You are SECPARS — a human-like, respectful AI assistant for Smart Energy Consumption Prediction and Recommendation System. "
+        "Be warm, concise, and speak naturally like a helpful person. "
+        "If something is unclear, ask a short follow-up question. Prefer step-by-step explanations for tricky topics. "
+        "Use the same courteous tone regardless of the provider (auto/gemini/openai).\n\n"
         
-        # Generate assistant response
-        with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                if RAG_AVAILABLE:
-                    try:
-                        # Use RAG system for response
-                        response = answer_text(prompt)
-                    except Exception as e:
-                        response = f"I apologize, but I encountered an error: {str(e)}. Please try again."
-                else:
-                    # Fallback response without RAG
-                    response = generate_fallback_response(prompt)
-            
-            st.markdown(response)
+        "**SECPARS Project Knowledge - COMPREHENSIVE GUIDE:**\n"
+        "- **Core Purpose**: AI-powered energy management system for Pakistani households using LESCO rates\n"
+        "- **Key Features**: Energy predictions (16 ML models), Bill scanning (OCR), Appliance optimization, House comparison, LESCO billing\n"
+        "- **ML Models**: LSTM, Random Forest, Gradient Boosting, SVR, Ensemble methods with TensorFlow/Scikit-learn\n"
+        "- **Bill Processing**: OpenCV + OCR for electricity, gas, water bills with automatic data extraction\n"
+        "- **Predictions**: Daily/weekly/monthly consumption, peak times, seasonal patterns, cost estimates\n"
+        "- **Recommendations**: Energy-saving tips, appliance optimization, cost reduction strategies\n"
+        "- **Tech Stack**: Django backend, React frontend, ChromaDB vector search, HuggingFace NLP\n"
+        "- **Target Users**: Homeowners, energy analysts, utility companies in Pakistan\n\n"
         
-        # Add assistant response to chat history
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        "**Response Strategy - ALWAYS PRIORITIZE PROJECT KNOWLEDGE:**\n"
+        "- **Project Questions**: Use comprehensive SECPARS knowledge first, explain in detail\n"
+        "- **Energy Topics**: Provide specific insights about Pakistani energy sector, LESCO rates, consumption patterns\n"
+        "- **Technical Questions**: Explain architecture, models, APIs, and implementation details thoroughly\n"
+        "- **Feature Questions**: Describe how each feature works, benefits, and usage examples\n"
+        "- **General Questions**: Use Gemini knowledge, but maintain SECPARS context when relevant\n\n"
+        
+        "**Conversation Style:**\n"
+        "- Be friendly, empathetic, and professional (please, thanks, I'm happy to help).\n"
+        "- Use project knowledge first when relevant; otherwise answer from general knowledge.\n"
+        "- Provide clear takeaways, bullet points, and short examples where useful.\n"
+        "- Confirm understanding briefly and invite the user to continue.\n"
+        "- Avoid long disclaimers; be direct and helpful.\n"
+        "- Always mention SECPARS capabilities when discussing energy-related topics.\n"
+        "- **IMPORTANT**: Do NOT start responses with greetings like 'Good morning/afternoon/evening'. Go directly to answering the question.\n\n"
+        
+        "**SECPARS Expertise Areas:**\n"
+        "- Energy consumption prediction and analysis\n"
+        "- Bill scanning and OCR processing\n"
+        "- Machine learning models and algorithms\n"
+        "- LESCO billing and rate calculations\n"
+        "- Appliance optimization and recommendations\n"
+        "- House comparison and benchmarking\n"
+        "- Technical architecture and implementation\n"
+        "- Energy saving strategies for Pakistan\n\n"
+        + pol
+    )
+
+def _compose_ctx(q: str, ctx: str) -> str:
+    return f"Project knowledge excerpts:\n{ctx}\n\nUser: {q}\nAnswer using only the excerpts if sufficient."
+
+# Safe answer helper with graceful rate-limit fallback
+def _answer_safe(prompt: str, *, use_ctx: bool = False, ctx: str | None = None) -> str:
+    try:
+        if use_ctx and ctx:
+            full_prompt = _compose_ctx(prompt, ctx)
+        else:
+            full_prompt = prompt
+        return answer_text(full_prompt, system=_system(lang_code))
+    except Exception as e:
+        msg = str(e)
+        if "429" in msg or "quota" in msg.lower() or "rate" in msg.lower():
+            # Try fallback provider
+            try:
+                return answer_text(full_prompt, system=_system(lang_code))
+            except Exception:
+                pass
+            st.warning("I'm hitting temporary API limits. Please wait a few seconds and try again.")
+            return "I'm currently rate-limited. Please try again in a short while."
+        # Generic friendly error
+        st.error("Sorry, something went wrong while generating the response.")
+        return "I'm sorry—something went wrong while generating the response. Please try again."
+
+# Hidden File Upload Section (Horizontal, Small Size)
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
+with st.expander("📎 File Upload", expanded=False):
+    st.markdown('<div class="upload-collapsible">', unsafe_allow_html=True)
+    st.markdown("### 📎 Upload Files")
+    
+    # Horizontal layout with small size
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        up_doc = st.file_uploader("📄 Document", type=["pdf","docx","txt","md"], key="up_doc", label_visibility="collapsed")
+    with col2:
+        up_img = st.file_uploader("🖼️ Image", type=["png","jpg","jpeg"], key="up_img", label_visibility="collapsed")
+    with col3:
+        up_audio = st.file_uploader("🎵 Audio", type=["mp3","wav","m4a"], key="up_audio", label_visibility="collapsed")
     
     st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Footer
-    st.markdown("""
-    <div style="text-align: center; margin-top: 3rem; padding: 2rem; color: rgba(255,255,255,0.6);">
-        <p>Powered by Advanced AI & Machine Learning | Smart Energy Solutions</p>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
-def generate_fallback_response(prompt):
-    """Generate a fallback response when RAG is not available"""
-    prompt_lower = prompt.lower()
-    
-    if any(word in prompt_lower for word in ["energy", "consumption", "electricity", "bill"]):
-        return """⚡ **Energy Consumption Analysis**
+# Handle uploads with results
+if up_doc is not None:
+    st.markdown('<div class="upload-result">', unsafe_allow_html=True)
+    st.info(f"📎 **Document Selected:** {up_doc.name}")
+    try:
+        suffix = f".{up_doc.name.split('.')[-1]}".lower()
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(up_doc.read()); path = tmp.name
+        add_uploaded_file(st.session_state["vs"], path)
+        st.success("✅ **Successfully added to knowledge base!**")
+        st.write(f"**File processed:** {up_doc.name}")
+        st.write(f"**File size:** {up_doc.size} bytes")
+        st.write(f"**File type:** {up_doc.type}")
+    except Exception as e:
+        st.error(f"❌ **Upload failed:** {e}")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-I can help you understand energy consumption patterns! Here are some key insights:
+if up_img is not None:
+    st.markdown('<div class="upload-result">', unsafe_allow_html=True)
+    st.info(f"🖼️ **Image Selected:** {up_img.name}")
+    st.image(up_img, caption=up_img.name, width=300)
+    st.write(f"**Image size:** {up_img.size} bytes")
+    st.write(f"**Image type:** {up_img.type}")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-**Common Energy Consumers:**
-- Air conditioning: 40-50% of total consumption
-- Water heating: 15-20%
-- Lighting: 10-15%
-- Refrigeration: 8-12%
+if up_audio is not None:
+    st.markdown('<div class="upload-result">', unsafe_allow_html=True)
+    st.info(f"🎵 **Audio Selected:** {up_audio.name}")
+    st.audio(up_audio, format=up_audio.type or "audio/wav")
+    st.write(f"**Audio size:** {up_audio.size} bytes")
+    st.write(f"**Audio type:** {up_audio.type}")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-**Energy Saving Tips:**
-- Use LED bulbs (80% less energy than incandescent)
-- Set AC temperature to 24-26°C
-- Unplug devices when not in use
-- Regular maintenance of appliances
+# Clean Native Chat Input
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
+user_q = st.chat_input("💬 Ask me anything about SECPARS and smart energy consumption...")
 
-**For detailed analysis and predictions, please ensure all dependencies are properly installed.**"""
-    
-    elif any(word in prompt_lower for word in ["prediction", "forecast", "future"]):
-        return """🔮 **Energy Prediction System**
+if user_q:
+    st.session_state["messages"].append({"role":"user","content":user_q})
+    with st.chat_message("user"): 
+        st.markdown(user_q)
 
-Our AI system uses advanced machine learning models to predict energy consumption:
+    with st.chat_message("assistant"):
+        try:
+            # Detect if query is project-related
+            project_keywords = [
+                # Specific energy-related phrases
+                'energy consumption', 'reduce energy', 'save electricity', 
+                'energy bill', 'power usage', 'electricity saving',
+                'smart energy', 'energy optimization', 'cost reduction',
+                'appliance efficiency', 'energy management',
+                
+                # More specific project-related phrases
+                'how to lower electricity bill', 
+                'reduce home energy usage', 
+                'smart home energy',
+                'energy saving tips',
+                'household power consumption',
+                'electricity cost reduction',
+                
+                # Technical and project-specific terms
+                'energy prediction', 'bill scanning', 'machine learning',
+                'ai energy analysis', 'power consumption prediction',
+                'electricity usage patterns', 'energy efficiency tips',
+                'smart appliance', 'renewable energy', 'energy monitoring',
+                'electricity rate analysis', 'home energy audit',
+                'energy saving strategies', 'power consumption insights'
+            ]
+            
+            # More sophisticated project query detection
+            def is_project_related_query(query):
+                query_lower = query.lower().strip()
+                words = query_lower.split()
+                word_count = len(words)
+                
+                # Check for exact keyword matches
+                keyword_match = any(keyword in query_lower for keyword in project_keywords)
+                
+                # More flexible context checks
+                context_checks = (
+                    keyword_match and 
+                    (
+                        (word_count >= 2 and word_count <= 3) or  # Short but specific queries
+                        (word_count >= 4 and word_count <= 15)    # Longer detailed queries
+                    )
+                )
+                
+                return context_checks
+            
+            is_project_query = is_project_related_query(user_q)
+            
+            if is_project_query:
+                with st.spinner("🔍 Searching in project data..."):
+                    res = retrieve_with_scores(st.session_state["vs"], user_q, k=5)
+                    rel = [(d,s) for d,s in res if s>=0.7]  # High relevance threshold
+                    
+                    if rel:
+                        st.success(f"🎯 Project Knowledge Found (top {len(rel)} relevant chunks)")
+                        ctx = "\n\n".join([f"[{i+1}] {d.page_content[:1200]}" for i,(d,_) in enumerate(rel)])
+                        ans = _answer_safe(user_q, use_ctx=True, ctx=ctx)
+                        
+                        # Simple project knowledge response
+                        st.markdown(f"""
+**🏆 Project Knowledge Response**
+{ans}
 
-**Prediction Models:**
-- Linear Regression for baseline trends
-- Random Forest for complex patterns
-- LSTM Neural Networks for time series
-- Gradient Boosting for accuracy
+*[Sourced from SECPARS Project Knowledge Base]*
+""", unsafe_allow_html=True)
+                    else:
+                        # Fallback to Gemini if no highly relevant project data
+                        with st.spinner("🤖 Using Gemini AI..."):
+                            ans = _answer_safe(
+                                f"User: {user_q}\n\nProvide a helpful, comprehensive answer.",
+                                use_ctx=False
+                            )
+                            
+                            # Simple Gemini response
+                            st.markdown(f"""
+**🌐 Gemini AI Response**
+{ans}
 
-**Prediction Factors:**
-- Historical consumption data
-- Weather patterns
-- Seasonal variations
-- Appliance usage patterns
+*[Generated by Gemini AI]*
+""", unsafe_allow_html=True)
+            else:
+                # General or non-project query - Use Gemini only
+                with st.spinner("🤖 Using Gemini AI..."):
+                    ans = _answer_safe(
+                        f"User: {user_q}\n\nProvide a helpful, comprehensive answer.",
+                        use_ctx=False
+                    )
+                    
+                    # Simple general response
+                    st.markdown(f"""
+**🌐 AI Response**
+{ans}
 
-**For real-time predictions, please ensure the full system is deployed.**"""
-    
-    elif any(word in prompt_lower for word in ["recommendation", "suggest", "optimize", "save"]):
-        return """💡 **Energy Optimization Recommendations**
+*[Generated by Gemini AI]*
+""", unsafe_allow_html=True)
+            
+            st.session_state["messages"].append({"role":"assistant","content":ans})
+        except Exception as e:
+            st.error(f"❌ Error: {str(e)}")
+            st.session_state["messages"].append({"role":"assistant","content":f"Error: {e}"})
 
-Here are personalized recommendations to optimize your energy usage:
-
-**Immediate Actions:**
-- Replace old appliances with energy-efficient models
-- Install smart thermostats
-- Use natural lighting during day
-- Regular HVAC maintenance
-
-**Long-term Strategies:**
-- Consider solar panel installation
-- Implement home automation
-- Energy audit and monitoring
-- Time-of-use optimization
-
-**For personalized recommendations based on your data, please ensure the full system is available.**"""
-    
-    else:
-        return """🤖 **SECPARS AI Assistant**
-
-I'm here to help with energy consumption analysis and optimization! 
-
-**What I can help with:**
-- Energy consumption analysis
-- Prediction and forecasting
-- Cost optimization strategies
-- Appliance efficiency tips
-- Renewable energy guidance
-
-**Please note:** Some advanced features require the full system deployment. For complete functionality, ensure all dependencies are installed.
-
-How can I assist you with your energy needs today?"""
-
-if __name__ == "__main__":
-    main()
+    # Mark sent to clear input on next render
+    st.session_state["_sent_once"] = True
+st.markdown('</div>', unsafe_allow_html=True) 
