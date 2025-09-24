@@ -69,7 +69,7 @@ const App_New = () => {
 
   const checkBackendConnection = async () => {
     try {
-      const response = await fetch('http://localhost:8002/api/health/');
+      const response = await fetch('http://localhost:8000/api/health/');
       if (response.ok) {
         setBackendStatus('connected');
       } else {

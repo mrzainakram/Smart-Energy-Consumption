@@ -232,7 +232,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/signup/', {
+      const response = await fetch('http://localhost:8000/api/auth/signup/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -274,7 +274,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/signin/', {
+      const response = await fetch('http://localhost:8000/api/auth/signin/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -312,7 +312,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/forgot-password/', {
+      const response = await fetch('http://localhost:8000/api/auth/forgot-password/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -343,7 +343,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     setSuccess('');
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/verify-forgot-otp/', {
+      const response = await fetch('http://localhost:8000/api/auth/verify-forgot-otp/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -382,7 +382,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/reset-password/', {
+      const response = await fetch('http://localhost:8000/api/auth/reset-password/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -428,7 +428,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     setSuccess('');
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/verify-otp/', {
+      const response = await fetch('http://localhost:8000/api/auth/verify-otp/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -471,7 +471,7 @@ const AuthSystem = ({ onAuthSuccess, theme = 'dark', onBack }) => {
     setSuccess('');
 
     try {
-      const response = await fetch('http://localhost:8001/api/auth/resend-otp/', {
+      const response = await fetch('http://localhost:8000/api/auth/resend-otp/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

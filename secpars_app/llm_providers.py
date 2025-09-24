@@ -1,87 +1,88 @@
 import os
 from typing import Optional, Dict, Any
 import base64
-import google.generativeai as genai
 from io import BytesIO
+
+# Try to import google.generativeai, but allow missing dependency
+try:
+    import google.generativeai as genai  # type: ignore
+    GEMINI_AVAILABLE = True
+except Exception:
+    genai = None  # type: ignore
+    GEMINI_AVAILABLE = False
 
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
 
-def _ensure_gemini():
+def _get_api_key() -> str:
     api_key = os.getenv("GEMINI_API_KEY", "")
-    if not api_key:
-        try:
-            import streamlit as st
-            if hasattr(st, 'secrets') and 'GEMINI_API_KEY' in st.secrets:
-                api_key = st.secrets['GEMINI_API_KEY']
-        except Exception:
-            pass
+    if api_key:
+        return api_key
+    try:
+        import streamlit as st  # lazy import
+        if hasattr(st, 'secrets') and 'GEMINI_API_KEY' in st.secrets:
+            return st.secrets['GEMINI_API_KEY']
+    except Exception:
+        pass
+    return ""
 
+def _ensure_gemini() -> bool:
+    if not GEMINI_AVAILABLE:
+        return False
+    api_key = _get_api_key()
     if not api_key:
-        raise RuntimeError("GEMINI_API_KEY not configured")
-    genai.configure(api_key=api_key)
+        return False
+    try:
+        genai.configure(api_key=api_key)  # type: ignore
+        return True
+    except Exception:
+        return False
+
+def _fallback_response(prompt: str) -> str:
+    pl = (prompt or "").lower()
+    if any(x in pl for x in ["energy", "consumption", "bill", "units", "kwh"]):
+        return (
+            "I'm SECPARS. I provide smart energy insights and recommendations. "
+            "Ask about energy consumption, predictions, or tips to save costs."
+        )
+    return (
+        "I'm SECPARS, your Smart Energy assistant. I can help with energy usage, predictions, and cost-saving tips. "
+        "What would you like to know about your energy consumption?"
+    )
 
 def call_gemini_text(prompt: str, system: Optional[str] = None) -> str:
-    _ensure_gemini()
-    model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system or "")
-    resp = model.generate_content(prompt)
-    return (resp.text or "").strip()
+    if not _ensure_gemini():
+        return _fallback_response(prompt)
+    try:
+        model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system or "")  # type: ignore
+        resp = model.generate_content(prompt)
+        return (getattr(resp, 'text', '') or '').strip() or _fallback_response(prompt)
+    except Exception:
+        return _fallback_response(prompt)
 
 def call_gemini_multimodal(prompt: str, images: list = None, audios: list = None, system: Optional[str] = None) -> str:
-    _ensure_gemini()
-    model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system or "")
-    parts = []
-    if prompt:
-        parts.append(prompt)
-    for img in images or []:
-        parts.append({"inline_data": img})
-    for au in audios or []:
-        parts.append({"inline_data": au})
-    resp = model.generate_content(parts)
-    return (resp.text or "").strip()
+    if not _ensure_gemini():
+        return _fallback_response(prompt)
+    try:
+        model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system or "")  # type: ignore
+        parts = []
+        if prompt:
+            parts.append(prompt)
+        for img in images or []:
+            parts.append({"inline_data": img})
+        for au in audios or []:
+            parts.append({"inline_data": au})
+        resp = model.generate_content(parts)
+        return (getattr(resp, 'text', '') or '').strip() or _fallback_response(prompt)
+    except Exception:
+        return _fallback_response(prompt)
 
 def answer_text(prompt: str, system: Optional[str] = None) -> str:
     # Professional system prompt for SECPARS
     professional_system = """
     You are SECPARS - Smart Energy Consumption Prediction & Recommendation System.
-    
-    CORE IDENTITY:
-    - I'm your AI assistant for smart energy management
-    - I help predict energy consumption and provide recommendations
-    - I'm designed to make energy usage more efficient and cost-effective
-    
-    RESPONSE RULES:
-    1. Keep answers SHORT and PROFESSIONAL (max 2-3 sentences)
-    2. Answer ONLY what was asked - no extra technical details
-    3. NEVER reveal internal technical details (models, APIs, endpoints, algorithms)
-    4. NEVER share implementation specifics or code details
-    5. Focus on USER BENEFITS, not technical implementation
-    6. End with 1-2 relevant follow-up questions
-    7. Maintain professional tone always
-    
-    GREETING RESPONSE:
-    When user greets, respond with:
-    "Hello! I'm SECPARS, your Smart Energy Consumption assistant. I help predict energy usage and provide recommendations to save costs and improve efficiency. How can I assist you with your energy management needs today?"
-    
-    TECHNICAL QUESTIONS:
-    - If asked about "how predictions work" → "I use advanced AI algorithms to analyze your energy patterns and predict future consumption"
-    - If asked about "models" → "I use machine learning models trained on energy data to make accurate predictions"
-    - If asked about "APIs" → "I connect to various data sources to provide comprehensive energy insights"
-    - NEVER mention specific model names, endpoints, or technical architecture
-    
-    PRIVACY PROTECTION:
-    - Never reveal internal system details
-    - Never share code or implementation specifics
-    - Never mention specific technologies or frameworks
-    - Focus on user benefits and outcomes only
-    
-    Example format:
-    [Direct, professional answer]
-    
-    💡 You can also ask:
-    - [Related question 1]
-    - [Related question 2]
+    Keep answers concise (2-3 sentences), professional, and focused on user benefits.
+    Never reveal internal technical details. Suggest one follow-up question.
     """
-    
     return call_gemini_text(prompt, system or professional_system)
 
 def answer_multimodal(prompt: str, image_bytes: Optional[bytes], image_mime: Optional[str], system: Optional[str] = None) -> str:
@@ -95,11 +96,13 @@ def answer_audio(prompt: str, audio_bytes: Optional[bytes], audio_mime: Optional
     return call_gemini_multimodal(prompt, audios=[{"mime_type": audio_mime, "data": base64.b64encode(audio_bytes).decode("utf-8")}], system=system)
 
 def get_available_models() -> Dict[str, list]:
-    return {"gemini": [GEMINI_MODEL]}
+    return {"gemini": [GEMINI_MODEL] if GEMINI_AVAILABLE else []}
 
 def test_connection() -> Dict[str, Any]:
+    if not _ensure_gemini():
+        return {"status": "error", "message": "Gemini not configured", "provider": "gemini"}
     try:
         result = call_gemini_text("Hello, this is a test message.")
-        return {"status": "success", "provider": "gemini", "response": result[:100] + "..." if len(result) > 100 else result}
+        return {"status": "success", "provider": "gemini", "response": (result[:100] + "...") if len(result) > 100 else result}
     except Exception as e:
         return {"status": "error", "message": str(e), "provider": "gemini"}

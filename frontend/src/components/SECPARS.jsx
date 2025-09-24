@@ -21,7 +21,7 @@ const SECPARS = ({ theme = 'dark' }) => {
     const renderer = useRef(null);
     const stars = useRef([]);
 
-    const backendUrl = 'http://localhost:8001';
+    const backendUrl = 'http://localhost:8000';
     const streamlitUrl = 'http://localhost:8501';
 
     useEffect(() => {

@@ -718,9 +718,13 @@ def enhanced_energy_prediction(request):
     """
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            consumed_units = int(data.get('consumed_units', 0))
-            appliance_data = data.get('appliance_data', {})
+            data = json.loads(request.body or '{}')
+            # If payload is a list, take the first object
+            if isinstance(data, list):
+                data = data[0] if data else {}
+            # Normalize types and provide defaults
+            consumed_units = int(float(data.get('consumed_units', 0) or 0))
+            appliance_data = data.get('appliance_data', {}) or {}
             
             # Load models
             models = load_models()
@@ -769,12 +773,12 @@ def enhanced_energy_prediction(request):
                 try:
                     if hasattr(model, 'predict'):
                         # Prepare input for model
-                        if model_name in ['lstm', 'rnn']:
-                            # For neural networks, reshape input
-                            X = np.array([features]).reshape(1, 1, len(features))
+                        # Build a flat 2D feature vector regardless of type returned by prepare_features
+                        if isinstance(features, (list, tuple, np.ndarray)):
+                            vec = list(features)
                         else:
-                            # For scikit-learn models
-                            X = np.array([list(features.values())])
+                            vec = list(features.values())
+                        X = np.array([vec], dtype=float).reshape(1, -1)
                         
                         # Get prediction
                         pred = model.predict(X)
@@ -782,6 +786,11 @@ def enhanced_energy_prediction(request):
                             base_prediction = float(pred[0])
                         else:
                             base_prediction = float(pred)
+                        
+                        # Clamp prediction to a reasonable band around current usage
+                        min_pred = max(0.0, consumed_units * 0.8)
+                        max_pred = consumed_units * 1.5
+                        base_prediction = max(min_pred, min(base_prediction, max_pred))
                         
                         # Apply seasonal adjustments
                         season_factor = seasonal_factors[current_season]
