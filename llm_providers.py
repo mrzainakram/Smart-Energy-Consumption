@@ -3,141 +3,107 @@ from typing import Optional, Dict, Any
 import base64
 from io import BytesIO
 
-# Try to import google.generativeai, but don't fail if it's not available
+# Try to import google.generativeai, but allow missing dependency
 try:
-    import google.generativeai as genai
+    import google.generativeai as genai  # type: ignore
     GEMINI_AVAILABLE = True
-except ImportError:
-    genai = None
+except Exception:
+    genai = None  # type: ignore
     GEMINI_AVAILABLE = False
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+# Use a stable default model on cloud
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
 
-def _ensure_gemini():
-    if not GEMINI_AVAILABLE:
-        return False, "Google Generative AI not available"
-    
+def _get_api_key() -> str:
     api_key = os.getenv("GEMINI_API_KEY", "")
-    if not api_key:
-        return False, "GEMINI_API_KEY not found in environment variables"
-    
+    if api_key:
+        return api_key
     try:
-        genai.configure(api_key=api_key)
-        return True, "Gemini configured successfully"
-    except Exception as e:
-        return False, f"Failed to configure Gemini: {str(e)}"
+        import streamlit as st  # lazy import
+        if hasattr(st, 'secrets') and 'GEMINI_API_KEY' in st.secrets:
+            return st.secrets['GEMINI_API_KEY']
+    except Exception:
+        pass
+    return ""
 
-def answer_text(question: str, context: str = "") -> str:
-    """Answer a question using Gemini AI with fallback responses"""
-    
+def _ensure_gemini() -> bool:
     if not GEMINI_AVAILABLE:
-        return _get_fallback_response(question)
-    
-    success, message = _ensure_gemini()
-    if not success:
-        return _get_fallback_response(question)
-    
+        return False
+    api_key = _get_api_key()
+    if not api_key:
+        return False
     try:
-        # Create a simple prompt
-        prompt = f"""
-        You are an AI assistant for Smart Energy Consumption Prediction and Analysis (SECPARS).
-        
-        Context: {context}
-        Question: {question}
-        
-        Please provide a helpful response about energy consumption, predictions, or recommendations.
-        Keep your response concise and practical.
-        """
-        
-        model = genai.GenerativeModel(GEMINI_MODEL)
-        response = model.generate_content(prompt)
-        return response.text if response.text else _get_fallback_response(question)
-        
+        genai.configure(api_key=api_key)  # type: ignore
+        return True
+    except Exception:
+        return False
+
+def _fallback_response(prompt: str) -> str:
+    pl = (prompt or "").lower()
+    if any(x in pl for x in ["energy", "consumption", "bill", "units", "kwh"]):
+        return (
+            "I'm SECPARS. I provide smart energy insights and recommendations. "
+            "Ask about energy consumption, predictions, or tips to save costs."
+        )
+    return (
+        "I'm SECPARS, your Smart Energy assistant. I can help with energy usage, predictions, and cost-saving tips. "
+        "What would you like to know about your energy consumption?"
+    )
+
+def call_gemini_text(prompt: str, system: Optional[str] = None) -> str:
+    if not _ensure_gemini():
+        return _fallback_response(prompt)
+    try:
+        model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system or "")  # type: ignore
+        resp = model.generate_content(prompt)
+        return (getattr(resp, 'text', '') or '').strip() or _fallback_response(prompt)
+    except Exception:
+        return _fallback_response(prompt)
+
+def call_gemini_multimodal(prompt: str, images: list = None, audios: list = None, system: Optional[str] = None) -> str:
+    if not _ensure_gemini():
+        return _fallback_response(prompt)
+    try:
+        model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system or "")  # type: ignore
+        parts = []
+        if prompt:
+            parts.append(prompt)
+        for img in images or []:
+            parts.append({"inline_data": img})
+        for au in audios or []:
+            parts.append({"inline_data": au})
+        resp = model.generate_content(parts)
+        return (getattr(resp, 'text', '') or '').strip() or _fallback_response(prompt)
+    except Exception:
+        return _fallback_response(prompt)
+
+def answer_text(prompt: str, system: Optional[str] = None) -> str:
+    # Professional system prompt for SECPARS
+    professional_system = """
+    You are SECPARS - Smart Energy Consumption Prediction & Recommendation System.
+    Keep answers concise (2-3 sentences), professional, and focused on user benefits.
+    Never reveal internal technical details. Suggest one follow-up question.
+    """
+    return call_gemini_text(prompt, system or professional_system)
+
+def answer_multimodal(prompt: str, image_bytes: Optional[bytes], image_mime: Optional[str], system: Optional[str] = None) -> str:
+    if image_bytes is None:
+        return answer_text(prompt, system)
+    return call_gemini_multimodal(prompt, [{"mime_type": image_mime, "data": base64.b64encode(image_bytes).decode("utf-8")}], system=system)
+
+def answer_audio(prompt: str, audio_bytes: Optional[bytes], audio_mime: Optional[str], system: Optional[str] = None) -> str:
+    if audio_bytes is None:
+        return answer_text(prompt, system)
+    return call_gemini_multimodal(prompt, audios=[{"mime_type": audio_mime, "data": base64.b64encode(audio_bytes).decode("utf-8")}], system=system)
+
+def get_available_models() -> Dict[str, list]:
+    return {"gemini": [GEMINI_MODEL] if GEMINI_AVAILABLE else []}
+
+def test_connection() -> Dict[str, Any]:
+    if not _ensure_gemini():
+        return {"status": "error", "message": "Gemini not configured", "provider": "gemini"}
+    try:
+        result = call_gemini_text("Hello, this is a test message.")
+        return {"status": "success", "provider": "gemini", "response": (result[:100] + "...") if len(result) > 100 else result}
     except Exception as e:
-        return _get_fallback_response(question)
-
-def _get_fallback_response(question: str) -> str:
-    """Provide fallback responses when AI is not available"""
-    question_lower = question.lower()
-    
-    if any(word in question_lower for word in ["energy", "consumption", "electricity", "bill"]):
-        return """⚡ **Energy Consumption Analysis**
-
-I can help you understand energy consumption patterns! Here are some key insights:
-
-**Common Energy Consumers:**
-- Air conditioning: 40-50% of total consumption
-- Water heating: 15-20%
-- Lighting: 10-15%
-- Refrigeration: 8-12%
-
-**Energy Saving Tips:**
-- Use LED bulbs (80% less energy than incandescent)
-- Set AC temperature to 24-26°C
-- Unplug devices when not in use
-- Regular maintenance of appliances
-
-**Note:** For detailed AI-powered analysis, please ensure all dependencies are installed."""
-    
-    elif any(word in question_lower for word in ["prediction", "forecast", "future"]):
-        return """🔮 **Energy Prediction System**
-
-Our AI system uses advanced machine learning models to predict energy consumption:
-
-**Prediction Models:**
-- Linear Regression for baseline trends
-- Random Forest for complex patterns
-- LSTM Neural Networks for time series
-- Gradient Boosting for accuracy
-
-**Prediction Factors:**
-- Historical consumption data
-- Weather patterns
-- Seasonal variations
-- Appliance usage patterns
-
-**Note:** For real-time AI predictions, please ensure all dependencies are installed."""
-    
-    elif any(word in question_lower for word in ["recommendation", "suggest", "optimize", "save"]):
-        return """💡 **Energy Optimization Recommendations**
-
-Here are personalized recommendations to optimize your energy usage:
-
-**Immediate Actions:**
-- Replace old appliances with energy-efficient models
-- Install smart thermostats
-- Use natural lighting during day
-- Regular HVAC maintenance
-
-**Long-term Strategies:**
-- Consider solar panel installation
-- Implement home automation
-- Energy audit and monitoring
-- Time-of-use optimization
-
-**Note:** For personalized AI recommendations, please ensure all dependencies are installed."""
-    
-    else:
-        return """🤖 **SECPARS AI Assistant**
-
-I'm here to help with energy consumption analysis and optimization! 
-
-**What I can help with:**
-- Energy consumption analysis
-- Prediction and forecasting
-- Cost optimization strategies
-- Appliance efficiency tips
-- Renewable energy guidance
-
-**Note:** Some advanced AI features require the full system deployment. For complete functionality, ensure all dependencies are installed.
-
-How can I assist you with your energy needs today?"""
-
-# Additional functions for compatibility
-def generate_response(prompt: str, context: str = "") -> str:
-    """Generate a response using available AI models"""
-    return answer_text(prompt, context)
-
-def get_ai_insights(question: str) -> str:
-    """Get AI insights for a given question"""
-    return answer_text(question)
+        return {"status": "error", "message": str(e), "provider": "gemini"}
