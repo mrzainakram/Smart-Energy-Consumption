@@ -318,7 +318,7 @@ def _answer_safe(prompt: str, *, use_ctx: bool = False, ctx: str | None = None) 
             full_prompt = _compose_ctx(prompt, ctx)
         else:
             full_prompt = prompt
-        return answer_text(full_prompt, system=_system(lang_code))
+        return answer_text(full_prompt)
     except Exception as e:
         msg = str(e)
         if "429" in msg or "quota" in msg.lower() or "rate" in msg.lower():
