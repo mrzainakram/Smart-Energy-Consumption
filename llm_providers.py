@@ -40,15 +40,65 @@ def _ensure_gemini() -> bool:
 
 def _fallback_response(prompt: str) -> str:
     pl = (prompt or "").lower()
-    if any(x in pl for x in ["energy", "consumption", "bill", "units", "kwh"]):
-        return (
-            "I'm SECPARS. I provide smart energy insights and recommendations. "
-            "Ask about energy consumption, predictions, or tips to save costs."
-        )
-    return (
-        "I'm SECPARS, your Smart Energy assistant. I can help with energy usage, predictions, and cost-saving tips. "
-        "What would you like to know about your energy consumption?"
-    )
+    
+    # Check if it's a greeting
+    if any(x in pl for x in ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"]):
+        return "Hi there! 👋 I'm SECPARS, your Smart Energy Assistant. I can help you with energy consumption predictions, bill analysis, and cost-saving tips. What would you like to know about your energy usage?"
+    
+    # Check if it's about SECPARS project
+    if any(x in pl for x in ["secpars", "what is", "tell me about", "explain", "project"]):
+        return """**SECPARS - Smart Energy Consumption Prediction & Recommendation System**
+
+I'm an AI-powered energy management system designed for Pakistani households. Here's what I can do:
+
+🔋 **Energy Predictions**: 16 advanced ML models for consumption forecasting
+📷 **Bill Analysis**: OCR-powered bill scanning and data extraction  
+🤖 **Smart Recommendations**: Personalized energy-saving tips
+🏠 **House Comparison**: Benchmark your usage against similar households
+💰 **LESCO Integration**: Pakistan-specific billing and rate calculations
+
+**Key Features:**
+- LSTM, Random Forest, Gradient Boosting models
+- OpenCV + OCR for bill processing
+- Django backend, React frontend
+- ChromaDB for vector search
+
+What specific aspect of SECPARS would you like to know more about?"""
+    
+    # Check if it's energy-related
+    if any(x in pl for x in ["energy", "electricity", "consumption", "bill", "units", "kwh", "power", "saving", "efficiency"]):
+        return """**Energy Management Tips:**
+
+🔋 **Reduce Your Bill:**
+- Use energy-efficient appliances (5-star rating)
+- Turn off lights and electronics when not in use
+- Use LED bulbs instead of incandescent
+- Set AC temperature to 24-26°C
+
+⚡ **Peak Usage:**
+- Avoid heavy appliances during peak hours (6-10 PM)
+- Use washing machine, iron during off-peak hours
+- Consider time-of-use billing if available
+
+🏠 **Home Optimization:**
+- Insulate your home properly
+- Use ceiling fans with AC
+- Regular maintenance of appliances
+- Monitor usage with smart meters
+
+Would you like specific advice for your situation?"""
+    
+    # General fallback
+    return """Hi! I'm SECPARS, your Smart Energy Assistant. I specialize in energy management, consumption predictions, and cost-saving strategies for Pakistani households. 
+
+I can help you with:
+- Energy consumption analysis
+- Bill optimization tips
+- Appliance efficiency advice
+- LESCO billing information
+- Smart energy solutions
+
+What would you like to know about energy management?"""
 
 def call_gemini_text(prompt: str, system: Optional[str] = None) -> str:
     if not _ensure_gemini():
@@ -78,13 +128,11 @@ def call_gemini_multimodal(prompt: str, images: list = None, audios: list = None
         return _fallback_response(prompt)
 
 def answer_text(prompt: str, system: Optional[str] = None) -> str:
-    # Professional system prompt for SECPARS
-    professional_system = """
-    You are SECPARS - Smart Energy Consumption Prediction & Recommendation System.
-    Keep answers concise (2-3 sentences), professional, and focused on user benefits.
-    Never reveal internal technical details. Suggest one follow-up question.
-    """
-    return call_gemini_text(prompt, system or professional_system)
+    # Use the system prompt if provided, otherwise use fallback
+    if system:
+        return call_gemini_text(prompt, system)
+    else:
+        return _fallback_response(prompt)
 
 def answer_multimodal(prompt: str, image_bytes: Optional[bytes], image_mime: Optional[str], system: Optional[str] = None) -> str:
     if image_bytes is None:
