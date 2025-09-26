@@ -32,18 +32,6 @@ if hasattr(st, 'secrets'):
     if 'CHROMA_DIR' in st.secrets:
         os.environ['CHROMA_DIR'] = st.secrets['CHROMA_DIR']
 
-# Load Streamlit secrets for cloud deployment
-if hasattr(st, 'secrets'):
-    # Set environment variables from Streamlit secrets
-    if 'GEMINI_API_KEY' in st.secrets:
-        os.environ['GEMINI_API_KEY'] = st.secrets['GEMINI_API_KEY']
-    if 'OPENAI_API_KEY' in st.secrets:
-        os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
-    if 'PROJECT_DATA_DIR' in st.secrets:
-        os.environ['PROJECT_DATA_DIR'] = st.secrets['PROJECT_DATA_DIR']
-    if 'CHROMA_DIR' in st.secrets:
-        os.environ['CHROMA_DIR'] = st.secrets['CHROMA_DIR']
-
 # Clean Native Streamlit SECPARS Interface
 st.markdown("""
 <style>
@@ -99,308 +87,106 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 3.8rem; /* Slightly reduced font size */
     font-weight: 900;
-    color: #ffffff;
-    margin-bottom: 1rem;
-    letter-spacing: 2px;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    position: relative;
+    margin: 0;
+    line-height: 1.1;
 }
 
-.title-main::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 3px;
-    background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
-    border-radius: 2px;
+.subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #a0a0a0;
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
 }
 
-    /* --- NEW, TARGETED CSS FOR SIDEBAR & CHAT HEADER --- */
-    
-    /* Overall App Background to Dark Black */
-    .stApp {
-        /* background-color: #1a1a1a !important; /* Dark black background */
-    }
-
-    /* Sidebar Background - Default Dark Gray */
-    .stSidebar {
-        background-color: #262730; /* Streamlit's default dark mode sidebar color */
-    }
-
-    /* All text within the sidebar to be white and bold */
-    .stSidebar * {
-        color: #ffffff !important;
-        font-weight: 600 !important;
-    }
-
-    /* Specifically ensure titles/subheaders are extra bold */
-    .stSidebar .st-emotion-cache-nahz7x, /* st.title "Configuration" */
-    .stSidebar .st-emotion-cache-1cpx4v7 /* st.subheader "📊 System Status" */
-    {
-        font-weight: 800 !important;
-        font-size: 24px !important;
+.chat-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-    /* Selectbox values should have a dark background and orange border */
-    .stSidebar .st-emotion-cache-192z83 > div > div > div {
-        background-color: #000000 !important; /* Black background for selectbox */
-        border: 1px solid #ff8c00 !important; /* Orange border */
-    }
-
-    /* Re-ingest button styling */
-    .stSidebar .st-emotion-cache-v02bni > button {
-        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border-radius: 12px !important;
-        padding: 0.8rem 1.5rem !important;
-        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
-    }
-
-    /* Project Information Bar */
-    .stExpander > div > div > div > div {
-        color: #000000 !important; /* Black text */
-        background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-        border-radius: 12px !important;
-        padding: 1rem !important;
-        font-weight: 900 !important;
-        font-size: 1.2rem !important;
-        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important;
-        text-shadow: 1px 1px 2px rgba(255,255,255,0.5) !important;
-    }
-
-    /* Chat with SECPARS Header */
-    .stMarkdown h3:contains("Chat with SECPARS"),
-    .stMarkdown h4:contains("Chat with SECPARS")
-    {
-        font-family: 'Metal Mania', system-ui !important; /* Apply Metal Mania */
-        font-size: 5rem !important; /* Increased font size */
-        font-weight: 400 !important; /* Metal Mania default weight */
-        color: #ff8c00 !important;
-        -webkit-text-fill-color: #ff8c00 !important;
-        background: none !important;
-        text-shadow: 4px 4px 8px rgba(0,0,0,0.5), 0 0 15px rgba(255,215,0,0.7) !important; /* Shiny effect */
-        text-align: center !important;
-        margin: 2rem 0 !important;
-        letter-spacing: 3px !important; /* Increased letter spacing */
-        position: relative !important;
-        line-height: 1.2 !important;
-        border: 2px solid #ff8c00 !important; /* Border */
-        border-image: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) 1 !important;
-        padding: 15px 25px !important;
-        border-radius: 10px !important;
-        box-shadow: 0 0 20px rgba(255, 140, 0, 0.6) !important;
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
-    .stMarkdown h3:contains("Chat with SECPARS")::after,
-    .stMarkdown h4:contains("Chat with SECPARS")::after
-    {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80%;
-        height: 3px;
-        background: linear-gradient(90deg, #ff8c00, #ffa500, #ff8c00);
-        border-radius: 2px;
+.project-info-content {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 0;
 }
 
-    /* Subtitle Styling */
-    .subtitle-main {
-        font-family: 'Metal Mania', system-ui !important;
-        font-size: 1.8rem !important;
-        font-weight: 400 !important;
-        color: #ffffff !important;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.5) !important;
-        background: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        border: 1px solid #ff8c00 !important;
-        border-image: linear-gradient(45deg, #ff8c00, #ffa500, #ff8c00) 1 !important;
-        padding: 10px 20px !important;
-        border-radius: 8px !important;
-        box-shadow: 0 0 15px rgba(255, 140, 0, 0.4) !important;
-        display: inline-block;
-        margin-bottom: 1.2rem;
+.upload-collapsible {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 1rem;
 }
 
-    /* Global Text Styling for Dark Mode - White and Bold */
-    /* This targets all text within the main app container when the base theme is dark */
-    html[data-theme='dark'] .stApp,
-    html[data-theme='dark'] .stApp .stMarkdown, 
-    html[data-theme='dark'] .stApp .stText, 
-    html[data-theme='dark'] .stApp p, 
-    html[data-theme='dark'] .stApp span, 
-    html[data-theme='dark'] .stApp li, 
-    html[data-theme='dark'] .stApp strong, 
-    html[data-theme='dark'] .stApp em, 
-    html[data-theme='dark'] .stApp div:not(.stExpander) {
-        color: #ffffff !important;
-        font-weight: 700 !important; /* Bold */
-    }
-
-    html[data-theme='dark'] .stApp h1, 
-    html[data-theme='dark'] .stApp h2, 
-    html[data-theme='dark'] .stApp h3, 
-    html[data-theme='dark'] .stApp h4, 
-    html[data-theme='dark'] .stApp h5, 
-    html[data-theme='dark'] .stApp h6 {
-        color: #ffffff !important;
-        font-weight: 800 !important; /* Extra bold */
-    }
-
-    /* Override for elements that should maintain their specific color/gradient in dark mode */
-    html[data-theme='dark'] .title-main, 
-    html[data-theme='dark'] .subtitle-main, 
-    html[data-theme='dark'] .stMarkdown h3:contains("Chat with SECPARS"), 
-    html[data-theme='dark'] .stMarkdown h4:contains("Chat with SECPARS") {
-        -webkit-text-fill-color: unset !important; /* Allow background-clip to work */
-        color: unset !important; /* Reset color for gradient to apply */
-    }
-
-    html[data-theme='dark'] .title-main,
-    html[data-theme='dark'] .stMarkdown h3:contains("Chat with SECPARS"), 
-    html[data-theme='dark'] .stMarkdown h4:contains("Chat with SECPARS") {
-        color: #ff8c00 !important; /* Re-apply specific color for these */
-        -webkit-text-fill-color: #ff8c00 !important;
+.upload-result {
+    background: rgba(0, 255, 0, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid #00ff00;
 }
 
-    html[data-theme='dark'] .subtitle-main {
-        -webkit-text-fill-color: transparent !important; /* Maintain transparent for gradient */
-    }
-
-    /* Input Fields Text Color */
-    .stTextInput > div > div > input, 
-    .stTextInput > div > div > textarea {
-        color: #000000 !important; /* Black text inside input fields */
-    }
-
-    /* Streamlit Chat Input Text */
-    .stApp [data-testid="stForm"] input[type="text"] {
-        color: #000000 !important; /* Black text for the chat input field */
-    }
-</style>
-""", unsafe_allow_html=True)
-
-# Custom CSS for mobile responsiveness and light mode compatibility
-st.markdown("""
-<style>
-    /* Mobile Text Visibility Fix */
-    @media (max-width: 768px) {
-        .stMarkdown, .stText, .stChatMessage {
-            font-size: 16px !important;
-            line-height: 1.5 !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-        }
-        
-        /* Fix SECPARS title on mobile */
-        .main-header h1 {
-            font-size: 2rem !important;
-            font-weight: bold !important;
-            color: #1f2937 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-}
-
-        /* Mobile button sizing */
-        .stButton > button {
-            min-height: 44px !important;
-            min-width: 44px !important;
-            font-size: 16px !important;
-}
+/* Responsive design */
+@media (max-width: 768px) {
+    .title-main {
+        font-size: 2.5rem;
     }
     
-    @media (prefers-color-scheme: light) {
-        /* Light Mode Text Visibility */
-        .stMarkdown, .stText, .stChatMessage {
-            color: #1f2937 !important;
-            background-color: transparent !important;
-        }
-        
-        /* Chat message text visibility */
-        .stChatMessage .stMarkdown {
-            color: #1f2937 !important;
-            background-color: transparent !important;
-        }
-        
-        /* Sidebar text visibility */
-        .css-1d391kg .stMarkdown {
-            color: #1f2937 !important;
-}
-
-        /* Title text visibility */
-        h1, h2, h3, h4, h5, h6 {
-            color: #1f2937 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1) !important;
-        }
-        
-        /* Button text visibility */
-        .stButton > button {
-    color: #ffffff !important;
-            background-color: #667eea !important;
-            border: 1px solid #5a67d8 !important;
-        }
-        
-        /* Input text visibility */
-        .stTextInput > div > div > input {
-            color: #1f2937 !important;
-            background-color: #ffffff !important;
-            border: 1px solid #d1d5db !important;
-}
-
-        /* Selectbox text visibility */
-        .stSelectbox > div > div > div {
-            color: #1f2937 !important;
-            background-color: #000000 !important; /* Black background for selectbox input field in light mode */
-        }
-        
-        /* Caption text visibility */
-        .stCaption {
-            color: #6b7280 !important;
-            font-size: 14px !important;
-        }
-        
-        /* Subheader text visibility */
-        .stSubheader {
-            color: #374151 !important;
-            font-weight: 600 !important;
-        }
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .chat-container {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .logo-icons {
+        font-size: 3rem;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
 
-# Clean Native Header Section
-st.markdown("""
-<div class="main-container">
-    <div class="header-section">
-        <div class="logo-section">
-            <div class="logo-icons">
-                <span>⚡</span>
-                <span>🔋</span>
-                <span>💡</span>
-                <span>🚀</span>
-            </div>
-            <div class="title-main">SECPARS</div>
-            <div class="subtitle-main">Smart Energy Consumption Prediction & Recommendation System</div>
-            <div class="caption-main">🚀 Your AI-powered energy management assistant. Ask me anything about SECPARS and smart energy consumption!</div>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+# Main Header
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
+st.markdown('<div class="header-section">', unsafe_allow_html=True)
+st.markdown('<div class="logo-section">', unsafe_allow_html=True)
+st.markdown('<div class="logo-icons">', unsafe_allow_html=True)
+st.markdown('⚡🔋💡🌱', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('<h1 class="title-main">SECPARS</h1>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">Smart Energy Consumption Prediction & Recommendation System</p>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Initialize session state
 if "vs" not in st.session_state:
-    st.session_state["vs"] = build_or_load_vectorstore()
+    with st.spinner("🔄 Loading SECPARS knowledge base..."):
+        st.session_state["vs"] = build_or_load_vectorstore()
+        if st.session_state["vs"] is None:
+            st.warning("⚠️ Knowledge base not available. Using AI-only mode.")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
-        {"role": "assistant", "content": "Hello! 👋 I'm your AI Smart Energy Assistant. How can I help you today?"}
+        {"role": "assistant", "content": "Hi there! 👋 I'm SECPARS, your Smart Energy Assistant. I can help you with energy consumption predictions, bill analysis, and cost-saving tips. What would you like to know about your energy usage?"}
     ]
 
 # Clean Native Sidebar
@@ -488,8 +274,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">💬 Chat with SECPARS</div>', unsafe_allow_html=True)
 
-
-
 for m in st.session_state["messages"]:
     with st.chat_message(m["role"]):
         st.markdown(m["content"])
@@ -498,53 +282,36 @@ st.markdown('</div>', unsafe_allow_html=True)
 def _system(lang: str) -> str:
     pol = {"en":"Respond ONLY in English.","ur":"Respond ONLY in Urdu script.","roman-ur":"Respond ONLY in Roman Urdu."}.get(lang,"Respond ONLY in English.")
     return (
-        "You are SECPARS — a human-like, respectful AI assistant for Smart Energy Consumption Prediction and Recommendation System. "
-        "Be warm, concise, and speak naturally like a helpful person. "
-        "If something is unclear, ask a short follow-up question. Prefer step-by-step explanations for tricky topics. "
-        "Use the same courteous tone regardless of the provider (auto/gemini/openai).\n\n"
+        "You are SECPARS — a helpful AI assistant for Smart Energy Consumption Prediction and Recommendation System. "
+        "Be friendly, concise, and speak naturally like a helpful person. "
+        "Always prioritize project knowledge when answering energy-related questions. "
+        "For general questions, provide helpful answers. "
+        "Keep responses to-the-point and practical.\n\n"
         
-        "**SECPARS Project Knowledge - COMPREHENSIVE GUIDE:**\n"
+        "**SECPARS Project Knowledge:**\n"
         "- **Core Purpose**: AI-powered energy management system for Pakistani households using LESCO rates\n"
         "- **Key Features**: Energy predictions (16 ML models), Bill scanning (OCR), Appliance optimization, House comparison, LESCO billing\n"
-        "- **ML Models**: LSTM, Random Forest, Gradient Boosting, SVR, Ensemble methods with TensorFlow/Scikit-learn\n"
+        "- **ML Models**: LSTM, Random Forest, Gradient Boosting, SVR, Ensemble methods\n"
         "- **Bill Processing**: OpenCV + OCR for electricity, gas, water bills with automatic data extraction\n"
         "- **Predictions**: Daily/weekly/monthly consumption, peak times, seasonal patterns, cost estimates\n"
         "- **Recommendations**: Energy-saving tips, appliance optimization, cost reduction strategies\n"
-        "- **Tech Stack**: Django backend, React frontend, ChromaDB vector search, HuggingFace NLP\n"
+        "- **Tech Stack**: Django backend, React frontend, ChromaDB vector search\n"
         "- **Target Users**: Homeowners, energy analysts, utility companies in Pakistan\n\n"
         
-        "**Response Strategy - ALWAYS PRIORITIZE PROJECT KNOWLEDGE:**\n"
-        "- **Project Questions**: Use comprehensive SECPARS knowledge first, explain in detail\n"
-        "- **Energy Topics**: Provide specific insights about Pakistani energy sector, LESCO rates, consumption patterns\n"
-        "- **Technical Questions**: Explain architecture, models, APIs, and implementation details thoroughly\n"
-        "- **Feature Questions**: Describe how each feature works, benefits, and usage examples\n"
-        "- **General Questions**: Use Gemini knowledge, but maintain SECPARS context when relevant\n\n"
-        
-        "**Conversation Style:**\n"
-        "- Be friendly, empathetic, and professional (please, thanks, I'm happy to help).\n"
-        "- Use project knowledge first when relevant; otherwise answer from general knowledge.\n"
-        "- Provide clear takeaways, bullet points, and short examples where useful.\n"
-        "- Confirm understanding briefly and invite the user to continue.\n"
-        "- Avoid long disclaimers; be direct and helpful.\n"
-        "- Always mention SECPARS capabilities when discussing energy-related topics.\n"
-        "- **IMPORTANT**: Do NOT start responses with greetings like 'Good morning/afternoon/evening'. Go directly to answering the question.\n\n"
-        
-        "**SECPARS Expertise Areas:**\n"
-        "- Energy consumption prediction and analysis\n"
-        "- Bill scanning and OCR processing\n"
-        "- Machine learning models and algorithms\n"
-        "- LESCO billing and rate calculations\n"
-        "- Appliance optimization and recommendations\n"
-        "- House comparison and benchmarking\n"
-        "- Technical architecture and implementation\n"
-        "- Energy saving strategies for Pakistan\n\n"
+        "**Response Guidelines:**\n"
+        "- For energy/project questions: Use SECPARS knowledge first\n"
+        "- For general questions: Use your general knowledge\n"
+        "- Be warm and helpful: 'Hi!', 'Great question!', 'I'd be happy to help!'\n"
+        "- Keep answers concise but informative\n"
+        "- Provide practical, actionable advice\n"
+        "- Always mention SECPARS capabilities when relevant\n\n"
         + pol
     )
 
 def _compose_ctx(q: str, ctx: str) -> str:
-    return f"Project knowledge excerpts:\n{ctx}\n\nUser: {q}\nAnswer using only the excerpts if sufficient."
+    return f"Project knowledge:\n{ctx}\n\nUser: {q}\nAnswer using the project knowledge above."
 
-# Safe answer helper with graceful rate-limit fallback
+# Safe answer helper with graceful fallback
 def _answer_safe(prompt: str, *, use_ctx: bool = False, ctx: str | None = None) -> str:
     try:
         if use_ctx and ctx:
@@ -555,14 +322,8 @@ def _answer_safe(prompt: str, *, use_ctx: bool = False, ctx: str | None = None) 
     except Exception as e:
         msg = str(e)
         if "429" in msg or "quota" in msg.lower() or "rate" in msg.lower():
-            # Try fallback provider
-            try:
-                return answer_text(full_prompt, system=_system(lang_code))
-            except Exception:
-                pass
             st.warning("I'm hitting temporary API limits. Please wait a few seconds and try again.")
             return "I'm currently rate-limited. Please try again in a short while."
-        # Generic friendly error
         st.error("Sorry, something went wrong while generating the response.")
         return "I'm sorry—something went wrong while generating the response. Please try again."
 
@@ -598,136 +359,94 @@ if up_doc is not None:
         st.write(f"**File size:** {up_doc.size} bytes")
         st.write(f"**File type:** {up_doc.type}")
     except Exception as e:
-        st.error(f"❌ **Upload failed:** {e}")
+        st.error(f"❌ **Error processing document:** {str(e)}")
     st.markdown('</div>', unsafe_allow_html=True)
 
 if up_img is not None:
     st.markdown('<div class="upload-result">', unsafe_allow_html=True)
     st.info(f"🖼️ **Image Selected:** {up_img.name}")
-    st.image(up_img, caption=up_img.name, width=300)
-    st.write(f"**Image size:** {up_img.size} bytes")
-    st.write(f"**Image type:** {up_img.type}")
+    try:
+        suffix = f".{up_img.name.split('.')[-1]}".lower()
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(up_img.read()); path = tmp.name
+        add_uploaded_file(st.session_state["vs"], path)
+        st.success("✅ **Successfully added to knowledge base!**")
+        st.write(f"**File processed:** {up_img.name}")
+        st.write(f"**File size:** {up_img.size} bytes")
+        st.write(f"**File type:** {up_img.type}")
+    except Exception as e:
+        st.error(f"❌ **Error processing image:** {str(e)}")
     st.markdown('</div>', unsafe_allow_html=True)
 
 if up_audio is not None:
     st.markdown('<div class="upload-result">', unsafe_allow_html=True)
-    st.info(f"🎵 **Audio Selected:** {up_audio.name}")
-    st.audio(up_audio, format=up_audio.type or "audio/wav")
-    st.write(f"**Audio size:** {up_audio.size} bytes")
-    st.write(f"**Audio type:** {up_audio.type}")
+    st.info(f"�� **Audio Selected:** {up_audio.name}")
+    try:
+        suffix = f".{up_audio.name.split('.')[-1]}".lower()
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(up_audio.read()); path = tmp.name
+        add_uploaded_file(st.session_state["vs"], path)
+        st.success("✅ **Successfully added to knowledge base!**")
+        st.write(f"**File processed:** {up_audio.name}")
+        st.write(f"**File size:** {up_audio.size} bytes")
+        st.write(f"**File type:** {up_audio.type}")
+    except Exception as e:
+        st.error(f"❌ **Error processing audio:** {str(e)}")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Clean Native Chat Input
-st.markdown('<div class="main-container">', unsafe_allow_html=True)
-user_q = st.chat_input("💬 Ask me anything about SECPARS and smart energy consumption...")
-
-if user_q:
-    st.session_state["messages"].append({"role":"user","content":user_q})
-    with st.chat_message("user"): 
-        st.markdown(user_q)
-
+# Chat input and processing
+if prompt := st.chat_input("Ask me anything about energy consumption, predictions, or SECPARS..."):
+    st.session_state["messages"].append({"role": "user", "content": prompt})
+    
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    
     with st.chat_message("assistant"):
         try:
-            # Detect if query is project-related
+            user_q = prompt.strip()
+            
+            # Project-related keywords
             project_keywords = [
-                # Specific energy-related phrases
-                'energy consumption', 'reduce energy', 'save electricity', 
-                'energy bill', 'power usage', 'electricity saving',
-                'smart energy', 'energy optimization', 'cost reduction',
-                'appliance efficiency', 'energy management',
-                
-                # More specific project-related phrases
-                'how to lower electricity bill', 
-                'reduce home energy usage', 
-                'smart home energy',
-                'energy saving tips',
-                'household power consumption',
-                'electricity cost reduction',
-                
-                # Technical and project-specific terms
-                'energy prediction', 'bill scanning', 'machine learning',
-                'ai energy analysis', 'power consumption prediction',
+                'energy', 'electricity', 'consumption', 'prediction', 'bill', 'lesco',
+                'appliance', 'power', 'usage', 'cost', 'saving', 'efficiency',
+                'smart energy', 'energy management', 'electricity bill',
+                'energy consumption', 'power consumption', 'energy efficiency',
+                'electricity usage', 'energy saving', 'bill analysis',
+                'energy prediction', 'consumption prediction', 'energy optimization',
                 'electricity usage patterns', 'energy efficiency tips',
                 'smart appliance', 'renewable energy', 'energy monitoring',
                 'electricity rate analysis', 'home energy audit',
-                'energy saving strategies', 'power consumption insights'
+                'energy saving strategies', 'power consumption insights',
+                'secpars', 'smart energy consumption', 'energy recommendation'
             ]
             
-            # More sophisticated project query detection
+            # Check if query is project-related
             def is_project_related_query(query):
                 query_lower = query.lower().strip()
-                words = query_lower.split()
-                word_count = len(words)
-                
-                # Check for exact keyword matches
-                keyword_match = any(keyword in query_lower for keyword in project_keywords)
-                
-                # More flexible context checks
-                context_checks = (
-                    keyword_match and 
-                    (
-                        (word_count >= 2 and word_count <= 3) or  # Short but specific queries
-                        (word_count >= 4 and word_count <= 15)    # Longer detailed queries
-                    )
-                )
-                
-                return context_checks
+                return any(keyword in query_lower for keyword in project_keywords)
             
             is_project_query = is_project_related_query(user_q)
             
-            if is_project_query:
-                with st.spinner("🔍 Searching in project data..."):
+            if is_project_query and st.session_state["vs"] is not None:
+                # Search in project knowledge first
+                with st.spinner("🔍 Searching SECPARS knowledge base..."):
                     res = retrieve_with_scores(st.session_state["vs"], user_q, k=5)
-                    rel = [(d,s) for d,s in res if s>=0.7]  # High relevance threshold
+                    rel = [(d,s) for d,s in res if s>=0.6]  # Medium relevance threshold
                     
                     if rel:
-                        st.success(f"🎯 Project Knowledge Found (top {len(rel)} relevant chunks)")
-                        ctx = "\n\n".join([f"[{i+1}] {d.page_content[:1200]}" for i,(d,_) in enumerate(rel)])
+                        ctx = "\n\n".join([f"[{i+1}] {d[:800]}" for i,(d,_) in enumerate(rel)])
                         ans = _answer_safe(user_q, use_ctx=True, ctx=ctx)
-                        
-                        # Simple project knowledge response
-                        st.markdown(f"""
-**🏆 Project Knowledge Response**
-{ans}
-
-*[Sourced from SECPARS Project Knowledge Base]*
-""", unsafe_allow_html=True)
                     else:
-                        # Fallback to Gemini if no highly relevant project data
-                        with st.spinner("🤖 Using Gemini AI..."):
-                            ans = _answer_safe(
-                                f"User: {user_q}\n\nProvide a helpful, comprehensive answer.",
-                                use_ctx=False
-                            )
-                            
-                            # Simple Gemini response
-                            st.markdown(f"""
-**🌐 Gemini AI Response**
-{ans}
-
-*[Generated by Gemini AI]*
-""", unsafe_allow_html=True)
+                        # Fallback to general AI if no relevant project data
+                        ans = _answer_safe(user_q, use_ctx=False)
             else:
-                # General or non-project query - Use Gemini only
-                with st.spinner("🤖 Using Gemini AI..."):
-                    ans = _answer_safe(
-                        f"User: {user_q}\n\nProvide a helpful, comprehensive answer.",
-                        use_ctx=False
-                    )
-                    
-                    # Simple general response
-                    st.markdown(f"""
-**🌐 AI Response**
-{ans}
-
-*[Generated by Gemini AI]*
-""", unsafe_allow_html=True)
+                # General query - Use AI directly
+                ans = _answer_safe(user_q, use_ctx=False)
             
+            st.markdown(ans)
             st.session_state["messages"].append({"role":"assistant","content":ans})
         except Exception as e:
             st.error(f"❌ Error: {str(e)}")
             st.session_state["messages"].append({"role":"assistant","content":f"Error: {e}"})
 
-    # Mark sent to clear input on next render
-    st.session_state["_sent_once"] = True
-st.markdown('</div>', unsafe_allow_html=True) 
+st.markdown('</div>', unsafe_allow_html=True)
