@@ -21,7 +21,7 @@ from rag_utils import (
 from llm_providers import answer_text
 
 # Load Streamlit secrets for cloud deployment
-if hasattr(st, 'secrets'):
+if hasattr(st, 'secrets') and st.secrets:
     # Set environment variables from Streamlit secrets
     if 'GEMINI_API_KEY' in st.secrets:
         os.environ['GEMINI_API_KEY'] = st.secrets['GEMINI_API_KEY']
