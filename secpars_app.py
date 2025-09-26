@@ -279,54 +279,6 @@ for m in st.session_state["messages"]:
         st.markdown(m["content"])
 st.markdown('</div>', unsafe_allow_html=True)
 
-def _system(lang: str) -> str:
-    pol = {"en":"Respond ONLY in English.","ur":"Respond ONLY in Urdu script.","roman-ur":"Respond ONLY in Roman Urdu."}.get(lang,"Respond ONLY in English.")
-    return (
-        "You are SECPARS — a helpful AI assistant for Smart Energy Consumption Prediction and Recommendation System. "
-        "Be friendly, concise, and speak naturally like a helpful person. "
-        "Always prioritize project knowledge when answering energy-related questions. "
-        "For general questions, provide helpful answers. "
-        "Keep responses to-the-point and practical.\n\n"
-        
-        "**SECPARS Project Knowledge:**\n"
-        "- **Core Purpose**: AI-powered energy management system for Pakistani households using LESCO rates\n"
-        "- **Key Features**: Energy predictions (16 ML models), Bill scanning (OCR), Appliance optimization, House comparison, LESCO billing\n"
-        "- **ML Models**: LSTM, Random Forest, Gradient Boosting, SVR, Ensemble methods\n"
-        "- **Bill Processing**: OpenCV + OCR for electricity, gas, water bills with automatic data extraction\n"
-        "- **Predictions**: Daily/weekly/monthly consumption, peak times, seasonal patterns, cost estimates\n"
-        "- **Recommendations**: Energy-saving tips, appliance optimization, cost reduction strategies\n"
-        "- **Tech Stack**: Django backend, React frontend, ChromaDB vector search\n"
-        "- **Target Users**: Homeowners, energy analysts, utility companies in Pakistan\n\n"
-        
-        "**Response Guidelines:**\n"
-        "- For energy/project questions: Use SECPARS knowledge first\n"
-        "- For general questions: Use your general knowledge\n"
-        "- Be warm and helpful: 'Hi!', 'Great question!', 'I'd be happy to help!'\n"
-        "- Keep answers concise but informative\n"
-        "- Provide practical, actionable advice\n"
-        "- Always mention SECPARS capabilities when relevant\n\n"
-        + pol
-    )
-
-def _compose_ctx(q: str, ctx: str) -> str:
-    return f"Project knowledge:\n{ctx}\n\nUser: {q}\nAnswer using the project knowledge above."
-
-# Safe answer helper with graceful fallback
-def _answer_safe(prompt: str, *, use_ctx: bool = False, ctx: str | None = None) -> str:
-    try:
-        if use_ctx and ctx:
-            full_prompt = _compose_ctx(prompt, ctx)
-        else:
-            full_prompt = prompt
-        return answer_text(full_prompt)
-    except Exception as e:
-        msg = str(e)
-        if "429" in msg or "quota" in msg.lower() or "rate" in msg.lower():
-            st.warning("I'm hitting temporary API limits. Please wait a few seconds and try again.")
-            return "I'm currently rate-limited. Please try again in a short while."
-        st.error("Sorry, something went wrong while generating the response.")
-        return "I'm sorry—something went wrong while generating the response. Please try again."
-
 # Hidden File Upload Section (Horizontal, Small Size)
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
 with st.expander("📎 File Upload", expanded=False):
@@ -380,7 +332,7 @@ if up_img is not None:
 
 if up_audio is not None:
     st.markdown('<div class="upload-result">', unsafe_allow_html=True)
-    st.info(f"�� **Audio Selected:** {up_audio.name}")
+    st.info(f"🎵 **Audio Selected:** {up_audio.name}")
     try:
         suffix = f".{up_audio.name.split('.')[-1]}".lower()
         with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
@@ -435,13 +387,13 @@ if prompt := st.chat_input("Ask me anything about energy consumption, prediction
                     
                     if rel:
                         ctx = "\n\n".join([f"[{i+1}] {d[:800]}" for i,(d,_) in enumerate(rel)])
-                        ans = _answer_safe(user_q, use_ctx=True, ctx=ctx)
+                        ans = answer_text(f"Project knowledge:\n{ctx}\n\nUser: {user_q}\nAnswer using the project knowledge above.")
                     else:
                         # Fallback to general AI if no relevant project data
-                        ans = _answer_safe(user_q, use_ctx=False)
+                        ans = answer_text(user_q)
             else:
                 # General query - Use AI directly
-                ans = _answer_safe(user_q, use_ctx=False)
+                ans = answer_text(user_q)
             
             st.markdown(ans)
             st.session_state["messages"].append({"role":"assistant","content":ans})
