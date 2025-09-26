@@ -26,30 +26,20 @@ except ImportError:
 def build_or_load_vectorstore(data_dir: str = PROJECT_DATA_DIR) -> Optional[object]:
     """Build or load vector store with error handling"""
     if not LANGCHAIN_AVAILABLE or not CHROMADB_AVAILABLE:
-        logging.warning("LangChain or ChromaDB not available, using fallback")
+        # Silent fallback - no warning
         return None
     
     try:
-        # Create embeddings
-        embeddings = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
-        )
-        
-        # Create vector store
-        vectorstore = Chroma(
-            persist_directory=CHROMA_DIR,
-            embedding_function=embeddings
-        )
-        
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
         return vectorstore
     except Exception as e:
-        logging.error(f"Failed to build vector store: {e}")
+        logging.error(f"Vectorstore init failed: {e}")
         return None
 
 def ingest_directory_into_store(directory_path: str, vectorstore: Optional[object] = None) -> bool:
-    """Ingest directory into vector store with error handling"""
+    """Ingest documents from directory into vector store"""
     if not LANGCHAIN_AVAILABLE or not CHROMADB_AVAILABLE:
-        logging.warning("LangChain or ChromaDB not available, skipping ingestion")
         return False
     
     if vectorstore is None:
@@ -58,42 +48,32 @@ def ingest_directory_into_store(directory_path: str, vectorstore: Optional[objec
             return False
     
     try:
-        # Simple text ingestion
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200
-        )
-        
-        # Process files in directory
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         directory = Path(directory_path)
         if not directory.exists():
-            logging.warning(f"Directory {directory_path} does not exist")
             return False
         
-        texts = []
+        texts: List[str] = []
         for file_path in directory.rglob("*.txt"):
             try:
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                    texts.append(content)
-            except Exception as e:
-                logging.warning(f"Failed to read {file_path}: {e}")
+                with open(file_path, "r", encoding="utf-8") as f:
+                    texts.append(f.read())
+            except Exception:
+                continue
         
-        if texts:
-            chunks = text_splitter.split_text("\n".join(texts))
-            vectorstore.add_texts(chunks)
-            logging.info(f"Successfully ingested {len(chunks)} chunks")
-            return True
+        if not texts:
+            return False
         
-        return False
+        chunks = text_splitter.split_text("\n".join(texts))
+        vectorstore.add_texts(chunks)
+        return True
     except Exception as e:
-        logging.error(f"Failed to ingest directory: {e}")
+        logging.error(f"Ingest failed: {e}")
         return False
 
 def add_uploaded_file(file_content: str, filename: str, vectorstore: Optional[object] = None) -> bool:
-    """Add uploaded file to vector store with error handling"""
+    """Add uploaded file to vector store"""
     if not LANGCHAIN_AVAILABLE or not CHROMADB_AVAILABLE:
-        logging.warning("LangChain or ChromaDB not available, skipping file addition")
         return False
     
     if vectorstore is None:
@@ -102,23 +82,17 @@ def add_uploaded_file(file_content: str, filename: str, vectorstore: Optional[ob
             return False
     
     try:
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200
-        )
-        
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         chunks = text_splitter.split_text(file_content)
         vectorstore.add_texts(chunks)
-        logging.info(f"Successfully added {len(chunks)} chunks from {filename}")
         return True
     except Exception as e:
-        logging.error(f"Failed to add uploaded file: {e}")
+        logging.error(f"Upload add failed: {e}")
         return False
 
 def retrieve_with_scores(query: str, vectorstore: Optional[object] = None, k: int = 5) -> List[Tuple[str, float]]:
-    """Retrieve documents with scores with error handling"""
+    """Retrieve documents with similarity scores"""
     if not LANGCHAIN_AVAILABLE or not CHROMADB_AVAILABLE:
-        logging.warning("LangChain or ChromaDB not available, returning empty results")
         return []
     
     if vectorstore is None:
@@ -130,17 +104,5 @@ def retrieve_with_scores(query: str, vectorstore: Optional[object] = None, k: in
         results = vectorstore.similarity_search_with_score(query, k=k)
         return [(doc.page_content, score) for doc, score in results]
     except Exception as e:
-        logging.error(f"Failed to retrieve documents: {e}")
+        logging.error(f"Retrieve failed: {e}")
         return []
-
-# Fallback functions for when dependencies are not available
-def get_fallback_response(query: str) -> str:
-    """Get a fallback response when RAG is not available"""
-    query_lower = query.lower()
-    
-    if any(word in query_lower for word in ["energy", "consumption", "electricity"]):
-        return "I can help with energy consumption analysis. For detailed AI-powered responses, please ensure all dependencies are installed."
-    elif any(word in query_lower for word in ["prediction", "forecast"]):
-        return "I can provide energy predictions. For advanced AI predictions, please ensure all dependencies are installed."
-    else:
-        return "I'm here to help with energy-related questions. For full AI functionality, please ensure all dependencies are installed."
