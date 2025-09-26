@@ -128,9 +128,18 @@ def call_gemini_multimodal(prompt: str, images: list = None, audios: list = None
         return _fallback_response(prompt)
 
 def answer_text(prompt: str, system: Optional[str] = None) -> str:
-    # Use the system prompt if provided, otherwise use fallback
-    if system:
-        return call_gemini_text(prompt, system)
+    # Always try Gemini first, then fallback
+    if _ensure_gemini():
+        try:
+            # Use system prompt if provided
+            if system:
+                return call_gemini_text(prompt, system)
+            else:
+                # Use default system prompt for better responses
+                default_system = "You are SECPARS, a helpful AI assistant for Smart Energy Consumption Prediction and Recommendation System. Be friendly, concise, and provide helpful answers. For energy-related questions, provide specific insights. For general questions, be helpful and informative."
+                return call_gemini_text(prompt, default_system)
+        except Exception:
+            return _fallback_response(prompt)
     else:
         return _fallback_response(prompt)
 
